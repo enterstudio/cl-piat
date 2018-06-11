@@ -1,0 +1,181 @@
+###############
+# Ansible generated config, will be overwritten!
+###############
+
+###############
+# General
+###############
+auto lo
+iface lo inet loopback
+   address {{node[inventory_hostname]["routing"]["lo"]}}
+{% if node[inventory_hostname]["overlay"]["anycast-ip"] is defined %}
+   clagd-vxlan-anycast-ip {{ node[inventory_hostname]["overlay"]["anycast-ip"]|replace("/32", "")}}
+{% endif %}
+
+auto eth0
+iface eth0 inet dhcp
+  vrf mgmt
+
+auto mgmt
+iface mgmt
+  address 127.0.0.1/8
+  vrf-table auto
+
+###############
+# VRFs / L3VNI
+###############
+
+{% set vrfs = [] %}
+{% for irb in node[inventory_hostname]["overlay"]["irb"] -%}
+{% if node[inventory_hostname]["overlay"]["irb"][irb]["vrf"] is defined %}
+{% if [node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]] not in vrfs %}
+auto {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
+iface {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
+    vrf-table auto
+
+auto vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+iface vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+    bridge-access {{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}} 
+    bridge-arp-nd-suppress on
+    bridge-learning off
+    vxlan-id 40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+    vxlan-local-tunnelip {{ node[inventory_hostname]["routing"]["lo"]|replace("/32", "")}} 
+
+auto dummysvi40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+iface dummysvi40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+{% if node[inventory_hostname]["mlag"] is defined %}
+    hwaddress {{ node[inventory_hostname]["mlag"]["sysmac"] }}
+{% endif %}
+    vlan-id {{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+    vlan-raw-device bridge
+    vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
+
+{{ vrfs.append( [node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]] ) }}
+{% endif %}
+{% endif %}
+{% endfor %}
+
+
+###############
+# Bridge / Vlans
+###############
+
+{% set l3vnis = [] %}
+auto bridge
+iface bridge
+  bridge-vlan-aware yes
+  bridge-ports
+{%- for port in node[inventory_hostname]["ports"] -%}
+{% if (node[inventory_hostname]["ports"][port]["vlans"] is defined) or (node[inventory_hostname]["ports"][port]["vlan"] is defined) %}
+ {{ port }} 
+{%- endif %}
+{% endfor %}
+{% if node[inventory_hostname]["mlag"] is defined %} peerlink{% endif %}
+{%- for irb in node[inventory_hostname]["overlay"]["irb"] %}{% if node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"] is defined %} vni10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}{% endif %}{% if node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"] is defined %}{% if [node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]] not in l3vnis %} vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}{{ l3vnis.append( [node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]] ) }}{% endif %}{% endif %}{%- endfor %}
+
+  bridge-vids {%- for irb in node[inventory_hostname]["overlay"]["irb"] %} {{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}{% endfor %}
+
+  bridge-stp off
+
+###############
+# MLAG
+###############
+
+{% if node[inventory_hostname]["mlag"] is defined %}
+auto peerlink
+iface peerlink
+  bond-slaves {{ node[inventory_hostname]["mlag"]["members"] | join(" ") }}
+  mtu 9216
+
+auto peerlink.4094
+iface peerlink.4094
+  address {{ node[inventory_hostname]["mlag"]["address"] }}
+  clagd-peer-ip {{ node[inventory_hostname]["mlag"]["peer-ip"] }}
+  clagd-backup-ip {{ node[inventory_hostname]["mlag"]["backup-ip"] }} vrf mgmt
+  clagd-sys-mac {{ node[inventory_hostname]["mlag"]["sysmac"] }}
+{% endif %}
+  
+###############
+# L2 VNIs
+###############
+
+{% if node[inventory_hostname]["overlay"] is defined %}
+{% for irb in node[inventory_hostname]["overlay"]["irb"] -%}
+auto vni10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+iface vni10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+  mtu 9000
+  vxlan-id 10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+  vxlan-local-tunnelip {{ node[inventory_hostname]["routing"]["lo"]|replace("/32", "")}} 
+  bridge-access {{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+  bridge-learning off
+  mstpctl-bpduguard yes
+  mstpctl-portbpdufilter yes
+  bridge-arp-nd-suppress on
+  
+{% endfor %}
+{% endif %}
+
+###############
+# SVIs
+###############
+
+{% if node[inventory_hostname]["overlay"] is defined %}
+{% for irb in node[inventory_hostname]["overlay"]["irb"] -%}
+{% if node[inventory_hostname]["overlay"]["irb"][irb]["vrf"] is defined %}
+
+auto vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+iface vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+    vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
+    vlan-id {{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+    vlan-raw-device bridge
+    {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv4"] is defined %}
+    address {{node[inventory_hostname]["overlay"]["irb"][irb]["ipv4"]["None"]}}
+    {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv4"]["VRRP"] is defined %}
+    address-virtual 00:00:5e:00:01:01 {{node[inventory_hostname]["overlay"]["irb"][irb]["ipv4"]["VRRP"]}} {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"] is defined %}{% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"]["VRRP"] is defined %} fe80::1/64 {{node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"]["VRRP"]}}{% endif %}{% endif %}
+    {%- endif %}    
+    {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"] is defined %}
+    address {{node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"]["None"]}}
+
+    post-up ip link set dev vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}-v0 addrgenmode none
+    post-up ip link set dev vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}-v0 down
+    post-up ip link set dev vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}-v0 up
+    post-up ip address add fe80::1/64 dev vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}-v0
+    {% endif %}
+    {% endif %}
+{% endif %}
+{% endfor %}
+{% endif %}
+
+###############
+# Server ports
+###############
+
+{% if node[inventory_hostname]["ports"] is defined %}
+{% for port in node[inventory_hostname]["ports"] -%}
+
+{% if node[inventory_hostname]["ports"][port]["members"] is defined %}
+{% for member in node[inventory_hostname]["ports"][port]["members"] -%}
+auto {{member}}
+iface {{member}}
+{% endfor %}
+{% endif %}
+
+auto {{port}}
+iface {{port}}
+  mtu 9000
+  {% if node[inventory_hostname]["ports"][port]["alias"] is defined %}
+  alias {{ node[inventory_hostname]["ports"][port]["alias"] }}
+  {% endif %}
+  {% if node[inventory_hostname]["ports"][port]["members"] is defined %}
+  clag-id {{ port[-2:] }}
+  bond-slaves {{ node[inventory_hostname]["ports"][port]["members"] | join(" ") }}
+  {% endif %}
+  {% if node[inventory_hostname]["ports"][port]["vlans"] is defined %}
+  bridge-vids {{ node[inventory_hostname]["ports"][port]["vlans"] | join(" ") }}
+  {% else %}
+  {% if node[inventory_hostname]["ports"][port]["vlan"] is defined %}
+  bridge-access {{ node[inventory_hostname]["ports"][port]["vlan"] }}
+  {% endif %}
+  {% endif %}
+{% endfor %}
+{% endif %}

@@ -1,0 +1,126 @@
+node:
+  rtr01:
+    routing:
+      lo: 10.10.50.1/32
+      bgp:
+        external:
+          tenant1:
+            asn: 65501
+            unnumbered_peers:
+              - vlan2500
+              - vlan2506
+          tenant2:
+            asn: 65501
+            unnumbered_peers:
+              - vlan2501
+              - vlan2507
+    overlay:
+      irb:
+        irb2500:
+          vrf: tenant1
+          l2vni: 2500
+          l3vni: 4001
+        irb2506:
+          vrf: tenant1
+          l2vni: 2506
+          l3vni: 4001
+        irb2501:
+          vrf: tenant2
+          l2vni: 2501
+          l3vni: 4002
+        irb2507:
+          vrf: tenant2
+          l2vni: 2507
+          l3vni: 4002
+        irb2701:
+          vrf: tenant1
+          l2vni: 2701
+          l3vni: 4002
+          ipv4: 
+            None: 10.201.1.1/24
+          ipv6: 
+            None: fc00:2701::1/64
+        irb2702:
+          vrf: tenant2
+          l2vni: 2702
+          l3vni: 4002
+          ipv4: 
+            None: 10.202.1.1/24
+          ipv6: 
+            None: fc00:2702::1/64
+    ports:
+      swp1:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2500
+        - 2501
+      swp2:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2506
+        - 2507
+        
+  rtr02:
+    routing:
+      lo: 10.10.50.2/32
+      bgp:
+        external:
+          tenant1:
+            asn: 65502
+            unnumbered_peers:
+              - vlan2503
+              - vlan2509
+          tenant2:
+            asn: 65502
+            unnumbered_peers:
+              - vlan2504
+              - vlan2510
+    overlay:
+      irb:
+        irb2503:
+          vrf: tenant1
+          l2vni: 2503
+          l3vni: 4001
+        irb2509:
+          vrf: tenant1
+          l2vni: 2509
+          l3vni: 4001
+        irb2504:
+          vrf: tenant2
+          l2vni: 2504
+          l3vni: 4002
+        irb2510:
+          vrf: tenant2
+          l2vni: 2510
+          l3vni: 4002
+        irb2703:
+          vrf: tenant1
+          l2vni: 2703
+          l3vni: 4002
+          ipv4: 
+            None: 10.203.1.1/24
+          ipv6:
+            None: fc00:2703::1/64
+        irb2704:
+          vrf: tenant2
+          l2vni: 2704
+          l3vni: 4002
+          ipv4:
+            None: 10.204.1.1/24
+          ipv6:
+            None: fc00:2704::1/64
+    ports:
+      swp1:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2503
+        - 2504
+      swp2:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2509
+        - 2510

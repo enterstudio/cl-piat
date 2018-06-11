@@ -1,0 +1,76 @@
+- hosts: leafs,spines,edge,superspine
+  become: yes
+  tasks:
+    - name: Set IPv4 L4 hashing
+      sysctl:
+        name: net.ipv4.fib_multipath_hash_policy
+        value: 1
+        state: present
+        reload: yes
+
+- hosts: servers 
+  become: yes
+  tasks:
+    - name: kill iperf 
+      command: killall -q iperf3
+      ignore_errors: true
+
+    - name: Start Iperf daemon
+      command: ip vrf exec "{{ item.app }}" iperf3 -p "{{ item.port }}" -s -D
+      loop:
+        - { app: 'app2', port: '40001'} 
+        - { app: 'app2', port: '50001'} 
+        - { app: 'app2', port: '40002'} 
+        - { app: 'app2', port: '50002'} 
+        - { app: 'app2', port: '40003'} 
+        - { app: 'app2', port: '50003'} 
+        - { app: 'app2', port: '40004'} 
+        - { app: 'app2', port: '50004'} 
+        - { app: 'app2', port: '40005'} 
+        - { app: 'app2', port: '50005'} 
+        - { app: 'app2', port: '40006'} 
+        - { app: 'app2', port: '50006'} 
+        - { app: 'app4', port: '40001'} 
+        - { app: 'app4', port: '50001'} 
+        - { app: 'app4', port: '40002'} 
+        - { app: 'app4', port: '50002'} 
+        - { app: 'app4', port: '40003'} 
+        - { app: 'app4', port: '50003'} 
+        - { app: 'app4', port: '40004'} 
+        - { app: 'app4', port: '50004'} 
+        - { app: 'app4', port: '40005'} 
+        - { app: 'app4', port: '50005'} 
+        - { app: 'app4', port: '40006'} 
+        - { app: 'app4', port: '50006'} 
+
+    - name: IPv4 Iperf traffic 
+      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 400{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
+      loop:
+        - { app: 'app1', prefix: '11', destination: '11'} 
+        - { app: 'app1', prefix: '11', destination: '12'} 
+        - { app: 'app1', prefix: '11', destination: '13'} 
+        - { app: 'app1', prefix: '11', destination: '14'} 
+        - { app: 'app1', prefix: '11', destination: '15'} 
+        - { app: 'app1', prefix: '11', destination: '16'} 
+        - { app: 'app3', prefix: '12', destination: '11'} 
+        - { app: 'app3', prefix: '12', destination: '12'} 
+        - { app: 'app3', prefix: '12', destination: '13'} 
+        - { app: 'app3', prefix: '12', destination: '14'} 
+        - { app: 'app3', prefix: '12', destination: '15'} 
+        - { app: 'app3', prefix: '12', destination: '16'} 
+
+    - name: IPv6 Iperf traffic 
+      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
+      loop:
+        - { app: 'app1', prefix: '11', destination: '11'} 
+        - { app: 'app1', prefix: '11', destination: '12'} 
+        - { app: 'app1', prefix: '11', destination: '13'} 
+        - { app: 'app1', prefix: '11', destination: '14'} 
+        - { app: 'app1', prefix: '11', destination: '15'} 
+        - { app: 'app1', prefix: '11', destination: '16'} 
+        - { app: 'app3', prefix: '12', destination: '11'} 
+        - { app: 'app3', prefix: '12', destination: '12'} 
+        - { app: 'app3', prefix: '12', destination: '13'} 
+        - { app: 'app3', prefix: '12', destination: '14'} 
+        - { app: 'app3', prefix: '12', destination: '15'} 
+        - { app: 'app3', prefix: '12', destination: '16'} 

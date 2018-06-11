@@ -1,0 +1,70 @@
+# Created by Topology-Converter v4.6.8
+#    Template Revision: v4.6.8
+#    https://github.com/cumulusnetworks/topology_converter
+#    using topology data from: cl-piat.dot
+
+
+
+
+[oob-switch]
+oob-mgmt-switch ansible_host=192.168.200.2
+
+
+
+[exit]
+rtr02 ansible_host=192.168.200.7
+edge01 ansible_host=192.168.200.22
+edge02 ansible_host=192.168.200.23
+rtr01 ansible_host=192.168.200.33
+
+
+
+
+
+[leaf]
+leaf06 ansible_host=192.168.200.15
+leaf07 ansible_host=192.168.200.16
+leaf04 ansible_host=192.168.200.17
+leaf05 ansible_host=192.168.200.18
+leaf02 ansible_host=192.168.200.19
+leaf03 ansible_host=192.168.200.20
+leaf01 ansible_host=192.168.200.21
+leaf08 ansible_host=192.168.200.24
+exit04 ansible_host=192.168.200.27
+exit02 ansible_host=192.168.200.29
+exit03 ansible_host=192.168.200.30
+exit01 ansible_host=192.168.200.32
+
+
+
+[spine]
+super02 ansible_host=192.168.200.3
+super01 ansible_host=192.168.200.4
+spine02 ansible_host=192.168.200.25
+spine03 ansible_host=192.168.200.26
+spine01 ansible_host=192.168.200.28
+spine04 ansible_host=192.168.200.31
+
+
+
+
+
+[host]
+server09 ansible_host=192.168.200.5
+server08 ansible_host=192.168.200.6
+server01 ansible_host=192.168.200.8
+server03 ansible_host=192.168.200.9
+server02 ansible_host=192.168.200.10
+server05 ansible_host=192.168.200.11
+server04 ansible_host=192.168.200.12
+server07 ansible_host=192.168.200.13
+server06 ansible_host=192.168.200.14
+netq-ts ansible_host=192.168.200.250
+server12 ansible_host=192.168.200.34
+server10 ansible_host=192.168.200.35
+server11 ansible_host=192.168.200.36
+
+
+[all:vars]
+ansible_user=cumulus
+ansible_ssh_pass=CumulusLinux!

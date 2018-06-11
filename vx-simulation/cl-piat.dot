@@ -1,0 +1,126 @@
+graph dc {
+   "oob-mgmt-switch"  [function="oob-switch" config="./helper_scripts/oob_switch_config.sh" mgmt_ip="192.168.200.2"]
+   "oob-mgmt-server"  [function="oob-server" config="./helper_scripts/OOB_Server_Config.sh" mgmt_ip="192.168.200.1"]
+   "netq-ts"   [function="host" config="./helper_scripts/extra_server_config.sh" mgmt_ip="192.168.200.250" memory="2048" os="cumulus/ts"]
+
+   "rtr01"  [function="exit" config="./helper_scripts/extra_switch_config.sh"]
+   "rtr02"  [function="exit" config="./helper_scripts/extra_switch_config.sh"]
+   "edge01"  [function="exit" config="./helper_scripts/extra_switch_config.sh"]
+   "edge02"  [function="exit" config="./helper_scripts/extra_switch_config.sh"]
+   "super01"  [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "super02" [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "spine01" [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "spine02" [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "spine03" [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "spine04" [function="spine" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf01" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf02" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf03" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf04" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf05" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf06" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf07" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "leaf08" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "exit01" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "exit02" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "exit03" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   "exit04" [function="leaf" config="./helper_scripts/extra_switch_config.sh"]
+   
+   "server01" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server02" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server03" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server04" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server05" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server06" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server07" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server08" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server09" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server10" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server11" [function="host" config="./helper_scripts/extra_server_config.sh"]
+   "server12" [function="host" config="./helper_scripts/extra_server_config.sh"]
+
+   "rtr01":"swp1" -- "edge01":"swp49"
+   "rtr02":"swp1" -- "edge01":"swp50"
+   "rtr01":"swp2" -- "edge02":"swp49"
+   "rtr02":"swp2" -- "edge02":"swp50"
+   
+   "edge01":"swp1" -- "super01":"swp49"
+   "edge02":"swp1" -- "super01":"swp50"
+   "edge01":"swp2" -- "super02":"swp49"
+   "edge02":"swp2" -- "super02":"swp50"
+   
+   "super01":"swp1" -- "exit01":"swp51"
+   "super02":"swp1" -- "exit01":"swp52"
+   "super01":"swp2" -- "exit02":"swp51"
+   "super02":"swp2" -- "exit02":"swp52"
+   "super01":"swp3" -- "exit03":"swp51"
+   "super02":"swp3" -- "exit03":"swp52"
+   "super01":"swp4" -- "exit04":"swp51"
+   "super02":"swp4" -- "exit04":"swp52"
+
+   "spine01":"swp1" -- "leaf01":"swp49"
+   "spine02":"swp1" -- "leaf01":"swp50"
+   "spine01":"swp2" -- "leaf02":"swp49"
+   "spine02":"swp2" -- "leaf02":"swp50"
+   "spine01":"swp3" -- "leaf03":"swp49"
+   "spine02":"swp3" -- "leaf03":"swp50"
+   "spine01":"swp4" -- "leaf04":"swp49"
+   "spine02":"swp4" -- "leaf04":"swp50"
+   "spine01":"swp5" -- "exit01":"swp49"
+   "spine02":"swp5" -- "exit01":"swp50"
+   "spine01":"swp6" -- "exit02":"swp49"
+   "spine02":"swp6" -- "exit02":"swp50"
+
+   "leaf01":"swp1" -- "server01":"eth1"
+   "leaf02":"swp1" -- "server01":"eth2"
+   "leaf01":"swp2" -- "server02":"eth1"
+   "leaf02":"swp2" -- "server02":"eth2"
+   "leaf03":"swp1" -- "server03":"eth1"
+   "leaf04":"swp1" -- "server03":"eth2"
+   "leaf03":"swp2" -- "server04":"eth1"
+   "leaf04":"swp2" -- "server04":"eth2"
+   "exit01":"swp1" -- "server05":"eth1"
+   "exit02":"swp1" -- "server05":"eth2"
+   "exit01":"swp2" -- "server06":"eth1"
+   "exit02":"swp2" -- "server06":"eth2"
+
+   "leaf01":"swp20" -- "leaf02":"swp20"
+   "leaf01":"swp21" -- "leaf02":"swp21"
+   "leaf03":"swp20" -- "leaf04":"swp20"
+   "leaf03":"swp21" -- "leaf04":"swp21"
+   "exit01":"swp20" -- "exit02":"swp20"
+   "exit01":"swp21" -- "exit02":"swp21"
+
+   "spine03":"swp1" -- "leaf05":"swp49"
+   "spine04":"swp1" -- "leaf05":"swp50"
+   "spine03":"swp2" -- "leaf06":"swp49"
+   "spine04":"swp2" -- "leaf06":"swp50"
+   "spine03":"swp3" -- "leaf07":"swp49"
+   "spine04":"swp3" -- "leaf07":"swp50"
+   "spine03":"swp4" -- "leaf08":"swp49"
+   "spine04":"swp4" -- "leaf08":"swp50"
+   "spine03":"swp5" -- "exit03":"swp49"
+   "spine04":"swp5" -- "exit03":"swp50"
+   "spine03":"swp6" -- "exit04":"swp49"
+   "spine04":"swp6" -- "exit04":"swp50"
+
+   "leaf05":"swp1" -- "server07":"eth1"
+   "leaf06":"swp1" -- "server07":"eth2"
+   "leaf05":"swp2" -- "server08":"eth1"
+   "leaf06":"swp2" -- "server08":"eth2"
+   "leaf07":"swp1" -- "server09":"eth1"
+   "leaf08":"swp1" -- "server09":"eth2"
+   "leaf07":"swp2" -- "server10":"eth1"
+   "leaf08":"swp2" -- "server10":"eth2"
+   "exit03":"swp1" -- "server11":"eth1"
+   "exit04":"swp1" -- "server11":"eth2"
+   "exit03":"swp2" -- "server12":"eth1"
+   "exit04":"swp2" -- "server12":"eth2"
+
+   "leaf05":"swp20" -- "leaf06":"swp20"
+   "leaf05":"swp21" -- "leaf06":"swp21"
+   "leaf07":"swp20" -- "leaf08":"swp20"
+   "leaf07":"swp21" -- "leaf08":"swp21"
+   "exit03":"swp20" -- "exit04":"swp20"
+   "exit03":"swp21" -- "exit04":"swp21"
+}

@@ -1,0 +1,73 @@
+---
+- name: Check NetQ install
+  command: apt search cumulus-netq
+  register: netq_installed
+
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
+    state: present
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Add Cumulus Repo
+  apt_repository:
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.3
+    state: present
+    update_cache: no
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Install NetQ
+  apt:
+    name: cumulus-netq
+    update_cache: yes
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Add netq to mgmt vrf
+  lineinfile:
+    dest: /etc/vrf/systemd.conf
+    line: "{{ item }}"
+  with_items:
+    - 'netq-agent'
+    - 'netq-notifier'
+    - 'netqd'
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Restart VRF systemctl daemon
+  command: systemctl daemon-reload
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Configure NetQ in management VRF
+  command: "{{item}}"
+  with_items:
+    - systemctl stop netqd.service
+    - systemctl disable netqd.service
+    - systemctl stop netq-agent.service
+    - systemctl disable netq-agent.service
+    - systemctl enable netqd@mgmt
+    - systemctl start netqd@mgmt
+    - systemctl enable netq-agent@mgmt
+    - systemctl start netq-agent@mgmt
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Add netq server IP
+  command: netq config add server 192.168.200.250 vrf mgmt
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: NetQ config add stats 
+  command: netq config add agent stats 
+
+- name: Restart Rsyslog
+  service:
+    name: rsyslog
+    state: restarted
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Restart NetQ Agent
+  command: netq config restart agent
+  when: netq_installed.stdout.find('[installed]') == -1
+
+- name: Pause to let NetQ service to start
+  pause:
+    seconds: 5
+  when: netq_installed.stdout.find('[installed]') == -1
+...

@@ -1,0 +1,59 @@
+---
+- name: Install Screen 
+  apt:
+    name: screen
+    update_cache: yes
+
+- name: Install Git
+  apt:
+    name: git-core
+    update_cache: yes
+
+- name: Enable NetQ stats collection 
+  command: "{{item}}"
+  with_items:
+    - systemctl enable netq-stats-pushd.service 
+    - systemctl start netq-stats-pushd.service
+
+- name: Create Grafana storage
+  docker_volume:
+    name: grafana-storage
+
+- name: Grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    ports:
+    - "3000:3000"
+    volumes:
+    - grafana-storage:/var/lib/grafana
+    env:
+      GF_SERVER_ROOT_URL: 'http://grafana.server.name'
+      GF_SECURITY_ADMIN_PASSWORD: 'CumulusLinux!' 
+
+- name: Pause to let container start 
+  pause:
+    seconds: 5
+
+- name: Create Grafana NetQ datasource
+  grafana_datasource:
+    name: NetQ
+    grafana_url: http://localhost:3000
+    grafana_password: 'CumulusLinux!'
+    ds_type: influxdb
+    url: http://192.168.200.250:8086
+    database: netq
+    state: present
+
+# Dashboard import disabled due to bug in Ansible module: https://github.com/ansible/ansible/issues/39663
+
+#- name: Import Grafana dashboard 
+#  grafana_dashboard:
+#    grafana_url: http://localhost:3000
+#    state: present
+#    overwrite: yes
+#    message: Updated by ansible
+#    slug: foo 
+#    path: ip-fabric.json
+...

@@ -1,0 +1,66 @@
+node:
+  server01:
+    id: 11
+    ports:
+      eth0:
+        dhcp:
+        vrf: mgmt
+      eth1:
+      eth2:
+      uplink:
+        lag:
+        members:
+          - eth1
+          - eth2
+    apps:
+      1000:
+        prefix-id: 10
+        vrf: app1
+      1001:
+        prefix-id: 11
+        vrf: app2
+      1002:
+        prefix-id: 12
+        vrf: app3
+      1003:
+        prefix-id: 13
+        vrf: app4
+      1004:
+        prefix-id: 14
+        vrf: app5
+      1005:
+        prefix-id: 15
+        vrf: app6
+
+  server02:
+    id: 12
+    ports:
+      eth0:
+        dhcp:
+        vrf: mgmt
+      eth1:
+      eth2:
+      uplink:
+        lag:
+        members:
+          - eth1
+          - eth2
+    apps:
+      1000:
+        prefix-id: 10
+        vrf: app1
+      1001:
+        prefix-id: 11
+        vrf: app2
+      1002:
+        prefix-id: 12
+        vrf: app3
+      1003:
+        prefix-id: 13
+        vrf: app4
+      1004:
+        prefix-id: 14
+        vrf: app5
+      1005:
+        prefix-id: 15
+        vrf: app6

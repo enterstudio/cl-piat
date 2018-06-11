@@ -1,0 +1,60 @@
+---
+stages:
+  - build
+  - test
+  - destroy
+  - deploy
+
+build:
+  tags:
+    - packet.ninja 
+  stage: build
+  before_script:
+    - mv vx-simulation cicd-$CI_PROJECT_ID
+    - cd cicd-$CI_PROJECT_ID
+    #- sed 's/offset = 2000/offset = 10000/' Vagrantfile > Vagrantfile2
+    #- mv Vagrantfile2 Vagrantfile
+  script:
+    - vagrant up oob-mgmt-server oob-mgmt-switch netq-ts
+    - vagrant up leaf01 leaf02 leaf03 leaf04 spine01 spine02 server01 server02 server03 server04 server05 server06 exit01 exit02 super01 super02 edge01 edge02 rtr01 rtr02
+    - echo "Waiting for VMs to have booted"
+    - sleep 30
+
+staging:
+  tags:
+    - staging
+  before_script:
+    - cd ansible 
+  stage: test
+  script:
+    - "ansible-playbook deploy.yaml -l oob,pod1,superspine,edge,router"
+    - sleep 15 
+    - "ansible oob,pod1,superspine,edge,router -m shell -a 'netq config restart agent'"
+    - sleep 90 
+    - netq check mtu
+    - netq check clag
+  after_script:
+    - sudo gitlab-runner unregister --all-runners
+
+destroy:
+  tags:
+    - packet.ninja 
+  stage: destroy
+  script:
+    - virsh list | grep cicd-$CI_PROJECT_ID | awk '{print $2}' | while read name; do virsh destroy $name;virsh undefine $name;done
+    - virsh vol-list default | grep cicd-$CI_PROJECT_ID | awk '{print $1}' | while read vol; do virsh vol-delete $vol --pool default; done
+    - vagrant global-status --prune
+
+production:
+  tags:
+    - production
+  before_script:
+    - cd ansible 
+  stage: deploy
+  script:
+    - "ansible-playbook deploy.yaml -l oob,pod1,superspine,edge,router"
+    - sleep 10
+    - "ansible oob,pod1,superspine,edge,router -m shell -a 'netq config restart agent'"
+    - sleep 15 
+    - netq check mtu
+    - netq check clag

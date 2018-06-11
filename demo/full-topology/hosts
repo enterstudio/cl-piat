@@ -1,0 +1,157 @@
+# Created by Topology-Converter v4.6.8
+#    Template Revision: v4.6.8
+#    https://github.com/cumulusnetworks/topology_converter
+#    using topology data from: cl-piat.dot
+
+[router]
+rtr01 ansible_host=192.168.200.33
+rtr02 ansible_host=192.168.200.7
+
+[edge]
+edge01 ansible_host=192.168.200.22
+edge02 ansible_host=192.168.200.23
+
+[superspine]
+super02 ansible_host=192.168.200.3
+super01 ansible_host=192.168.200.4
+
+
+[leafs-rack1]
+leaf02 ansible_host=192.168.200.19
+leaf01 ansible_host=192.168.200.21
+
+[servers-rack1]
+server01 ansible_host=192.168.200.8
+server02 ansible_host=192.168.200.10
+
+[leafs-rack2]
+leaf03 ansible_host=192.168.200.20
+leaf04 ansible_host=192.168.200.17
+
+[servers-rack2]
+server03 ansible_host=192.168.200.9
+server04 ansible_host=192.168.200.12
+
+[leafs-rack3]
+exit02 ansible_host=192.168.200.29
+exit01 ansible_host=192.168.200.32
+
+[servers-rack3]
+server05 ansible_host=192.168.200.11
+server06 ansible_host=192.168.200.14
+
+[leafs-rack5]
+leaf05 ansible_host=192.168.200.18
+leaf06 ansible_host=192.168.200.15
+
+[servers-rack5]
+server09 ansible_host=192.168.200.5
+server10 ansible_host=192.168.200.35
+
+[leafs-rack6]
+leaf07 ansible_host=192.168.200.16
+leaf08 ansible_host=192.168.200.24
+
+[servers-rack6]
+server11 ansible_host=192.168.200.36
+server12 ansible_host=192.168.200.34
+
+[leafs-rack4]
+exit04 ansible_host=192.168.200.27
+exit03 ansible_host=192.168.200.30
+
+[servers-rack4]
+server07 ansible_host=192.168.200.13
+server08 ansible_host=192.168.200.6
+
+[spine-pod1]
+spine02 ansible_host=192.168.200.25
+spine01 ansible_host=192.168.200.28
+
+[spine-pod2]
+spine03 ansible_host=192.168.200.26
+spine04 ansible_host=192.168.200.31
+
+[netq]
+netq-ts ansible_host=192.168.200.250
+
+[oob]
+localhost ansible_connection=local
+
+[rack1-pod1:children]
+leafs-rack1
+servers-rack1
+
+[rack2-pod1:children]
+leafs-rack2
+servers-rack2
+
+[rack3-pod1:children]
+leafs-rack3
+servers-rack3
+
+[rack4-pod2:children]
+leafs-rack4
+servers-rack4
+
+[rack5-pod2:children]
+leafs-rack5
+servers-rack5
+
+[rack6-pod2:children]
+leafs-rack6
+servers-rack6
+
+[pod1:children]
+rack1-pod1
+rack2-pod1
+rack3-pod1
+spine-pod1
+
+[pod2:children]
+rack4-pod2
+rack5-pod2
+rack6-pod2
+spine-pod2
+
+[servers-pod1:children]
+servers-rack1
+servers-rack2
+servers-rack3
+
+[servers-pod2:children]
+servers-rack4
+servers-rack5
+servers-rack6
+
+[leafs-pod1:children]
+leafs-rack1
+leafs-rack2
+leafs-rack3
+
+[leafs-pod2:children]
+leafs-rack4
+leafs-rack5
+leafs-rack6
+
+[leafs:children]
+leafs-pod1
+leafs-pod2
+
+[spines:children]
+spine-pod1
+spine-pod2
+
+[servers:children]
+servers-pod1
+servers-pod2
+
+[network:children]
+pod1
+pod2
+superspine
+edge
+
+[all:vars]
+ansible_user=cumulus
+ansible_ssh_pass=CumulusLinux!

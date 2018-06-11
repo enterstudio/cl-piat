@@ -1,0 +1,110 @@
+node:
+  edge01:
+    routing:
+      lo: 10.10.40.1/32
+      bgp:
+        underlay:
+          asn: '65401'
+          evpn: true
+          peers:
+          - swp1
+          - swp2
+        external:
+          tenant1:
+            asn: 65401
+            unnumbered_peers:
+              - vlan2500
+              - vlan2503
+          tenant2:
+            asn: 65401
+            unnumbered_peers:
+              - vlan2501
+              - vlan2504
+    overlay:
+      irb:
+        irb2500:
+          vrf: tenant1
+          l2vni: 2500
+          l3vni: 4001
+        irb2503:
+          vrf: tenant1
+          l2vni: 2503
+          l3vni: 4001
+        irb2501:
+          vrf: tenant2
+          l2vni: 2501
+          l3vni: 4002
+        irb2504:
+          vrf: tenant2
+          l2vni: 2504
+          l3vni: 4002
+    ports:
+      swp1:
+      swp2:
+      swp49:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2500
+        - 2501
+      swp50:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2503
+        - 2504
+        
+  edge02:
+    routing:
+      lo: 10.10.40.2/32
+      bgp:
+        underlay:
+          asn: '65402'
+          evpn: true
+          peers:
+          - swp1
+          - swp2
+        external:
+          tenant1:
+            asn: 65402
+            unnumbered_peers:
+              - vlan2506
+              - vlan2509
+          tenant2:
+            asn: 65402
+            unnumbered_peers:
+              - vlan2507
+              - vlan2510
+    overlay:
+      irb:
+        irb2506:
+          vrf: tenant1
+          l2vni: 2506
+          l3vni: 4001
+        irb2509:
+          vrf: tenant1
+          l2vni: 2509
+          l3vni: 4001
+        irb2507:
+          vrf: tenant2
+          l2vni: 2507
+          l3vni: 4002
+        irb2510:
+          vrf: tenant2
+          l2vni: 2510
+          l3vni: 4002
+    ports:
+      swp1:
+      swp2:
+      swp49:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2506
+        - 2507
+      swp50:
+        mlag: false
+        trunk: true
+        vlans:
+        - 2509
+        - 2510
