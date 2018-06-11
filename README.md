@@ -26,6 +26,7 @@ Table of Contents
 * [Demo explanation](#Demo explanation)
   * [Tenant setup](#Tenant setup)
   * [Orchestration](#Automation)
+  * [Orchestration](#Orchestration)
 * [Running the Demo](#running-the-demo)
   * [EVPN](#EVPN)
   * [NetQ](#NetQ)
