@@ -4,24 +4,24 @@
 #    using topology data from: cl-piat.dot
 
 [leafs-rack1]
-leaf02 ansible_host=192.168.200.19
-leaf01 ansible_host=192.168.200.21
+leaf02 ansible_host=192.168.0.12
+leaf01 ansible_host=192.168.0.11
 
 [servers-rack1]
-server01 ansible_host=192.168.200.8
-server02 ansible_host=192.168.200.10
+server01 ansible_host=192.168.0.31
+server02 ansible_host=192.168.0.32
 
 [leafs-rack2]
-leaf03 ansible_host=192.168.200.20
-leaf04 ansible_host=192.168.200.17
+leaf03 ansible_host=192.168.0.13
+leaf04 ansible_host=192.168.0.14
 
 [servers-rack2]
-server03 ansible_host=192.168.200.9
-server04 ansible_host=192.168.200.12
+server03 ansible_host=192.168.0.32
+server04 ansible_host=192.168.0.34
 
 [spine-pod1]
-spine02 ansible_host=192.168.200.25
-spine01 ansible_host=192.168.200.28
+spine02 ansible_host=192.168.0.22
+spine01 ansible_host=192.168.0.21
 
 [netq]
 localhost ansible_connection=local
