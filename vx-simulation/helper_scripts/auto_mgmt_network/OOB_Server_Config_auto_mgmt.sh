@@ -15,7 +15,7 @@ echo " Detected vagrant user is: $username"
 #       KNOBS
 #######################
 
-REPOSITORY="https://gitlab.com/packet.ninja"
+REPOSITORY="https://github.com/CumulusNetworks"
 REPONAME="cl-piat"
 
 #Install Automation Tools
