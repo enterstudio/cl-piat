@@ -19,7 +19,7 @@ leaf04 ansible_host=192.168.0.14
 server03 ansible_host=192.168.0.32
 server04 ansible_host=192.168.0.34
 
-[spine-pod1]
+[spines]
 spine02 ansible_host=192.168.0.22
 spine01 ansible_host=192.168.0.21
 
@@ -32,9 +32,6 @@ localhost ansible_connection=local
 [leafs:children]
 leafs-rack1
 leafs-rack2
-
-[spines:children]
-spine-pod1
 
 [servers:children]
 servers-rack1
