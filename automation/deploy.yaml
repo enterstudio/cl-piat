@@ -18,7 +18,7 @@
 #####
 # Host config from NetQ demo, needs to move to separate role
 #####
-- hosts: netq
+- hosts: netq-ts
   become: true
   roles:
   - telemetry
