@@ -110,6 +110,11 @@
     name: iperf3
     update_cache: yes
 
+- name: Install LLDPd
+  apt:
+    name: lldpd
+    update_cache: yes
+
 - name: Correct LLDP Settings
   lineinfile:
     dest: /etc/lldpd.d/port_info.conf
