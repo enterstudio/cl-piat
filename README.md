@@ -73,7 +73,8 @@ Because the CITC workbench is a subset of the above topology (2 spines, 4 leafs,
 
 Next  
 * `cd cl-piat/automation`  
-* `mv ../demo/citc/hosts .`
+* `mv ../demo/citc/hosts .
+* `ansible network -m shell -a 'net add vrf mgmt; net commit'``
 * `./provision.sh`
 
 Demo explanation
