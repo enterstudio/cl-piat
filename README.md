@@ -79,9 +79,17 @@ Next
 
 Demo explanation
 ------------------------
+This section explains how the demo has been built. The "running demo" section shows some examples that can be done during a live demo.
 
 ### Tenant setup
+The environment is built with three tenants that are routed in the EVPN L3 overlay. Each leaf is provisioned with three VRFs/L3VNIs. Each VRFs has two IPv4 and IPv6 SVIs that could be different services on a host. These SVIs are tagged in 6 vlans to each server. The servers are setup with a new kernel, VRF support and VRF tools. This is done for two reasons, 1. Show the development of Linux tools by Cumulus and how it is applicable beyond just switches, 2. makeing sure that each "service" has it's own routing table and can be configured with a default route (statically for IPv4, through RAs with IPv6).
+
+![cl-piat topology](diagrams/cl-piat-tenants.png)
+
+This setup means that there is no local bridging between the "apps" on the servers. E.g traffic from app1 to app2 on the same host will be routed on the TOR. There is no traffic possible between "apps" in different VRFs unless route-leaking would be configured on either rtr01/rtr02. 
+
 ### Orchestration
+In most Demos we've shown how orchestration of the configuration can be done through editting the Ansible variable files. While this might work in some environments, this wouldn't be always the case. In an environment with infrastructure data in multiple places, you would like to have a single source of truth. In this case Netbox (opensource IPAM, developed bij DigitalOcean) was used to store the variables needed to configure the infrastructure. The script "netbox.py", uses the api to generate a json file that is used as input for the Ansible playbook.
 
 
 Running the Demo
