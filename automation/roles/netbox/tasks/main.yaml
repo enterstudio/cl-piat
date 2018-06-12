@@ -4,7 +4,7 @@
   register: netbox_state 
 
 - name: Netbox docker clone
-  command: 'git clone -b master https://github.com/ninech/netbox-docker.git'
+  command: 'git clone -b master https://github.com/ninech/netbox-docker.git /home/cumulus/netbox-docker'
   when:
     - netbox_state.stdout.find('netbox') == -1
 
