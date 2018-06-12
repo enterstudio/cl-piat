@@ -6,7 +6,6 @@ from pprint import pprint
 import ipaddress
 
 nb = pynetbox.api(
-    #'http://deep.packet.ninja:3002',
     'http://netq-ts:32768',
     token='0123456789abcdef0123456789abcdefcumulus'
 )

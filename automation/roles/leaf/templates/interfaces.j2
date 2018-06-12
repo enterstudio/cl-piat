@@ -93,6 +93,7 @@ iface peerlink.4094
   clagd-peer-ip {{ node[inventory_hostname]["mlag"]["peer-ip"] }}
   clagd-backup-ip {{ node[inventory_hostname]["mlag"]["backup-ip"] }} vrf mgmt
   clagd-sys-mac {{ node[inventory_hostname]["mlag"]["sysmac"] }}
+  clagd-args --neighSync true
 {% endif %}
   
 ###############

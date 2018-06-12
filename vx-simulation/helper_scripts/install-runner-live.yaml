@@ -25,7 +25,7 @@
       command: gitlab-runner register >
         --non-interactive
         --url https://gitlab.com
-        --registration-token dqYiPWTkm4w96-vMaQae 
+        --registration-token xxxxxxx 
         --description live 
         --tag-list production
         --executor shell
