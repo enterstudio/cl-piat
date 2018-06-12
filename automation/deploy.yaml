@@ -44,6 +44,6 @@
 - hosts: servers 
   become: true 
   roles:
-  - netq
   - servers
+  - netq
 ...
