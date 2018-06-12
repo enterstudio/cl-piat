@@ -18,6 +18,11 @@
 #####
 # Host config from NetQ demo, needs to move to separate role
 #####
+- hosts: oob 
+  become: true
+  roles:
+  - oob
+
 - hosts: netq-ts
   become: true
   roles:
