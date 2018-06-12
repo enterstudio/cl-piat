@@ -15,7 +15,7 @@ echo " Detected vagrant user is: $username"
 #       KNOBS
 #######################
 
-REPOSITORY="https://github.com/CumulusNetworks"
+REPOSITORY="https://github.com/CumulusNetworks/cl-piat"
 REPONAME="cl-piat"
 
 #Install Automation Tools
@@ -217,7 +217,7 @@ cat <<EOT >> /home/cumulus/.gitconfig
 EOT
 
 sudo su - cumulus -c '\
-git clone https://gitlab.com/packet.ninja/cl-piat.git;
+git clone https://github.com/CumulusNetworks/cl-piat.git;
 ansible-playbook /home/cumulus/cl-piat/vx-simulation/helper_scripts/install-runner.yaml;\
 '
 
