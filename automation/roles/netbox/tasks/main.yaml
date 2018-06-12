@@ -16,7 +16,7 @@
     - netbox_state.stdout.find('netbox') == -1
 
 - name: Netbox docker compose
-  shell: 'cd netbox-docker;docker-compose pull;docker-compose up -d'
+  shell: 'cd /home/cumulus/netbox-docker;docker-compose pull;docker-compose up -d'
   when:
     - netbox_state.stdout.find('netbox') == -1
 
