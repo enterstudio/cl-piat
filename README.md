@@ -72,9 +72,9 @@ Once connected run
 Because the CITC workbench is a subset of the above topology (2 spines, 4 leafs, 4 servers), we have to change the hosts file to provision less hosts. There is a specific hosts file provided in the `demo` directory. 
 
 Next  
-`cd cl-piat/automation`  
-`mv ../demo/citc/hosts .`
-`./provision.sh`
+* `cd cl-piat/automation`  
+* `mv ../demo/citc/hosts .`
+* `./provision.sh`
 
 Demo explanation
 ------------------------
