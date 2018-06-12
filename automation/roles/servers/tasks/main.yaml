@@ -76,7 +76,7 @@
 
 - name: Sleep for server to disconnect
   pause:
-    seconds: 60 
+    seconds: 90 
   when: vrf_check.stdout.find('no packages found') == -1
 
 - name: Wait for hosts to be up 
