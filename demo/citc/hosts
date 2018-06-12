@@ -23,7 +23,7 @@ server04 ansible_host=192.168.0.34
 spine02 ansible_host=192.168.0.22
 spine01 ansible_host=192.168.0.21
 
-[netq]
+[netq-ts]
 localhost ansible_connection=local
 
 [oob]
