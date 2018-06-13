@@ -30,7 +30,7 @@ interface {{interface}}
 {% for irb in node[inventory_hostname]["overlay"]["irb"] -%}
 {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"] is defined %}
 {% if node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"]["VRRP"] is defined %}
-interface vlan{{node["leaf02"]["overlay"]["irb"][irb]["l2vni"]}}-v0 vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}} 
+interface vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}-v0 vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}} 
  ipv6 nd managed-config-flag
  ipv6 nd other-config-flag
  ipv6 nd prefix {{node[inventory_hostname]["overlay"]["irb"][irb]["ipv6"]["prefix"]}} 7200 1800 no-autoconfig
