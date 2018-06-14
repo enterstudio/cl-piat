@@ -25,7 +25,7 @@ Table of Contents
 * [Using Cumulus in the Cloud](#using-cumulus-in-the-cloud)
 * [Demo explanation](#Demo explanation)
   * [Tenant setup](#Tenant setup)
-  * [Orchestration](#Automation)
+  * [Automation](#Automation)
   * [Orchestration](#Orchestration)
 * [Running the Demo](#running-the-demo)
   * [EVPN](#EVPN)
@@ -88,6 +88,8 @@ The environment is built with three tenants that are routed in the EVPN L3 overl
 ![cl-piat topology](diagrams/cl-piat-tenants.png)
 
 This setup means that there is no local bridging between the "apps" on the servers. E.g traffic from app1 to app2 on the same host will be routed on the TOR. There is no traffic possible between "apps" in different VRFs unless route-leaking would be configured on either rtr01/rtr02. 
+
+### Automation
 
 ### Orchestration
 In most Demos we've shown how orchestration of the configuration can be done through editting the Ansible variable files. While this might work in some environments, this wouldn't be always the case. In an environment with infrastructure data in multiple places, you would like to have a single source of truth. In this case Netbox (opensource IPAM, developed bij DigitalOcean) was used to store the variables needed to configure the infrastructure. The script "netbox.py", uses the api to generate a json file that is used as input for the Ansible playbook.
