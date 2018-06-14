@@ -107,8 +107,10 @@ Running the Demo
 
 Troubleshooting + FAQ
 -------
-* The `Vagrantfile` expects the telemetry server to be named `cumulus/ts`. If you get the following error
-```The box 'cumulus/ts' could not be found or could not be accessed in the remote catalog. If this is a private box on HashiCorp's Atlas, please verify you're logged in via `vagrant login`. Also, please double-check the name. The expanded URL and error message are shown below:
+* The `Vagrantfile` expects the telemetry server to be named `cumulus/ts`. If you get the following error:
+
+```
+The box 'cumulus/ts' could not be found or could not be accessed in the remote catalog. If this is a private box on HashiCorp's Atlas, please verify you're logged in via `vagrant login`. Also, please double-check the name. The expanded URL and error message are shown below:
 
 URL: ["https://atlas.hashicorp.com/cumulus/ts"]
 Error: The requested URL returned error: 404 Not Found
