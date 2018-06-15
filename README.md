@@ -39,7 +39,7 @@ Prerequisites
 ------------------------
 * Running this simulation roughly 23G of Ram (by default only pod1, superspines and edge are started. Full topology will use ~35G)
 * Internet connectivity is required from the hypervisor. Multiple packages are installed on both the switches and servers when the lab is created.
-* Download this repository locally with `git clone` 
+* Download this repository locally with `git clone https://github.com/CumulusNetworks/cl-piat.git` 
 * Download the NetQ Telemetry Server from https://cumulusnetworks.com/downloads/#product=NetQ%20Virtual&hypervisor=Vagrant. You need to be logged into the site to access this.  Choose NetQ 1.3.
 * Setup your hypervisor according to the instructions with [Vagrant, Libvirt and KVM](https://docs.cumulusnetworks.com/display/VX/Vagrant+and+Libvirt+with+KVM+or+QEMU)
 
@@ -66,7 +66,7 @@ Using Cumulus in the Cloud
 Request a "Blank Workbench" on [Cumulus in the Cloud](https://cumulusnetworks.com/try-for-free/). When you receive notice that it is provisioned, connect to the *oob-mgmt-server*
 
 Once connected run  
-`git clone`
+`git clone https://github.com/CumulusNetworks/cl-piat.git`
 
 Because the CITC workbench is a subset of the above topology (2 spines, 4 leafs, 4 servers), we have to change the hosts file to provision less hosts. There is a specific hosts file provided in the `demo` directory. 
 
@@ -84,21 +84,39 @@ This section explains how the demo has been built. The "running demo" section sh
 ### Tenant setup
 The environment is built with three tenants that are routed in the EVPN L3 overlay. Each leaf is provisioned with three VRFs/L3VNIs. Each VRFs has two IPv4 and IPv6 SVIs that could be different services on a host. These SVIs are tagged in 6 vlans to each server. The servers are setup with a new kernel, VRF support and VRF tools. This is done for two reasons, 1. Show the development of Linux tools by Cumulus and how it is applicable beyond just switches, 2. makeing sure that each "service" has it's own routing table and can be configured with a default route (statically for IPv4, through RAs with IPv6).
 
-![cl-piat topology](diagrams/cl-piat-tenants.png)
+![Tenants](diagrams/cl-piat-tenants.png)
 
 This setup means that there is no local bridging between the "apps" on the servers. E.g traffic from app1 to app2 on the same host will be routed on the TOR. There is no traffic possible between "apps" in different VRFs unless route-leaking would be configured on either rtr01/rtr02. 
 
 ### Automation and Orchestration
 
-In most Demos we've shown how orchestration of the configuration can be done through editting the Ansible variable files. While this might work in some environments, this wouldn't be always the case. In an environment with infrastructure data in multiple places, you would like to have a single source of truth. In this case Netbox (opensource IPAM, developed bij DigitalOcean) was used to store the variables needed to configure the infrastructure. The script "netbox.py", uses the api to generate a json file that is used as input for the Ansible playbook.
+This environment is fully provisioned with Ansible in combination with Jinja2 templates. Currently the playbook is separated in multiple roles for each type of component, such as leaf and spine switches. The servers and provisioning of management tools is also done with separate roles. This creates an easy way of setting up the base for the demo / PoC environment.  
 
+![Orchestration](diagrams/cl-piat-orchestration.png)
+
+In most demos we have shown how orchestration of the configuration can be done through editting the Ansible variable files. While this might work in some environments, this wouldn't be always the case. In an environment with infrastructure data in multiple places, you would like to have a single source of truth. In this case Netbox (opensource IPAM, developed bij DigitalOcean) was used to store the variables needed to configure the infrastructure. In this demo the Netbox is the source of truth and orchestration is done as shown in the above diagram. The script "netbox.py" (Netbox importer), uses the Netbox api to generate a json file that contains the variable file for Ansible. Ansible uses the variables to generate the configuration files based on Jinja templates.
 
 Running the Demo
 ------------------------
+When the demo is fully provisioned, there are several topics that can be shown during the demo depending on the audience.
 
 ### EVPN
+The spine / leaf topology has been deployed with a symmetrical EVPN setup with the aforementioned tenant setup.
+
+
 ### NetQ
 ### Grafana
+During deployment Grafana is installed as a container on the netq-ts server. To make the gui accessable, we need to setup a remote ssh tunnel to a host that is publicly accessible: `screen ssh -NR 3001:localhost:3000 <user>@<host>`. Exit the screen with ctcl+A,D. Unfortunately the current Ansible module for Grafana has a bug that prevents the dashboards to be automatically provisioned (https://github.com/ansible/ansible/issues/39663). When the interface is accessible (default user/pass: admin / CumulusLinux!), there are two dashboards available that can be imported into Grafana in the roles/telemetry/files directory. Import them both to have access to them.
+
+The IP-fabric dashboard will display all interfaces on a specified switch:
+![IP-Fabric](images/ip-fabric.png)
+
+The detailed dashboard allows for a more granular selection of interfaces on multiple switches. As shown in the screenshot it will show traffic / errors of the interfaces swp1,2,49,50 of switches leaf01 and leaf02. This allows for showing traffic from up / downlink for specific servers.
+![Detailed](images/detailed.png)
+
+By default you will see only low traffic volumes. This repository also has an Ansible playbook that will use iperf to setup a full mesh of streams in all VRFs to show the traffic in the Grafana graphs. Use `ansible-playbook traffic.yaml -l servers` to start the traffic flows for 5 minutes.
+
+
 ### Netbox
 ### CI/CD
 
