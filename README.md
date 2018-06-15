@@ -101,8 +101,90 @@ Running the Demo
 When the demo is fully provisioned, there are several topics that can be shown during the demo depending on the audience.
 
 ### EVPN
-The spine / leaf topology has been deployed with a symmetrical EVPN setup with the aforementioned tenant setup.
+The spine / leaf topology has been deployed with a symmetrical EVPN setup with the aforementioned tenant setup. Log in to one of the leaf switches, for example leaf01:
 
+
+This shows the routing table from one of the tenants with the EVPN /32 (and /128 for IPv6) host routes and the prefixes that are announced from the routers using EVPN Type-5:
+```
+cumulus@leaf01:mgmt-vrf:~$ net show route vrf tenant1
+
+show ip route vrf tenant1 
+==========================
+Codes: K - kernel route, C - connected, S - static, R - RIP,
+       O - OSPF, I - IS-IS, B - BGP, E - EIGRP, N - NHRP,
+       T - Table, v - VNC, V - VNC-Direct, A - Babel, D - SHARP,
+       F - PBR,
+       > - selected route, * - FIB route
+
+
+VRF tenant1:
+B>* 10.201.1.0/24 [20/0] via 10.10.40.1, dummysvi404001 onlink, 3d09h06m
+  *                      via 10.10.40.2, dummysvi404001 onlink, 3d09h06m
+B>* 10.203.1.0/24 [20/0] via 10.10.40.1, dummysvi404001 onlink, 3d09h06m
+  *                      via 10.10.40.2, dummysvi404001 onlink, 3d09h06m
+C * 192.168.10.0/24 is directly connected, vlan1000-v0, 3d09h06m
+C>* 192.168.10.0/24 is directly connected, vlan1000, 3d09h06m
+B>* 192.168.10.13/32 [20/0] via 10.100.100.34, dummysvi404001 onlink, 3d00h36m
+B>* 192.168.10.14/32 [20/0] via 10.100.100.34, dummysvi404001 onlink, 3d00h37m
+B>* 192.168.10.15/32 [20/0] via 10.100.100.56, dummysvi404001 onlink, 3d08h49m
+B>* 192.168.10.16/32 [20/0] via 10.100.100.56, dummysvi404001 onlink, 3d08h49m
+C * 192.168.11.0/24 is directly connected, vlan1001-v0, 3d09h06m
+C>* 192.168.11.0/24 is directly connected, vlan1001, 3d09h06m
+B>* 192.168.11.13/32 [20/0] via 10.100.100.34, dummysvi404001 onlink, 3d00h36m
+B>* 192.168.11.14/32 [20/0] via 10.100.100.34, dummysvi404001 onlink, 3d00h35m
+B>* 192.168.11.15/32 [20/0] via 10.100.100.56, dummysvi404001 onlink, 3d08h49m
+B>* 192.168.11.16/32 [20/0] via 10.100.100.56, dummysvi404001 onlink, 3d08h49m
+
+show ipv6 route vrf tenant1 
+============================
+Codes: K - kernel route, C - connected, S - static, R - RIPng,
+       O - OSPFv3, I - IS-IS, B - BGP, N - NHRP, T - Table,
+       v - VNC, V - VNC-Direct, A - Babel, D - SHARP, F - PBR,
+       > - selected route, * - FIB route
+
+VRF tenant1:
+C * fc00:10::/64 is directly connected, vlan1000-v0, 3d09h06m
+C>* fc00:10::/64 is directly connected, vlan1000, 3d09h06m
+B>* fc00:10::13/128 [20/0] via ::ffff:10.100.100.34, dummysvi404001 onlink, 3d00h30m
+B>* fc00:10::14/128 [20/0] via ::ffff:10.100.100.34, dummysvi404001 onlink, 3d00h30m
+B>* fc00:10::15/128 [20/0] via ::ffff:10.100.100.56, dummysvi404001 onlink, 3d08h48m
+B>* fc00:10::16/128 [20/0] via ::ffff:10.100.100.56, dummysvi404001 onlink, 3d08h48m
+C * fc00:11::/64 is directly connected, vlan1001-v0, 3d09h06m
+C>* fc00:11::/64 is directly connected, vlan1001, 3d09h06m
+B>* fc00:11::13/128 [20/0] via ::ffff:10.100.100.34, dummysvi404001 onlink, 3d00h30m
+B>* fc00:11::14/128 [20/0] via ::ffff:10.100.100.34, dummysvi404001 onlink, 3d00h30m
+B>* fc00:11::15/128 [20/0] via ::ffff:10.100.100.56, dummysvi404001 onlink, 3d08h48m
+B>* fc00:11::16/128 [20/0] via ::ffff:10.100.100.56, dummysvi404001 onlink, 3d08h48m
+B>* fc00:2701::/64 [20/0] via ::ffff:10.10.40.1, dummysvi404001 onlink, 3d09h06m
+  *                       via ::ffff:10.10.40.2, dummysvi404001 onlink, 3d09h06m
+B>* fc00:2703::/64 [20/0] via ::ffff:10.10.40.1, dummysvi404001 onlink, 3d09h06m
+  *                       via ::ffff:10.10.40.2, dummysvi404001 onlink, 3d09h06m
+```
+
+Then log in to one of the servers to test connectivity:
+
+```
+cumulus@server01:~$ sudo ip vrf exec app1 ping6 fc00:2701::1 -c 3
+PING fc00:2701::1(fc00:2701::1) 56 data bytes
+64 bytes from fc00:2701::1: icmp_seq=1 ttl=62 time=2.70 ms
+64 bytes from fc00:2701::1: icmp_seq=2 ttl=62 time=3.50 ms
+64 bytes from fc00:2701::1: icmp_seq=3 ttl=62 time=2.79 ms
+
+--- fc00:2701::1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2002ms
+rtt min/avg/max/mdev = 2.706/3.004/3.509/0.361 ms
+cumulus@server01:~$ sudo ip vrf exec app1 ping 10.201.1.1 -c 3
+PING 10.201.1.1 (10.201.1.1) 56(84) bytes of data.
+64 bytes from 10.201.1.1: icmp_seq=1 ttl=62 time=7.16 ms
+64 bytes from 10.201.1.1: icmp_seq=2 ttl=62 time=7.66 ms
+64 bytes from 10.201.1.1: icmp_seq=3 ttl=62 time=2.85 ms
+
+--- 10.201.1.1 ping statistics ---
+3 packets transmitted, 3 received, 0% packet loss, time 2003ms
+rtt min/avg/max/mdev = 2.854/5.891/7.660/2.158 ms
+```
+
+During the demo, the generated configuration in `/etc/network/interfaces` and `/etc/frr/frr.conf` can be explained and shown how the Symmetrical EVPN setup has been made.
 
 ### NetQ
 ### Grafana
