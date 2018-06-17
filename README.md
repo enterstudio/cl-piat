@@ -187,6 +187,60 @@ rtt min/avg/max/mdev = 2.854/5.891/7.660/2.158 ms
 During the demo, the generated configuration in `/etc/network/interfaces` and `/etc/frr/frr.conf` can be explained and shown how the Symmetrical EVPN setup has been made.
 
 ### NetQ
+The NetQ Telemetry server has been deployed as a separate VM in the management network. The agent has been installed on all nodes, including the servers which allows to do demo the NetQ capabilities in this environment. Keep in mind that the topology is using Symmetrical EVPN. Not all functionalities around this feature have been implemented in NetQ and can cause issues.
+
+A few examples:
+
+```
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq check mtu
+Checked Nodes: 15, Checked Links: 395, Failed Nodes: 0, Failed Links: 0
+No MTU Mismatch found
+
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq check ntp
+Total Nodes: 15, Checked Nodes: 15, Rotten Nodes: 0, Unknown Nodes: 0, failed NTP Nodes: 0
+
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq check bgp
+Total Nodes: 15, Failed Nodes: 0, Total Sessions: 62, Failed Sessions: 0
+```
+
+```
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq trace 44:38:39:00:00:5a vlan 1000 from leaf04 vrf tenant1
+leaf04 -- leaf04:vni101000 -- leaf04:swp50 -- spine02:swp1 -- leaf01:vni101000 -- leaf01:bond01 -- server01:eth1
+                                           -- spine02:swp2 -- leaf02:vni101000 -- leaf02:bond01 -- server01:eth2
+                           -- leaf04:swp49 -- spine01:swp1 -- leaf01:vni101000 -- leaf01:bond01 -- server01:eth1
+                                           -- spine01:swp2 -- leaf02:vni101000 -- leaf02:bond01 -- server01:eth2
+Path MTU is 9000
+```
+
+The traces can only be done if the source and destination are using the same L2VNI because of the Symmetrical routing.
+
+```
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq check clag
+Checked Nodes: 6, Failed Nodes: 6 
+Hostname          Error
+----------------- --------------------------------------------------------------------------
+exit01            MSTP not running on node                                                  
+exit02            MSTP not running on node                                                  
+leaf01            MSTP not running on node                                                  
+leaf02            MSTP not running on node                                                  
+leaf03            MSTP not running on node                                                  
+leaf04            MSTP not running on node 
+```
+
+```
+cumulus@oob-mgmt-server:~/cl-piat/automation$ netq edge01 show bgp
+
+Matching bgp records:
+Hostname          Neighbor                         VRF              ASN        Peer ASN   PfxRx        Last Changed
+----------------- -------------------------------- ---------------- ---------- ---------- ------------ ----------------
+edge01            swp1(super01)                    default          65401      65901      14/-/266     4d:22h:13m:9s
+edge01            swp2(super02)                    default          65401      65902      14/-/266     4d:22h:13m:9s
+edge01            vlan2500(rtr01)                  tenant1          65401      65501      1/2/-        4d:22h:13m:15s
+edge01            vlan2501(rtr01)                  tenant2          65401      65501      1/1/-        4d:22h:13m:14s
+edge01            vlan2503(rtr02)                  tenant1          65401      65502      1/2/-        4d:22h:13m:15s
+edge01            vlan2504(rtr02)                  tenant2          65401      65502      1/1/-        4d:22h:13m:14s
+```
+
 ### Grafana
 During deployment Grafana is installed as a container on the netq-ts server. To make the gui accessable, we need to setup a remote ssh tunnel to a host that is publicly accessible: `screen ssh -NR 3001:localhost:3000 <user>@<host>`. Exit the screen with ctcl+A,D. Unfortunately the current Ansible module for Grafana has a bug that prevents the dashboards to be automatically provisioned (https://github.com/ansible/ansible/issues/39663). When the interface is accessible (default user/pass: admin / CumulusLinux!), there are two dashboards available that can be imported into Grafana in the roles/telemetry/files directory. Import them both to have access to them.
 
@@ -197,7 +251,6 @@ The detailed dashboard allows for a more granular selection of interfaces on mul
 ![Detailed](images/detailed.png)
 
 By default you will see only low traffic volumes. This repository also has an Ansible playbook that will use iperf to setup a full mesh of streams in all VRFs to show the traffic in the Grafana graphs. Use `ansible-playbook traffic.yaml -l servers` to start the traffic flows for 5 minutes.
-
 
 ### Netbox
 ### CI/CD
