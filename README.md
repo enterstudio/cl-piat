@@ -266,7 +266,7 @@ We can also create an additional IRB interface on a device. Keep in mind that if
 ![Detailed](images/netbox-irb.png)
 
 ### CI/CD
-
+See the [CI/CD section](./demo/cicd) for more documentation on including CI/CD in this demo.
 
 Troubleshooting + FAQ
 -------
