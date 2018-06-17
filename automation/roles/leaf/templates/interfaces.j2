@@ -163,7 +163,7 @@ iface {{member}}
 
 auto {{port}}
 iface {{port}}
-  mtu 9000
+  mtu 9216
   {% if node[inventory_hostname]["ports"][port]["alias"] is defined %}
   alias {{ node[inventory_hostname]["ports"][port]["alias"] }}
   {% endif %}
