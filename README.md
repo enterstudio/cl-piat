@@ -27,11 +27,11 @@ Table of Contents
   * [Tenant setup](#tenant-setup)
   * [Automation](#automation-and-orchestration)
 * [Running the Demo](#running-the-demo)
-  * [EVPN](#EVPN)
-  * [NetQ](#NetQ)
-  * [Grafana](#Grafana)
-  * [Netbox](#Netbox)
-  * [CI/CD](#CI/CD)
+  * [EVPN](#evpn)
+  * [NetQ](#netq)
+  * [Grafana](#grafana)
+  * [Netbox](#netbox)
+  * [CI/CD](#ci/cd)
 * [Troubleshooting + FAQ](#troubleshooting--faq)
 
 
@@ -242,17 +242,29 @@ edge01            vlan2504(rtr02)                  tenant2          65401      6
 ```
 
 ### Grafana
-During deployment Grafana is installed as a container on the netq-ts server. To make the gui accessable, we need to setup a remote ssh tunnel to a host that is publicly accessible: `screen ssh -NR 3001:localhost:3000 <user>@<host>`. Exit the screen with ctcl+A,D. Unfortunately the current Ansible module for Grafana has a bug that prevents the dashboards to be automatically provisioned (https://github.com/ansible/ansible/issues/39663). When the interface is accessible (default user/pass: admin / CumulusLinux!), there are two dashboards available that can be imported into Grafana in the roles/telemetry/files directory. Import them both to have access to them.
+During deployment Grafana is installed as a container on the netq-ts server. To make the gui accessable, we need to setup a remote ssh tunnel (from the NetQ-ts VM) to a host that is publicly accessible: `screen ssh -NR 3001:localhost:3000 <user>@<host>`. Exit the screen with ctcl+A,D after authentication. Unfortunately the current Ansible module for Grafana has a bug that prevents the dashboards to be automatically provisioned (https://github.com/ansible/ansible/issues/39663). When the interface is accessible (default user/pass: admin / CumulusLinux!), there are two dashboards available that can be imported into Grafana in the roles/telemetry/files directory. Import them both to have access to them.
 
 The IP-fabric dashboard will display all interfaces on a specified switch:
-![IP-Fabric](images/ip-fabric.png)
+![IP-Fabric](images/grafana-ip-fabric.png)
 
 The detailed dashboard allows for a more granular selection of interfaces on multiple switches. As shown in the screenshot it will show traffic / errors of the interfaces swp1,2,49,50 of switches leaf01 and leaf02. This allows for showing traffic from up / downlink for specific servers.
-![Detailed](images/detailed.png)
+![Detailed](images/grafana-detailed.png)
 
 By default you will see only low traffic volumes. This repository also has an Ansible playbook that will use iperf to setup a full mesh of streams in all VRFs to show the traffic in the Grafana graphs. Use `ansible-playbook traffic.yaml -l servers` to start the traffic flows for 5 minutes.
 
 ### Netbox
+Like Grafana, Netbox is also deployed as a container on the netq-ts server. To make the gui accessable, we need to setup a remote ssh tunnel (from the NetQ-ts VM) to a host that is publicly accessible: `screen ssh -NR 3002:localhost:32768 <user>@<host>`. Exit the screen with ctcl+A,D after authentication. When the interface is accessible (default user/pass: admin / CumulusLinux!) changes can be made to the configuration during a demo. These changes are imported to the Ansible variables and deployed to the infrastructure. These steps have to be done manually (although they can be automated) by running the `netbox.py` script and running the ansible-playbook, e.g `ansible-playbook deploy.yml -l network`.
+
+![Detailed](images/netbox-overview.png)
+
+During two changes would be good to see:
+
+Change the status of one or more devices in the GUI and destroy/restart the devices so they have an emptry configuration `vagrant destroy leaf01;vagrant up leaf01`. Show that the device won't be provisioned until the status has been set to "Active" by running the `netbox.py` script and the Ansible playbook `ansible-playbook deploy.yml -l leaf01`.
+![Detailed](images/netbox-status.png)
+
+We can also create an additional IRB interface on a device. Keep in mind that if it is intended to do on an mlag pair, it should be done on both.
+![Detailed](images/netbox-irb.png)
+
 ### CI/CD
 
 
