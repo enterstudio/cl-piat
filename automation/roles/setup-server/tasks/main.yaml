@@ -5,6 +5,11 @@
   failed_when: no
   changed_when: no
 
+- name: Sleep for releasing apt lock
+  pause:
+    seconds: 10
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+
 - name: Install HWE kernel
   apt:
     name: linux-generic-hwe-16.04
