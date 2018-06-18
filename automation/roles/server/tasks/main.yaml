@@ -1,4 +1,11 @@
 ---
+- name: Copy interfaces configuration
+  template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    backup: yes
+  notify: reload networking
+
 - name: Ping to learn prefixes
   command: screen -dm ip vrf exec "{{ item.app }}" ping 192.168."{{ item.prefix }}"."{{ item.destination }}" -c 120
   loop:

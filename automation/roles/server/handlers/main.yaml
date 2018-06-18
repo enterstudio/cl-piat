@@ -1,8 +1,3 @@
-- name: restart LLDP
-  service:
-    name: lldpd
-    state: restarted
-
 - name: reload networking
   shell: sleep 2 && ifreload -a 
   async: 1
