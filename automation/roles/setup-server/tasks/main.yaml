@@ -7,7 +7,7 @@
 
 - name: Sleep for releasing apt lock
   pause:
-    seconds: 10
+    seconds: 30
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Install HWE kernel
