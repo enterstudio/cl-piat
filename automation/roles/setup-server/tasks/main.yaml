@@ -11,7 +11,7 @@
     update_cache: yes
     install_recommends: yes
     state: present
-  when: vrf_check.stdout.find('Linux tools for VRF') != -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Install python packages for ifupdown2
   apt: name={{item}} state=present
