@@ -1,6 +1,6 @@
 ---
 - name: Check VRF configured
-  shell: dpkg-query -W -f='${Status}' vrf 
+  shell: dpkg -l           
   register: vrf_check
   failed_when: no
   changed_when: no
@@ -11,7 +11,7 @@
     update_cache: yes
     install_recommends: yes
     state: present
-  when: vrf_check.stdout.find('no packages found') != -1
+  when: vrf_check.stdout.find('Linux tools for VRF') != -1
 
 - name: Install python packages for ifupdown2
   apt: name={{item}} state=present
@@ -19,20 +19,20 @@
     - python2.7
     - python-argcomplete
     - python-ipaddr
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Remove ifupdown1
   apt: name={{item}} state=absent
   with_items:
     - ifupdown
     - ifenslave
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Copy deb packages
   copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
   with_fileglob:
     - files/*.deb
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Install ifupdown2 & Vrf tools
   apt: 
@@ -43,7 +43,7 @@
     - /home/cumulus/iproute2_4.14.1-1~bpo9+1_amd64.deb
     - /home/cumulus/vrf_1.2_all.deb
     - /home/cumulus/mgmt-vrf_1.2_all.deb
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Sysctl l3mdev_accept
   sysctl:
@@ -51,7 +51,7 @@
     value: 1
     state: present
     reload: no
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: L4 hash policy 
   sysctl:
@@ -59,25 +59,25 @@
     value: 1
     state: present
     reload: no
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Copy interfaces configuration
   template:
     src: interfaces.j2
     dest: /etc/network/interfaces
     backup: yes
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Reboot server 
   shell: sleep 2 && shutdown -r now
   async: 1
   poll: 0
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Sleep for server to disconnect
   pause:
     seconds: 90 
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Wait for hosts to be up 
   wait_for:
@@ -87,7 +87,7 @@
     delay: 15 
     timeout: 120
   ignore_errors: true
-  when: vrf_check.stdout.find('no packages found') == -1
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Add Ansible Apt Key
   apt_key:
