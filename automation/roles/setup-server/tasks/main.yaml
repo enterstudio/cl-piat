@@ -5,12 +5,10 @@
   failed_when: no
   changed_when: no
 
-- name: apt-lock test
-  shell: test -f /var/lib/dpkg/lock
-  retries: 30
-  register: apt_lock
-  changed_when: false
-  until: apt_lock | success
+- name: Wait until the lock file is removed
+  wait_for:
+    path: /var/lib/dpkg/lock
+    state: absent
 
 - name: Install HWE kernel
   apt:
