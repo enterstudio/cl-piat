@@ -5,10 +5,12 @@
   failed_when: no
   changed_when: no
 
-- name: Sleep for releasing apt lock
-  pause:
-    seconds: 30
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+- name: apt-lock test
+  shell: test -f /var/lib/dpkg/lock
+  retries: 30
+  register: apt_lock
+  changed_when: false
+  until: apt_lock | success
 
 - name: Install HWE kernel
   apt:
