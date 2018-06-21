@@ -72,7 +72,7 @@
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Reboot server 
-  shell: sleep 2 && shutdown -r now
+  shell: sleep 10 && shutdown -r now
   async: 1
   poll: 0
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
