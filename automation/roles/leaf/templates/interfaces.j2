@@ -163,11 +163,13 @@ iface {{member}}
 
 auto {{port}}
 iface {{port}}
+  {% if node[inventory_hostname]["ports"][port]["vlans"] is defined %}
   mtu 9000
-  {% if node[inventory_hostname]["ports"][port]["alias"] is defined %}
-  alias {{ node[inventory_hostname]["ports"][port]["alias"] }}
+  {% elif node[inventory_hostname]["ports"][port]["vlan"] is defined %}
+  mtu 9000
+  {% else %}
+  mtu 9216
   {% endif %}
-  {% if node[inventory_hostname]["ports"][port]["members"] is defined %}
   clag-id {{ port[-2:] }}
   bond-slaves {{ node[inventory_hostname]["ports"][port]["members"] | join(" ") }}
   {% endif %}
