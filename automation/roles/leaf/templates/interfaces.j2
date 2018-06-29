@@ -165,7 +165,8 @@ auto {{port}}
 iface {{port}}
   {% if node[inventory_hostname]["ports"][port]["vlans"] is not defined %}
   mtu 9216
-  {% elif node[inventory_hostname]["ports"][port]["vlan"] is not defined %}
+  {% endif %}
+  {% if node[inventory_hostname]["ports"][port]["vlan"] is not defined %}
   mtu 9216
   {% endif %}
   clag-id {{ port[-2:] }}
