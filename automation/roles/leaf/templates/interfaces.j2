@@ -163,20 +163,20 @@ iface {{member}}
 
 auto {{port}}
 iface {{port}}
-  {% if node[inventory_hostname]["ports"][port]["vlans"] is defined %}
-  mtu 9000
-  {% elif node[inventory_hostname]["ports"][port]["vlan"] is defined %}
-  mtu 9000
-  {% else %}
+  {% if node[inventory_hostname]["ports"][port]["vlans"] is not defined %}
+  mtu 9216
+  {% elif node[inventory_hostname]["ports"][port]["vlan"] is not defined %}
   mtu 9216
   {% endif %}
   clag-id {{ port[-2:] }}
   bond-slaves {{ node[inventory_hostname]["ports"][port]["members"] | join(" ") }}
   {% endif %}
   {% if node[inventory_hostname]["ports"][port]["vlans"] is defined %}
+  mtu 9000
   bridge-vids {{ node[inventory_hostname]["ports"][port]["vlans"] | join(" ") }}
   {% else %}
   {% if node[inventory_hostname]["ports"][port]["vlan"] is defined %}
+  mtu 9000
   bridge-access {{ node[inventory_hostname]["ports"][port]["vlan"] }}
   {% endif %}
   {% endif %}
