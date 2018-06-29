@@ -163,9 +163,7 @@ iface {{member}}
 
 auto {{port}}
 iface {{port}}
-  {% if node[inventory_hostname]["ports"][port]["vlans"] is not defined %}
-  mtu 9216
-  {% elif node[inventory_hostname]["ports"][port]["vlan"] is not defined %}
+  {% if (node[inventory_hostname]["ports"][port]["vlans"] is not defined) and (node[inventory_hostname]["ports"][port]["vlan"] is not defined) %}
   mtu 9216
   {% endif %}
   {% if node[inventory_hostname]["ports"][port]["alias"] is defined %}
