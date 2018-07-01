@@ -22,7 +22,6 @@ Table of Contents
 * [Prerequisites](#prerequisites)
 * [Using Libvirt KVM](#using-libvirtkvm)
 * [Using Virtualbox](#using-virtualbox)
-* [Using Cumulus in the Cloud](#using-cumulus-in-the-cloud)
 * [Demo explanation](#demo-explanation)
   * [Tenant setup](#tenant-setup)
   * [Automation](#automation-and-orchestration)
@@ -59,23 +58,6 @@ Next, when fully booted:
 Using Virtualbox
 ------------------------
 The topology can be generated for Virtualbox, but given the requirements it will not run on on typical desktops/laptops. Recommentation is to use the demo with the Libvirt/KVM. If Virtualbox is necessary, create an issue and we can create a Virtualbox Vagrantfile.  
-
-
-Using Cumulus in the Cloud
-------------------------
-Request a "Blank Workbench" on [Cumulus in the Cloud](https://cumulusnetworks.com/try-for-free/). When you receive notice that it is provisioned, connect to the *oob-mgmt-server*
-
-Once connected run  
-`git clone https://github.com/CumulusNetworks/cl-piat.git`
-
-Because the CITC workbench is a subset of the above topology (2 spines, 4 leafs, 4 servers), we have to change the hosts file to provision less hosts. There is a specific hosts file provided in the `demo` directory. 
-
-Next  
-* `cd cl-piat/automation`  
-* `mv ../demo/citc/hosts .`
-* `ansible network -m shell -a 'net add vrf mgmt; net commit'`
-* `echo "127.0.0.1 netq-ts" | sudo tee --append /etc/hosts`
-* `./provision.sh`
 
 Demo explanation
 ------------------------
