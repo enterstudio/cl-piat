@@ -37,18 +37,19 @@
 - hosts: spines,superspine
   become: true
   roles:
-  - setup
+  - setup-switch
   - spine
 
 - hosts: leafs,edge,router
   become: true 
   roles:
-  - setup
+  - setup-switch
   - leaf
 
 - hosts: servers 
   become: true 
   roles:
-  - servers
+  - setup-server
+  - server
   - netq
 ...

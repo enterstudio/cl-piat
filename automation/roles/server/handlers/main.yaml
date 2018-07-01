@@ -1,0 +1,4 @@
+- name: reload networking
+  shell: sleep 2 && ifreload -a 
+  async: 1
+  poll: 0
