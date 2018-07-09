@@ -34,7 +34,7 @@
 
 - name: Pause to let container start 
   pause:
-    seconds: 15
+    seconds: 60 
 
 - name: Create Grafana NetQ datasource
   grafana_datasource:

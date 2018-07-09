@@ -31,7 +31,7 @@
 
 - name: Pause to let container start 
   pause:
-    seconds: 60
+    seconds: 120 
 
 - name: Provision Netbox postgres db
   shell: 'cat netbox_postgres.sql | docker exec -i netboxdocker_postgres_1 psql -U postgres'
