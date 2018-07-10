@@ -75,10 +75,10 @@
   ignore_errors: true
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
-#- name: Sleep for server to disconnect
-#  pause:
-#    seconds: 90 
-#  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+- name: Sleep for server to disconnect
+  pause:
+    seconds: 90 
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Wait for hosts to be up 
   wait_for:
