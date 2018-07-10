@@ -26,16 +26,6 @@ if [ "$HOSTNAME" != netq-ts ]; then
       apt-get update -qy && apt-get install lldpd -qy
       echo "configure lldp portidsubtype ifname" > /etc/lldpd.d/port_info.conf
 
-  fi
-
-  #Test for Fedora-Based Host
-  which yum &> /dev/null
-  if [ "$?" == "0" ]; then
-      echo -e "note: fedora-based device detected"
-      /usr/bin/dnf install python -y
-      echo -e "DEVICE=vagrant\nBOOTPROTO=dhcp\nONBOOT=yes" > /etc/sysconfig/network-scripts/ifcfg-vagrant
-      echo -e "DEVICE=eth0\nBOOTPROTO=dhcp\nONBOOT=yes" > /etc/sysconfig/network-scripts/ifcfg-eth0
-
       #Replace existing network interfaces file
       echo -e "auto lo" > /etc/network/interfaces
       echo -e "iface lo inet loopback\n\n" >> /etc/network/interfaces
@@ -49,6 +39,16 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "iface eth0 inet dhcp\n\n" >> /etc/network/interfaces.d/eth0.cfg
 
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
+  fi
+
+  #Test for Fedora-Based Host
+  which yum &> /dev/null
+  if [ "$?" == "0" ]; then
+      echo -e "note: fedora-based device detected"
+      /usr/bin/dnf install python -y
+      echo -e "DEVICE=vagrant\nBOOTPROTO=dhcp\nONBOOT=yes" > /etc/sysconfig/network-scripts/ifcfg-vagrant
+      echo -e "DEVICE=eth0\nBOOTPROTO=dhcp\nONBOOT=yes" > /etc/sysconfig/network-scripts/ifcfg-eth0
+
   fi
 
 fi
