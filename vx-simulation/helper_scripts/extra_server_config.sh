@@ -11,11 +11,6 @@ if [ "$HOSTNAME" != netq-ts ]; then
   usermod -aG sudo cumulus
   echo "cumulus ALL=(ALL) NOPASSWD:ALL" | tee --append /etc/sudoers.d/20_cumulus
 
-  SSH_URL="http://192.168.200.1/authorized_keys"
-  #Setup SSH key authentication for Ansible
-  mkdir -p /home/cumulus/.ssh
-  wget -O /home/cumulus/.ssh/authorized_keys $SSH_URL
-  chown -R cumulus:cumulus /home/cumulus/.ssh
 
   #Test for Debian-Based Host
   which apt &> /dev/null
@@ -37,6 +32,11 @@ if [ "$HOSTNAME" != netq-ts ]; then
 
       echo -e "\n\nauto eth0" > /etc/network/interfaces.d/eth0.cfg
       echo -e "iface eth0 inet dhcp\n\n" >> /etc/network/interfaces.d/eth0.cfg
+      #Setup SSH key authentication for Ansible
+      echo -e "SSH_URL=\"http://192.168.200.1/authorized_keys\"" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "mkdir -p /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "wget -O /home/cumulus/.ssh/authorized_keys $SSH_URL" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
 
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
   fi
