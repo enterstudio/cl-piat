@@ -35,7 +35,7 @@ if [ "$HOSTNAME" != netq-ts ]; then
       #Setup SSH key authentication for Ansible
       echo -e "post-up SSH_URL=\"http://192.168.200.1/authorized_keys\"" >> /etc/network/interfaces.d/eth0.cfg
       echo -e "post-up mkdir -p /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
-      echo -e "post-up wget -O /home/cumulus/.ssh/authorized_keys $SSH_URL" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "post-up wget -O /home/cumulus/.ssh/authorized_keys \$SSH_URL" >> /etc/network/interfaces.d/eth0.cfg
       echo -e "post-up chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
 
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
