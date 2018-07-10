@@ -31,12 +31,12 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "iface vagrant inet dhcp\n\n" >> /etc/network/interfaces.d/vagrant.cfg
 
       echo -e "\n\nauto eth0" > /etc/network/interfaces.d/eth0.cfg
-      echo -e "iface eth0 inet dhcp\n\n" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "iface eth0 inet dhcp" >> /etc/network/interfaces.d/eth0.cfg
       #Setup SSH key authentication for Ansible
-      echo -e "SSH_URL=\"http://192.168.200.1/authorized_keys\"" >> /etc/network/interfaces.d/eth0.cfg
-      echo -e "mkdir -p /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
-      echo -e "wget -O /home/cumulus/.ssh/authorized_keys $SSH_URL" >> /etc/network/interfaces.d/eth0.cfg
-      echo -e "chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "post-up SSH_URL=\"http://192.168.200.1/authorized_keys\"" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "post-up mkdir -p /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "post-up wget -O /home/cumulus/.ssh/authorized_keys $SSH_URL" >> /etc/network/interfaces.d/eth0.cfg
+      echo -e "post-up chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
 
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
   fi
