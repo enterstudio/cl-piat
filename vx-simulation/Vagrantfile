@@ -101,12 +101,20 @@ SCRIPT
 
 Vagrant.configure("2") do |config|
 
-  config.vm.provider :libvirt do |domain|
-    # increase nic adapter count to be greater than 8 for all VMs.
-    domain.nic_adapter_count = 130
+  wbid = 9
+  offset = wbid * 200
+
+  config.vm.provider :libvirt do |libvirt|
+    libvirt.default_prefix = 'home_jrrivers_cl-piat'
   end
 
 
+  config.vm.provider :libvirt do |domain|
+    domain.management_network_address = "10.255.#{wbid}.0/24"
+    domain.management_network_name = "wbr#{wbid}"
+    # increase nic adapter count to be greater than 8 for all VMs.
+    domain.nic_adapter_count = 130
+  end
 
 
   ##### DEFINE VM for oob-mgmt-server #####
@@ -130,9 +138,9 @@ Vagrant.configure("2") do |config|
             :mac => "44:38:39:00:00:9a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18578',
+            :libvirt__tunnel_local_port => "#{ 19078 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17578',
+            :libvirt__tunnel_port => "#{ 17078 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
 
@@ -187,7 +195,7 @@ end
     
     device.vm.hostname = "oob-mgmt-switch" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 512
@@ -203,9 +211,9 @@ end
             :mac => "44:38:39:00:00:99",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17578',
+            :libvirt__tunnel_local_port => "#{ 17078 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18578',
+            :libvirt__tunnel_port => "#{ 19078 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> super02:eth0
@@ -213,9 +221,9 @@ end
             :mac => "44:38:39:00:00:9b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17579',
+            :libvirt__tunnel_local_port => "#{ 17079 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18579',
+            :libvirt__tunnel_port => "#{ 19079 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> super01:eth0
@@ -223,9 +231,9 @@ end
             :mac => "44:38:39:00:00:9d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17580',
+            :libvirt__tunnel_local_port => "#{ 17080 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18580',
+            :libvirt__tunnel_port => "#{ 19080 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> server09:eth0
@@ -233,9 +241,9 @@ end
             :mac => "44:38:39:00:00:9f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17581',
+            :libvirt__tunnel_local_port => "#{ 17081 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18581',
+            :libvirt__tunnel_port => "#{ 19081 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp5 --> server08:eth0
@@ -243,9 +251,9 @@ end
             :mac => "44:38:39:00:00:a1",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17582',
+            :libvirt__tunnel_local_port => "#{ 17082 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18582',
+            :libvirt__tunnel_port => "#{ 19082 + offset }",
             :libvirt__iface_name => 'swp5',
             auto_config: false
       # link for swp6 --> rtr02:eth0
@@ -253,9 +261,9 @@ end
             :mac => "44:38:39:00:00:a3",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17583',
+            :libvirt__tunnel_local_port => "#{ 17083 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18583',
+            :libvirt__tunnel_port => "#{ 19083 + offset }",
             :libvirt__iface_name => 'swp6',
             auto_config: false
       # link for swp7 --> server01:eth0
@@ -263,9 +271,9 @@ end
             :mac => "44:38:39:00:00:a5",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17584',
+            :libvirt__tunnel_local_port => "#{ 17084 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18584',
+            :libvirt__tunnel_port => "#{ 19084 + offset }",
             :libvirt__iface_name => 'swp7',
             auto_config: false
       # link for swp8 --> server03:eth0
@@ -273,9 +281,9 @@ end
             :mac => "44:38:39:00:00:a7",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17585',
+            :libvirt__tunnel_local_port => "#{ 17085 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18585',
+            :libvirt__tunnel_port => "#{ 19085 + offset }",
             :libvirt__iface_name => 'swp8',
             auto_config: false
       # link for swp9 --> server02:eth0
@@ -283,9 +291,9 @@ end
             :mac => "44:38:39:00:00:a9",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17586',
+            :libvirt__tunnel_local_port => "#{ 17086 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18586',
+            :libvirt__tunnel_port => "#{ 19086 + offset }",
             :libvirt__iface_name => 'swp9',
             auto_config: false
       # link for swp10 --> server05:eth0
@@ -293,9 +301,9 @@ end
             :mac => "44:38:39:00:00:ab",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17587',
+            :libvirt__tunnel_local_port => "#{ 17087 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18587',
+            :libvirt__tunnel_port => "#{ 19087 + offset }",
             :libvirt__iface_name => 'swp10',
             auto_config: false
       # link for swp11 --> server04:eth0
@@ -303,9 +311,9 @@ end
             :mac => "44:38:39:00:00:ad",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17588',
+            :libvirt__tunnel_local_port => "#{ 17088 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18588',
+            :libvirt__tunnel_port => "#{ 19088 + offset }",
             :libvirt__iface_name => 'swp11',
             auto_config: false
       # link for swp12 --> server07:eth0
@@ -313,9 +321,9 @@ end
             :mac => "44:38:39:00:00:af",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17589',
+            :libvirt__tunnel_local_port => "#{ 17089 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18589',
+            :libvirt__tunnel_port => "#{ 19089 + offset }",
             :libvirt__iface_name => 'swp12',
             auto_config: false
       # link for swp13 --> server06:eth0
@@ -323,9 +331,9 @@ end
             :mac => "44:38:39:00:00:b1",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17590',
+            :libvirt__tunnel_local_port => "#{ 17090 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18590',
+            :libvirt__tunnel_port => "#{ 19090 + offset }",
             :libvirt__iface_name => 'swp13',
             auto_config: false
       # link for swp14 --> leaf06:eth0
@@ -333,9 +341,9 @@ end
             :mac => "44:38:39:00:00:b3",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17591',
+            :libvirt__tunnel_local_port => "#{ 17091 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18591',
+            :libvirt__tunnel_port => "#{ 19091 + offset }",
             :libvirt__iface_name => 'swp14',
             auto_config: false
       # link for swp15 --> leaf07:eth0
@@ -343,9 +351,9 @@ end
             :mac => "44:38:39:00:00:b5",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17592',
+            :libvirt__tunnel_local_port => "#{ 17092 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18592',
+            :libvirt__tunnel_port => "#{ 19092 + offset }",
             :libvirt__iface_name => 'swp15',
             auto_config: false
       # link for swp16 --> leaf04:eth0
@@ -353,9 +361,9 @@ end
             :mac => "44:38:39:00:00:b7",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17593',
+            :libvirt__tunnel_local_port => "#{ 17093 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18593',
+            :libvirt__tunnel_port => "#{ 19093 + offset }",
             :libvirt__iface_name => 'swp16',
             auto_config: false
       # link for swp17 --> leaf05:eth0
@@ -363,9 +371,9 @@ end
             :mac => "44:38:39:00:00:b9",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17594',
+            :libvirt__tunnel_local_port => "#{ 17094 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18594',
+            :libvirt__tunnel_port => "#{ 19094 + offset }",
             :libvirt__iface_name => 'swp17',
             auto_config: false
       # link for swp18 --> leaf02:eth0
@@ -373,9 +381,9 @@ end
             :mac => "44:38:39:00:00:bb",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17595',
+            :libvirt__tunnel_local_port => "#{ 17095 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18595',
+            :libvirt__tunnel_port => "#{ 19095 + offset }",
             :libvirt__iface_name => 'swp18',
             auto_config: false
       # link for swp19 --> leaf03:eth0
@@ -383,9 +391,9 @@ end
             :mac => "44:38:39:00:00:bd",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17596',
+            :libvirt__tunnel_local_port => "#{ 17096 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18596',
+            :libvirt__tunnel_port => "#{ 19096 + offset }",
             :libvirt__iface_name => 'swp19',
             auto_config: false
       # link for swp20 --> leaf01:eth0
@@ -393,9 +401,9 @@ end
             :mac => "44:38:39:00:00:bf",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17597',
+            :libvirt__tunnel_local_port => "#{ 17097 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18597',
+            :libvirt__tunnel_port => "#{ 19097 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> edge01:eth0
@@ -403,9 +411,9 @@ end
             :mac => "44:38:39:00:00:c1",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17598',
+            :libvirt__tunnel_local_port => "#{ 17098 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18598',
+            :libvirt__tunnel_port => "#{ 19098 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp22 --> edge02:eth0
@@ -413,9 +421,9 @@ end
             :mac => "44:38:39:00:00:c3",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17599',
+            :libvirt__tunnel_local_port => "#{ 17099 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18599',
+            :libvirt__tunnel_port => "#{ 19099 + offset }",
             :libvirt__iface_name => 'swp22',
             auto_config: false
       # link for swp23 --> leaf08:eth0
@@ -423,9 +431,9 @@ end
             :mac => "44:38:39:00:00:c5",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17600',
+            :libvirt__tunnel_local_port => "#{ 17100 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18600',
+            :libvirt__tunnel_port => "#{ 19100 + offset }",
             :libvirt__iface_name => 'swp23',
             auto_config: false
       # link for swp24 --> spine02:eth0
@@ -433,9 +441,9 @@ end
             :mac => "44:38:39:00:00:c7",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17601',
+            :libvirt__tunnel_local_port => "#{ 17101 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18601',
+            :libvirt__tunnel_port => "#{ 19101 + offset }",
             :libvirt__iface_name => 'swp24',
             auto_config: false
       # link for swp25 --> spine03:eth0
@@ -443,9 +451,9 @@ end
             :mac => "44:38:39:00:00:c9",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17602',
+            :libvirt__tunnel_local_port => "#{ 17102 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18602',
+            :libvirt__tunnel_port => "#{ 19102 + offset }",
             :libvirt__iface_name => 'swp25',
             auto_config: false
       # link for swp26 --> exit04:eth0
@@ -453,9 +461,9 @@ end
             :mac => "44:38:39:00:00:cb",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17603',
+            :libvirt__tunnel_local_port => "#{ 17103 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18603',
+            :libvirt__tunnel_port => "#{ 19103 + offset }",
             :libvirt__iface_name => 'swp26',
             auto_config: false
       # link for swp27 --> spine01:eth0
@@ -463,9 +471,9 @@ end
             :mac => "44:38:39:00:00:cd",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17604',
+            :libvirt__tunnel_local_port => "#{ 17104 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18604',
+            :libvirt__tunnel_port => "#{ 19104 + offset }",
             :libvirt__iface_name => 'swp27',
             auto_config: false
       # link for swp28 --> exit02:eth0
@@ -473,9 +481,9 @@ end
             :mac => "44:38:39:00:00:cf",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17605',
+            :libvirt__tunnel_local_port => "#{ 17105 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18605',
+            :libvirt__tunnel_port => "#{ 19105 + offset }",
             :libvirt__iface_name => 'swp28',
             auto_config: false
       # link for swp29 --> exit03:eth0
@@ -483,9 +491,9 @@ end
             :mac => "44:38:39:00:00:d1",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17606',
+            :libvirt__tunnel_local_port => "#{ 17106 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18606',
+            :libvirt__tunnel_port => "#{ 19106 + offset }",
             :libvirt__iface_name => 'swp29',
             auto_config: false
       # link for swp30 --> spine04:eth0
@@ -493,9 +501,9 @@ end
             :mac => "44:38:39:00:00:d3",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17607',
+            :libvirt__tunnel_local_port => "#{ 17107 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18607',
+            :libvirt__tunnel_port => "#{ 19107 + offset }",
             :libvirt__iface_name => 'swp30',
             auto_config: false
       # link for swp31 --> exit01:eth0
@@ -503,9 +511,9 @@ end
             :mac => "44:38:39:00:00:d5",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17608',
+            :libvirt__tunnel_local_port => "#{ 17108 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18608',
+            :libvirt__tunnel_port => "#{ 19108 + offset }",
             :libvirt__iface_name => 'swp31',
             auto_config: false
       # link for swp32 --> rtr01:eth0
@@ -513,9 +521,9 @@ end
             :mac => "44:38:39:00:00:d7",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17609',
+            :libvirt__tunnel_local_port => "#{ 17109 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18609',
+            :libvirt__tunnel_port => "#{ 19109 + offset }",
             :libvirt__iface_name => 'swp32',
             auto_config: false
       # link for swp33 --> netq-ts:eth0
@@ -523,9 +531,9 @@ end
             :mac => "44:38:39:00:00:d9",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17610',
+            :libvirt__tunnel_local_port => "#{ 17110 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18610',
+            :libvirt__tunnel_port => "#{ 19110 + offset }",
             :libvirt__iface_name => 'swp33',
             auto_config: false
       # link for swp34 --> server12:eth0
@@ -533,9 +541,9 @@ end
             :mac => "44:38:39:00:00:db",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17611',
+            :libvirt__tunnel_local_port => "#{ 17111 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18611',
+            :libvirt__tunnel_port => "#{ 19111 + offset }",
             :libvirt__iface_name => 'swp34',
             auto_config: false
       # link for swp35 --> server10:eth0
@@ -543,9 +551,9 @@ end
             :mac => "44:38:39:00:00:dd",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17612',
+            :libvirt__tunnel_local_port => "#{ 17112 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18612',
+            :libvirt__tunnel_port => "#{ 19112 + offset }",
             :libvirt__iface_name => 'swp35',
             auto_config: false
       # link for swp36 --> server11:eth0
@@ -553,9 +561,9 @@ end
             :mac => "44:38:39:00:00:df",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17613',
+            :libvirt__tunnel_local_port => "#{ 17113 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18613',
+            :libvirt__tunnel_port => "#{ 19113 + offset }",
             :libvirt__iface_name => 'swp36',
             auto_config: false
 
@@ -747,7 +755,7 @@ end
     
     device.vm.hostname = "rtr02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -763,9 +771,9 @@ end
             :mac => "44:38:39:00:00:a4",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18583',
+            :libvirt__tunnel_local_port => "#{ 19083 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17583',
+            :libvirt__tunnel_port => "#{ 17083 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> edge01:swp50
@@ -773,9 +781,9 @@ end
             :mac => "44:38:39:00:00:11",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17509',
+            :libvirt__tunnel_local_port => "#{ 17009 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18509',
+            :libvirt__tunnel_port => "#{ 19009 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> edge02:swp50
@@ -783,9 +791,9 @@ end
             :mac => "44:38:39:00:00:47",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17536',
+            :libvirt__tunnel_local_port => "#{ 17036 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18536',
+            :libvirt__tunnel_port => "#{ 19036 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
 
@@ -843,7 +851,7 @@ end
     
     device.vm.hostname = "edge01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -859,9 +867,9 @@ end
             :mac => "44:38:39:00:00:c2",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18598',
+            :libvirt__tunnel_local_port => "#{ 19098 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17598',
+            :libvirt__tunnel_port => "#{ 17098 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> super01:swp49
@@ -869,9 +877,9 @@ end
             :mac => "44:38:39:00:00:07",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17504',
+            :libvirt__tunnel_local_port => "#{ 17004 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18504',
+            :libvirt__tunnel_port => "#{ 19004 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> super02:swp49
@@ -879,9 +887,9 @@ end
             :mac => "44:38:39:00:00:57",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17544',
+            :libvirt__tunnel_local_port => "#{ 17044 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18544',
+            :libvirt__tunnel_port => "#{ 19044 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp49 --> rtr01:swp1
@@ -889,9 +897,9 @@ end
             :mac => "44:38:39:00:00:02",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18501',
+            :libvirt__tunnel_local_port => "#{ 19001 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17501',
+            :libvirt__tunnel_port => "#{ 17001 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> rtr02:swp1
@@ -899,9 +907,9 @@ end
             :mac => "44:38:39:00:00:12",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18509',
+            :libvirt__tunnel_local_port => "#{ 19009 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17509',
+            :libvirt__tunnel_port => "#{ 17009 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -967,7 +975,7 @@ end
     
     device.vm.hostname = "edge02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -983,9 +991,9 @@ end
             :mac => "44:38:39:00:00:c4",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18599',
+            :libvirt__tunnel_local_port => "#{ 19099 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17599',
+            :libvirt__tunnel_port => "#{ 17099 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> super01:swp50
@@ -993,9 +1001,9 @@ end
             :mac => "44:38:39:00:00:81",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17565',
+            :libvirt__tunnel_local_port => "#{ 17065 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18565',
+            :libvirt__tunnel_port => "#{ 19065 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> super02:swp50
@@ -1003,9 +1011,9 @@ end
             :mac => "44:38:39:00:00:39",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17529',
+            :libvirt__tunnel_local_port => "#{ 17029 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18529',
+            :libvirt__tunnel_port => "#{ 19029 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp49 --> rtr01:swp2
@@ -1013,9 +1021,9 @@ end
             :mac => "44:38:39:00:00:46",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18535',
+            :libvirt__tunnel_local_port => "#{ 19035 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17535',
+            :libvirt__tunnel_port => "#{ 17035 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> rtr02:swp2
@@ -1023,9 +1031,9 @@ end
             :mac => "44:38:39:00:00:48",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18536',
+            :libvirt__tunnel_local_port => "#{ 19036 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17536',
+            :libvirt__tunnel_port => "#{ 17036 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -1091,7 +1099,7 @@ end
     
     device.vm.hostname = "rtr01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1107,9 +1115,9 @@ end
             :mac => "44:38:39:00:00:d8",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18609',
+            :libvirt__tunnel_local_port => "#{ 19109 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17609',
+            :libvirt__tunnel_port => "#{ 17109 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> edge01:swp49
@@ -1117,9 +1125,9 @@ end
             :mac => "44:38:39:00:00:01",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17501',
+            :libvirt__tunnel_local_port => "#{ 17001 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18501',
+            :libvirt__tunnel_port => "#{ 19001 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> edge02:swp49
@@ -1127,9 +1135,9 @@ end
             :mac => "44:38:39:00:00:45",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17535',
+            :libvirt__tunnel_local_port => "#{ 17035 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18535',
+            :libvirt__tunnel_port => "#{ 19035 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
 
@@ -1187,7 +1195,7 @@ end
     
     device.vm.hostname = "super02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1203,9 +1211,9 @@ end
             :mac => "44:38:39:00:00:9c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18579',
+            :libvirt__tunnel_local_port => "#{ 19079 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17579',
+            :libvirt__tunnel_port => "#{ 17079 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> exit01:swp52
@@ -1213,9 +1221,9 @@ end
             :mac => "44:38:39:00:00:8f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17572',
+            :libvirt__tunnel_local_port => "#{ 17072 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18572',
+            :libvirt__tunnel_port => "#{ 19072 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> exit02:swp52
@@ -1223,9 +1231,9 @@ end
             :mac => "44:38:39:00:00:95",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17575',
+            :libvirt__tunnel_local_port => "#{ 17075 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18575',
+            :libvirt__tunnel_port => "#{ 19075 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> exit03:swp52
@@ -1233,9 +1241,9 @@ end
             :mac => "44:38:39:00:00:13",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17510',
+            :libvirt__tunnel_local_port => "#{ 17010 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18510',
+            :libvirt__tunnel_port => "#{ 19010 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> exit04:swp52
@@ -1243,9 +1251,9 @@ end
             :mac => "44:38:39:00:00:15",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17511',
+            :libvirt__tunnel_local_port => "#{ 17011 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18511',
+            :libvirt__tunnel_port => "#{ 19011 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp49 --> edge01:swp2
@@ -1253,9 +1261,9 @@ end
             :mac => "44:38:39:00:00:58",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18544',
+            :libvirt__tunnel_local_port => "#{ 19044 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17544',
+            :libvirt__tunnel_port => "#{ 17044 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> edge02:swp2
@@ -1263,9 +1271,9 @@ end
             :mac => "44:38:39:00:00:3a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18529',
+            :libvirt__tunnel_local_port => "#{ 19029 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17529',
+            :libvirt__tunnel_port => "#{ 17029 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -1339,7 +1347,7 @@ end
     
     device.vm.hostname = "super01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1355,9 +1363,9 @@ end
             :mac => "44:38:39:00:00:9e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18580',
+            :libvirt__tunnel_local_port => "#{ 19080 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17580',
+            :libvirt__tunnel_port => "#{ 17080 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> exit01:swp51
@@ -1365,9 +1373,9 @@ end
             :mac => "44:38:39:00:00:25",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17519',
+            :libvirt__tunnel_local_port => "#{ 17019 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18519',
+            :libvirt__tunnel_port => "#{ 19019 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> exit02:swp51
@@ -1375,9 +1383,9 @@ end
             :mac => "44:38:39:00:00:2f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17524',
+            :libvirt__tunnel_local_port => "#{ 17024 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18524',
+            :libvirt__tunnel_port => "#{ 19024 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> exit03:swp51
@@ -1385,9 +1393,9 @@ end
             :mac => "44:38:39:00:00:83",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17566',
+            :libvirt__tunnel_local_port => "#{ 17066 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18566',
+            :libvirt__tunnel_port => "#{ 19066 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> exit04:swp51
@@ -1395,9 +1403,9 @@ end
             :mac => "44:38:39:00:00:4f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17540',
+            :libvirt__tunnel_local_port => "#{ 17040 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18540',
+            :libvirt__tunnel_port => "#{ 19040 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp49 --> edge01:swp1
@@ -1405,9 +1413,9 @@ end
             :mac => "44:38:39:00:00:08",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18504',
+            :libvirt__tunnel_local_port => "#{ 19004 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17504',
+            :libvirt__tunnel_port => "#{ 17004 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> edge02:swp1
@@ -1415,9 +1423,9 @@ end
             :mac => "44:38:39:00:00:82",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18565',
+            :libvirt__tunnel_local_port => "#{ 19065 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17565',
+            :libvirt__tunnel_port => "#{ 17065 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -1491,7 +1499,7 @@ end
     
     device.vm.hostname = "spine02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1507,9 +1515,9 @@ end
             :mac => "44:38:39:00:00:c8",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18601',
+            :libvirt__tunnel_local_port => "#{ 19101 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17601',
+            :libvirt__tunnel_port => "#{ 17101 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> leaf01:swp50
@@ -1517,9 +1525,9 @@ end
             :mac => "44:38:39:00:00:6b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17554',
+            :libvirt__tunnel_local_port => "#{ 17054 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18554',
+            :libvirt__tunnel_port => "#{ 19054 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> leaf02:swp50
@@ -1527,9 +1535,9 @@ end
             :mac => "44:38:39:00:00:7d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17563',
+            :libvirt__tunnel_local_port => "#{ 17063 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18563',
+            :libvirt__tunnel_port => "#{ 19063 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> leaf03:swp50
@@ -1537,9 +1545,9 @@ end
             :mac => "44:38:39:00:00:43",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17534',
+            :libvirt__tunnel_local_port => "#{ 17034 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18534',
+            :libvirt__tunnel_port => "#{ 19034 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> leaf04:swp50
@@ -1547,9 +1555,9 @@ end
             :mac => "44:38:39:00:00:6f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17556',
+            :libvirt__tunnel_local_port => "#{ 17056 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18556',
+            :libvirt__tunnel_port => "#{ 19056 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp5 --> exit01:swp50
@@ -1557,9 +1565,9 @@ end
             :mac => "44:38:39:00:00:0b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17506',
+            :libvirt__tunnel_local_port => "#{ 17006 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18506',
+            :libvirt__tunnel_port => "#{ 19006 + offset }",
             :libvirt__iface_name => 'swp5',
             auto_config: false
       # link for swp6 --> exit02:swp50
@@ -1567,9 +1575,9 @@ end
             :mac => "44:38:39:00:00:0f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17508',
+            :libvirt__tunnel_local_port => "#{ 17008 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18508',
+            :libvirt__tunnel_port => "#{ 19008 + offset }",
             :libvirt__iface_name => 'swp6',
             auto_config: false
 
@@ -1643,7 +1651,7 @@ end
     
     device.vm.hostname = "spine03" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1659,9 +1667,9 @@ end
             :mac => "44:38:39:00:00:ca",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18602',
+            :libvirt__tunnel_local_port => "#{ 19102 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17602',
+            :libvirt__tunnel_port => "#{ 17102 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> leaf05:swp49
@@ -1669,9 +1677,9 @@ end
             :mac => "44:38:39:00:00:61",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17549',
+            :libvirt__tunnel_local_port => "#{ 17049 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18549',
+            :libvirt__tunnel_port => "#{ 19049 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> leaf06:swp49
@@ -1679,9 +1687,9 @@ end
             :mac => "44:38:39:00:00:4d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17539',
+            :libvirt__tunnel_local_port => "#{ 17039 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18539',
+            :libvirt__tunnel_port => "#{ 19039 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> leaf07:swp49
@@ -1689,9 +1697,9 @@ end
             :mac => "44:38:39:00:00:0d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17507',
+            :libvirt__tunnel_local_port => "#{ 17007 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18507',
+            :libvirt__tunnel_port => "#{ 19007 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> leaf08:swp49
@@ -1699,9 +1707,9 @@ end
             :mac => "44:38:39:00:00:21",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17517',
+            :libvirt__tunnel_local_port => "#{ 17017 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18517',
+            :libvirt__tunnel_port => "#{ 19017 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp5 --> exit03:swp49
@@ -1709,9 +1717,9 @@ end
             :mac => "44:38:39:00:00:85",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17567',
+            :libvirt__tunnel_local_port => "#{ 17067 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18567',
+            :libvirt__tunnel_port => "#{ 19067 + offset }",
             :libvirt__iface_name => 'swp5',
             auto_config: false
       # link for swp6 --> exit04:swp49
@@ -1719,9 +1727,9 @@ end
             :mac => "44:38:39:00:00:19",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17513',
+            :libvirt__tunnel_local_port => "#{ 17013 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18513',
+            :libvirt__tunnel_port => "#{ 19013 + offset }",
             :libvirt__iface_name => 'swp6',
             auto_config: false
 
@@ -1795,7 +1803,7 @@ end
     
     device.vm.hostname = "spine01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1811,9 +1819,9 @@ end
             :mac => "44:38:39:00:00:ce",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18604',
+            :libvirt__tunnel_local_port => "#{ 19104 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17604',
+            :libvirt__tunnel_port => "#{ 17104 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> leaf01:swp49
@@ -1821,9 +1829,9 @@ end
             :mac => "44:38:39:00:00:79",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17561',
+            :libvirt__tunnel_local_port => "#{ 17061 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18561',
+            :libvirt__tunnel_port => "#{ 19061 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> leaf02:swp49
@@ -1831,9 +1839,9 @@ end
             :mac => "44:38:39:00:00:8d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17571',
+            :libvirt__tunnel_local_port => "#{ 17071 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18571',
+            :libvirt__tunnel_port => "#{ 19071 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> leaf03:swp49
@@ -1841,9 +1849,9 @@ end
             :mac => "44:38:39:00:00:33",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17526',
+            :libvirt__tunnel_local_port => "#{ 17026 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18526',
+            :libvirt__tunnel_port => "#{ 19026 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> leaf04:swp49
@@ -1851,9 +1859,9 @@ end
             :mac => "44:38:39:00:00:3d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17531',
+            :libvirt__tunnel_local_port => "#{ 17031 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18531',
+            :libvirt__tunnel_port => "#{ 19031 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp5 --> exit01:swp49
@@ -1861,9 +1869,9 @@ end
             :mac => "44:38:39:00:00:91",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17573',
+            :libvirt__tunnel_local_port => "#{ 17073 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18573',
+            :libvirt__tunnel_port => "#{ 19073 + offset }",
             :libvirt__iface_name => 'swp5',
             auto_config: false
       # link for swp6 --> exit02:swp49
@@ -1871,9 +1879,9 @@ end
             :mac => "44:38:39:00:00:69",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17553',
+            :libvirt__tunnel_local_port => "#{ 17053 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18553',
+            :libvirt__tunnel_port => "#{ 19053 + offset }",
             :libvirt__iface_name => 'swp6',
             auto_config: false
 
@@ -1947,7 +1955,7 @@ end
     
     device.vm.hostname = "spine04" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -1963,9 +1971,9 @@ end
             :mac => "44:38:39:00:00:d4",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18607',
+            :libvirt__tunnel_local_port => "#{ 19107 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17607',
+            :libvirt__tunnel_port => "#{ 17107 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> leaf05:swp50
@@ -1973,9 +1981,9 @@ end
             :mac => "44:38:39:00:00:63",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17550',
+            :libvirt__tunnel_local_port => "#{ 17050 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18550',
+            :libvirt__tunnel_port => "#{ 19050 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> leaf06:swp50
@@ -1983,9 +1991,9 @@ end
             :mac => "44:38:39:00:00:31",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17525',
+            :libvirt__tunnel_local_port => "#{ 17025 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18525',
+            :libvirt__tunnel_port => "#{ 19025 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp3 --> leaf07:swp50
@@ -1993,9 +2001,9 @@ end
             :mac => "44:38:39:00:00:23",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17518',
+            :libvirt__tunnel_local_port => "#{ 17018 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18518',
+            :libvirt__tunnel_port => "#{ 19018 + offset }",
             :libvirt__iface_name => 'swp3',
             auto_config: false
       # link for swp4 --> leaf08:swp50
@@ -2003,9 +2011,9 @@ end
             :mac => "44:38:39:00:00:93",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17574',
+            :libvirt__tunnel_local_port => "#{ 17074 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18574',
+            :libvirt__tunnel_port => "#{ 19074 + offset }",
             :libvirt__iface_name => 'swp4',
             auto_config: false
       # link for swp5 --> exit03:swp50
@@ -2013,9 +2021,9 @@ end
             :mac => "44:38:39:00:00:29",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17521',
+            :libvirt__tunnel_local_port => "#{ 17021 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18521',
+            :libvirt__tunnel_port => "#{ 19021 + offset }",
             :libvirt__iface_name => 'swp5',
             auto_config: false
       # link for swp6 --> exit04:swp50
@@ -2023,9 +2031,9 @@ end
             :mac => "44:38:39:00:00:17",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17512',
+            :libvirt__tunnel_local_port => "#{ 17012 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18512',
+            :libvirt__tunnel_port => "#{ 19012 + offset }",
             :libvirt__iface_name => 'swp6',
             auto_config: false
 
@@ -2099,7 +2107,7 @@ end
     
     device.vm.hostname = "leaf06" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2115,9 +2123,9 @@ end
             :mac => "44:38:39:00:00:b4",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18591',
+            :libvirt__tunnel_local_port => "#{ 19091 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17591',
+            :libvirt__tunnel_port => "#{ 17091 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server07:eth2
@@ -2125,9 +2133,9 @@ end
             :mac => "44:38:39:00:00:67",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17552',
+            :libvirt__tunnel_local_port => "#{ 17052 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18552',
+            :libvirt__tunnel_port => "#{ 19052 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server08:eth2
@@ -2135,9 +2143,9 @@ end
             :mac => "44:38:39:00:00:51",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17541',
+            :libvirt__tunnel_local_port => "#{ 17041 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18541',
+            :libvirt__tunnel_port => "#{ 19041 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf05:swp20
@@ -2145,9 +2153,9 @@ end
             :mac => "44:38:39:00:00:74",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18558',
+            :libvirt__tunnel_local_port => "#{ 19058 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17558',
+            :libvirt__tunnel_port => "#{ 17058 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf05:swp21
@@ -2155,9 +2163,9 @@ end
             :mac => "44:38:39:00:00:60",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18548',
+            :libvirt__tunnel_local_port => "#{ 19048 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17548',
+            :libvirt__tunnel_port => "#{ 17048 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp2
@@ -2165,9 +2173,9 @@ end
             :mac => "44:38:39:00:00:4e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18539',
+            :libvirt__tunnel_local_port => "#{ 19039 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17539',
+            :libvirt__tunnel_port => "#{ 17039 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp2
@@ -2175,9 +2183,9 @@ end
             :mac => "44:38:39:00:00:32",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18525',
+            :libvirt__tunnel_local_port => "#{ 19025 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17525',
+            :libvirt__tunnel_port => "#{ 17025 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -2251,7 +2259,7 @@ end
     
     device.vm.hostname = "leaf07" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2267,9 +2275,9 @@ end
             :mac => "44:38:39:00:00:b6",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18592',
+            :libvirt__tunnel_local_port => "#{ 19092 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17592',
+            :libvirt__tunnel_port => "#{ 17092 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server09:eth1
@@ -2277,9 +2285,9 @@ end
             :mac => "44:38:39:00:00:2b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17522',
+            :libvirt__tunnel_local_port => "#{ 17022 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18522',
+            :libvirt__tunnel_port => "#{ 19022 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server10:eth1
@@ -2287,9 +2295,9 @@ end
             :mac => "44:38:39:00:00:71",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17557',
+            :libvirt__tunnel_local_port => "#{ 17057 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18557',
+            :libvirt__tunnel_port => "#{ 19057 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf08:swp20
@@ -2297,9 +2305,9 @@ end
             :mac => "44:38:39:00:00:97",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17576',
+            :libvirt__tunnel_local_port => "#{ 17076 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18576',
+            :libvirt__tunnel_port => "#{ 19076 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf08:swp21
@@ -2307,9 +2315,9 @@ end
             :mac => "44:38:39:00:00:27",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17520',
+            :libvirt__tunnel_local_port => "#{ 17020 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18520',
+            :libvirt__tunnel_port => "#{ 19020 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp3
@@ -2317,9 +2325,9 @@ end
             :mac => "44:38:39:00:00:0e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18507',
+            :libvirt__tunnel_local_port => "#{ 19007 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17507',
+            :libvirt__tunnel_port => "#{ 17007 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp3
@@ -2327,9 +2335,9 @@ end
             :mac => "44:38:39:00:00:24",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18518',
+            :libvirt__tunnel_local_port => "#{ 19018 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17518',
+            :libvirt__tunnel_port => "#{ 17018 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -2403,7 +2411,7 @@ end
     
     device.vm.hostname = "leaf04" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2419,9 +2427,9 @@ end
             :mac => "44:38:39:00:00:b8",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18593',
+            :libvirt__tunnel_local_port => "#{ 19093 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17593',
+            :libvirt__tunnel_port => "#{ 17093 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server03:eth2
@@ -2429,9 +2437,9 @@ end
             :mac => "44:38:39:00:00:8b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17570',
+            :libvirt__tunnel_local_port => "#{ 17070 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18570',
+            :libvirt__tunnel_port => "#{ 19070 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server04:eth2
@@ -2439,9 +2447,9 @@ end
             :mac => "44:38:39:00:00:53",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17542',
+            :libvirt__tunnel_local_port => "#{ 17042 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18542',
+            :libvirt__tunnel_port => "#{ 19042 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf03:swp20
@@ -2449,9 +2457,9 @@ end
             :mac => "44:38:39:00:00:42",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18533',
+            :libvirt__tunnel_local_port => "#{ 19033 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17533',
+            :libvirt__tunnel_port => "#{ 17033 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf03:swp21
@@ -2459,9 +2467,9 @@ end
             :mac => "44:38:39:00:00:66",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18551',
+            :libvirt__tunnel_local_port => "#{ 19051 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17551',
+            :libvirt__tunnel_port => "#{ 17051 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp4
@@ -2469,9 +2477,9 @@ end
             :mac => "44:38:39:00:00:3e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18531',
+            :libvirt__tunnel_local_port => "#{ 19031 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17531',
+            :libvirt__tunnel_port => "#{ 17031 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp4
@@ -2479,9 +2487,9 @@ end
             :mac => "44:38:39:00:00:70",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18556',
+            :libvirt__tunnel_local_port => "#{ 19056 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17556',
+            :libvirt__tunnel_port => "#{ 17056 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -2555,7 +2563,7 @@ end
     
     device.vm.hostname = "leaf05" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2571,9 +2579,9 @@ end
             :mac => "44:38:39:00:00:ba",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18594',
+            :libvirt__tunnel_local_port => "#{ 19094 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17594',
+            :libvirt__tunnel_port => "#{ 17094 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server07:eth1
@@ -2581,9 +2589,9 @@ end
             :mac => "44:38:39:00:00:3f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17532',
+            :libvirt__tunnel_local_port => "#{ 17032 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18532',
+            :libvirt__tunnel_port => "#{ 19032 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server08:eth1
@@ -2591,9 +2599,9 @@ end
             :mac => "44:38:39:00:00:49",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17537',
+            :libvirt__tunnel_local_port => "#{ 17037 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18537',
+            :libvirt__tunnel_port => "#{ 19037 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf06:swp20
@@ -2601,9 +2609,9 @@ end
             :mac => "44:38:39:00:00:73",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17558',
+            :libvirt__tunnel_local_port => "#{ 17058 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18558',
+            :libvirt__tunnel_port => "#{ 19058 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf06:swp21
@@ -2611,9 +2619,9 @@ end
             :mac => "44:38:39:00:00:5f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17548',
+            :libvirt__tunnel_local_port => "#{ 17048 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18548',
+            :libvirt__tunnel_port => "#{ 19048 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp1
@@ -2621,9 +2629,9 @@ end
             :mac => "44:38:39:00:00:62",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18549',
+            :libvirt__tunnel_local_port => "#{ 19049 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17549',
+            :libvirt__tunnel_port => "#{ 17049 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp1
@@ -2631,9 +2639,9 @@ end
             :mac => "44:38:39:00:00:64",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18550',
+            :libvirt__tunnel_local_port => "#{ 19050 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17550',
+            :libvirt__tunnel_port => "#{ 17050 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -2707,7 +2715,7 @@ end
     
     device.vm.hostname = "leaf02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2723,9 +2731,9 @@ end
             :mac => "44:38:39:00:00:bc",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18595',
+            :libvirt__tunnel_local_port => "#{ 19095 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17595',
+            :libvirt__tunnel_port => "#{ 17095 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server01:eth2
@@ -2733,9 +2741,9 @@ end
             :mac => "44:38:39:00:00:59",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17545',
+            :libvirt__tunnel_local_port => "#{ 17045 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18545',
+            :libvirt__tunnel_port => "#{ 19045 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server02:eth2
@@ -2743,9 +2751,9 @@ end
             :mac => "44:38:39:00:00:87",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17568',
+            :libvirt__tunnel_local_port => "#{ 17068 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18568',
+            :libvirt__tunnel_port => "#{ 19068 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf01:swp20
@@ -2753,9 +2761,9 @@ end
             :mac => "44:38:39:00:00:76",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18559',
+            :libvirt__tunnel_local_port => "#{ 19059 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17559',
+            :libvirt__tunnel_port => "#{ 17059 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf01:swp21
@@ -2763,9 +2771,9 @@ end
             :mac => "44:38:39:00:00:2e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18523',
+            :libvirt__tunnel_local_port => "#{ 19023 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17523',
+            :libvirt__tunnel_port => "#{ 17023 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp2
@@ -2773,9 +2781,9 @@ end
             :mac => "44:38:39:00:00:8e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18571',
+            :libvirt__tunnel_local_port => "#{ 19071 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17571',
+            :libvirt__tunnel_port => "#{ 17071 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp2
@@ -2783,9 +2791,9 @@ end
             :mac => "44:38:39:00:00:7e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18563',
+            :libvirt__tunnel_local_port => "#{ 19063 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17563',
+            :libvirt__tunnel_port => "#{ 17063 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -2859,7 +2867,7 @@ end
     
     device.vm.hostname = "leaf03" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -2875,9 +2883,9 @@ end
             :mac => "44:38:39:00:00:be",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18596',
+            :libvirt__tunnel_local_port => "#{ 19096 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17596',
+            :libvirt__tunnel_port => "#{ 17096 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server03:eth1
@@ -2885,9 +2893,9 @@ end
             :mac => "44:38:39:00:00:7f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17564',
+            :libvirt__tunnel_local_port => "#{ 17064 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18564',
+            :libvirt__tunnel_port => "#{ 19064 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server04:eth1
@@ -2895,9 +2903,9 @@ end
             :mac => "44:38:39:00:00:1d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17515',
+            :libvirt__tunnel_local_port => "#{ 17015 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18515',
+            :libvirt__tunnel_port => "#{ 19015 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf04:swp20
@@ -2905,9 +2913,9 @@ end
             :mac => "44:38:39:00:00:41",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17533',
+            :libvirt__tunnel_local_port => "#{ 17033 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18533',
+            :libvirt__tunnel_port => "#{ 19033 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf04:swp21
@@ -2915,9 +2923,9 @@ end
             :mac => "44:38:39:00:00:65",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17551',
+            :libvirt__tunnel_local_port => "#{ 17051 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18551',
+            :libvirt__tunnel_port => "#{ 19051 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp3
@@ -2925,9 +2933,9 @@ end
             :mac => "44:38:39:00:00:34",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18526',
+            :libvirt__tunnel_local_port => "#{ 19026 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17526',
+            :libvirt__tunnel_port => "#{ 17026 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp3
@@ -2935,9 +2943,9 @@ end
             :mac => "44:38:39:00:00:44",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18534',
+            :libvirt__tunnel_local_port => "#{ 19034 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17534',
+            :libvirt__tunnel_port => "#{ 17034 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -3011,7 +3019,7 @@ end
     
     device.vm.hostname = "leaf01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3027,9 +3035,9 @@ end
             :mac => "44:38:39:00:00:c0",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18597',
+            :libvirt__tunnel_local_port => "#{ 19097 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17597',
+            :libvirt__tunnel_port => "#{ 17097 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server01:eth1
@@ -3037,9 +3045,9 @@ end
             :mac => "44:38:39:00:00:35",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17527',
+            :libvirt__tunnel_local_port => "#{ 17027 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18527',
+            :libvirt__tunnel_port => "#{ 19027 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server02:eth1
@@ -3047,9 +3055,9 @@ end
             :mac => "44:38:39:00:00:3b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17530',
+            :libvirt__tunnel_local_port => "#{ 17030 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18530',
+            :libvirt__tunnel_port => "#{ 19030 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf02:swp20
@@ -3057,9 +3065,9 @@ end
             :mac => "44:38:39:00:00:75",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17559',
+            :libvirt__tunnel_local_port => "#{ 17059 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18559',
+            :libvirt__tunnel_port => "#{ 19059 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf02:swp21
@@ -3067,9 +3075,9 @@ end
             :mac => "44:38:39:00:00:2d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17523',
+            :libvirt__tunnel_local_port => "#{ 17023 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18523',
+            :libvirt__tunnel_port => "#{ 19023 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp1
@@ -3077,9 +3085,9 @@ end
             :mac => "44:38:39:00:00:7a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18561',
+            :libvirt__tunnel_local_port => "#{ 19061 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17561',
+            :libvirt__tunnel_port => "#{ 17061 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp1
@@ -3087,9 +3095,9 @@ end
             :mac => "44:38:39:00:00:6c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18554',
+            :libvirt__tunnel_local_port => "#{ 19054 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17554',
+            :libvirt__tunnel_port => "#{ 17054 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -3163,7 +3171,7 @@ end
     
     device.vm.hostname = "leaf08" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3179,9 +3187,9 @@ end
             :mac => "44:38:39:00:00:c6",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18600',
+            :libvirt__tunnel_local_port => "#{ 19100 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17600',
+            :libvirt__tunnel_port => "#{ 17100 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server09:eth2
@@ -3189,9 +3197,9 @@ end
             :mac => "44:38:39:00:00:77",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17560',
+            :libvirt__tunnel_local_port => "#{ 17060 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18560',
+            :libvirt__tunnel_port => "#{ 19060 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server10:eth2
@@ -3199,9 +3207,9 @@ end
             :mac => "44:38:39:00:00:89",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17569',
+            :libvirt__tunnel_local_port => "#{ 17069 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18569',
+            :libvirt__tunnel_port => "#{ 19069 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> leaf07:swp20
@@ -3209,9 +3217,9 @@ end
             :mac => "44:38:39:00:00:98",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18576',
+            :libvirt__tunnel_local_port => "#{ 19076 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17576',
+            :libvirt__tunnel_port => "#{ 17076 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> leaf07:swp21
@@ -3219,9 +3227,9 @@ end
             :mac => "44:38:39:00:00:28",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18520',
+            :libvirt__tunnel_local_port => "#{ 19020 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17520',
+            :libvirt__tunnel_port => "#{ 17020 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp4
@@ -3229,9 +3237,9 @@ end
             :mac => "44:38:39:00:00:22",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18517',
+            :libvirt__tunnel_local_port => "#{ 19017 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17517',
+            :libvirt__tunnel_port => "#{ 17017 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp4
@@ -3239,9 +3247,9 @@ end
             :mac => "44:38:39:00:00:94",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18574',
+            :libvirt__tunnel_local_port => "#{ 19074 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17574',
+            :libvirt__tunnel_port => "#{ 17074 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
 
@@ -3315,7 +3323,7 @@ end
     
     device.vm.hostname = "exit04" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3331,9 +3339,9 @@ end
             :mac => "44:38:39:00:00:cc",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18603',
+            :libvirt__tunnel_local_port => "#{ 19103 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17603',
+            :libvirt__tunnel_port => "#{ 17103 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server11:eth2
@@ -3341,9 +3349,9 @@ end
             :mac => "44:38:39:00:00:05",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17503',
+            :libvirt__tunnel_local_port => "#{ 17003 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18503',
+            :libvirt__tunnel_port => "#{ 19003 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server12:eth2
@@ -3351,9 +3359,9 @@ end
             :mac => "44:38:39:00:00:4b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17538',
+            :libvirt__tunnel_local_port => "#{ 17038 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18538',
+            :libvirt__tunnel_port => "#{ 19038 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> exit03:swp20
@@ -3361,9 +3369,9 @@ end
             :mac => "44:38:39:00:00:20",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18516',
+            :libvirt__tunnel_local_port => "#{ 19016 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17516',
+            :libvirt__tunnel_port => "#{ 17016 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> exit03:swp21
@@ -3371,9 +3379,9 @@ end
             :mac => "44:38:39:00:00:5e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18547',
+            :libvirt__tunnel_local_port => "#{ 19047 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17547',
+            :libvirt__tunnel_port => "#{ 17047 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp6
@@ -3381,9 +3389,9 @@ end
             :mac => "44:38:39:00:00:1a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18513',
+            :libvirt__tunnel_local_port => "#{ 19013 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17513',
+            :libvirt__tunnel_port => "#{ 17013 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp6
@@ -3391,9 +3399,9 @@ end
             :mac => "44:38:39:00:00:18",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18512',
+            :libvirt__tunnel_local_port => "#{ 19012 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17512',
+            :libvirt__tunnel_port => "#{ 17012 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
       # link for swp51 --> super01:swp4
@@ -3401,9 +3409,9 @@ end
             :mac => "44:38:39:00:00:50",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18540',
+            :libvirt__tunnel_local_port => "#{ 19040 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17540',
+            :libvirt__tunnel_port => "#{ 17040 + offset }",
             :libvirt__iface_name => 'swp51',
             auto_config: false
       # link for swp52 --> super02:swp4
@@ -3411,9 +3419,9 @@ end
             :mac => "44:38:39:00:00:16",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18511',
+            :libvirt__tunnel_local_port => "#{ 19011 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17511',
+            :libvirt__tunnel_port => "#{ 17011 + offset }",
             :libvirt__iface_name => 'swp52',
             auto_config: false
 
@@ -3495,7 +3503,7 @@ end
     
     device.vm.hostname = "exit02" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3511,9 +3519,9 @@ end
             :mac => "44:38:39:00:00:d0",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18605',
+            :libvirt__tunnel_local_port => "#{ 19105 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17605',
+            :libvirt__tunnel_port => "#{ 17105 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server05:eth2
@@ -3521,9 +3529,9 @@ end
             :mac => "44:38:39:00:00:5b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17546',
+            :libvirt__tunnel_local_port => "#{ 17046 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18546',
+            :libvirt__tunnel_port => "#{ 19046 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server06:eth2
@@ -3531,9 +3539,9 @@ end
             :mac => "44:38:39:00:00:6d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17555',
+            :libvirt__tunnel_local_port => "#{ 17055 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18555',
+            :libvirt__tunnel_port => "#{ 19055 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> exit01:swp20
@@ -3541,9 +3549,9 @@ end
             :mac => "44:38:39:00:00:56",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18543',
+            :libvirt__tunnel_local_port => "#{ 19043 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17543',
+            :libvirt__tunnel_port => "#{ 17043 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> exit01:swp21
@@ -3551,9 +3559,9 @@ end
             :mac => "44:38:39:00:00:0a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18505',
+            :libvirt__tunnel_local_port => "#{ 19005 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17505',
+            :libvirt__tunnel_port => "#{ 17005 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp6
@@ -3561,9 +3569,9 @@ end
             :mac => "44:38:39:00:00:6a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18553',
+            :libvirt__tunnel_local_port => "#{ 19053 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17553',
+            :libvirt__tunnel_port => "#{ 17053 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp6
@@ -3571,9 +3579,9 @@ end
             :mac => "44:38:39:00:00:10",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18508',
+            :libvirt__tunnel_local_port => "#{ 19008 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17508',
+            :libvirt__tunnel_port => "#{ 17008 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
       # link for swp51 --> super01:swp2
@@ -3581,9 +3589,9 @@ end
             :mac => "44:38:39:00:00:30",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18524',
+            :libvirt__tunnel_local_port => "#{ 19024 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17524',
+            :libvirt__tunnel_port => "#{ 17024 + offset }",
             :libvirt__iface_name => 'swp51',
             auto_config: false
       # link for swp52 --> super02:swp2
@@ -3591,9 +3599,9 @@ end
             :mac => "44:38:39:00:00:96",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18575',
+            :libvirt__tunnel_local_port => "#{ 19075 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17575',
+            :libvirt__tunnel_port => "#{ 17075 + offset }",
             :libvirt__iface_name => 'swp52',
             auto_config: false
 
@@ -3675,7 +3683,7 @@ end
     
     device.vm.hostname = "exit03" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3691,9 +3699,9 @@ end
             :mac => "44:38:39:00:00:d2",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18606',
+            :libvirt__tunnel_local_port => "#{ 19106 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17606',
+            :libvirt__tunnel_port => "#{ 17106 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server11:eth1
@@ -3701,9 +3709,9 @@ end
             :mac => "44:38:39:00:00:7b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17562',
+            :libvirt__tunnel_local_port => "#{ 17062 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18562',
+            :libvirt__tunnel_port => "#{ 19062 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server12:eth1
@@ -3711,9 +3719,9 @@ end
             :mac => "44:38:39:00:00:37",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17528',
+            :libvirt__tunnel_local_port => "#{ 17028 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18528',
+            :libvirt__tunnel_port => "#{ 19028 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> exit04:swp20
@@ -3721,9 +3729,9 @@ end
             :mac => "44:38:39:00:00:1f",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17516',
+            :libvirt__tunnel_local_port => "#{ 17016 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18516',
+            :libvirt__tunnel_port => "#{ 19016 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> exit04:swp21
@@ -3731,9 +3739,9 @@ end
             :mac => "44:38:39:00:00:5d",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17547',
+            :libvirt__tunnel_local_port => "#{ 17047 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18547',
+            :libvirt__tunnel_port => "#{ 19047 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine03:swp5
@@ -3741,9 +3749,9 @@ end
             :mac => "44:38:39:00:00:86",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18567',
+            :libvirt__tunnel_local_port => "#{ 19067 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17567',
+            :libvirt__tunnel_port => "#{ 17067 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine04:swp5
@@ -3751,9 +3759,9 @@ end
             :mac => "44:38:39:00:00:2a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18521',
+            :libvirt__tunnel_local_port => "#{ 19021 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17521',
+            :libvirt__tunnel_port => "#{ 17021 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
       # link for swp51 --> super01:swp3
@@ -3761,9 +3769,9 @@ end
             :mac => "44:38:39:00:00:84",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18566',
+            :libvirt__tunnel_local_port => "#{ 19066 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17566',
+            :libvirt__tunnel_port => "#{ 17066 + offset }",
             :libvirt__iface_name => 'swp51',
             auto_config: false
       # link for swp52 --> super02:swp3
@@ -3771,9 +3779,9 @@ end
             :mac => "44:38:39:00:00:14",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18510',
+            :libvirt__tunnel_local_port => "#{ 19010 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17510',
+            :libvirt__tunnel_port => "#{ 17010 + offset }",
             :libvirt__iface_name => 'swp52',
             auto_config: false
 
@@ -3855,7 +3863,7 @@ end
     
     device.vm.hostname = "exit01" 
     
-    device.vm.box = "CumulusCommunity/cumulus-vx"
+    device.vm.box = "cl-3.6.2"
 
     device.vm.provider :libvirt do |v|
       v.memory = 768
@@ -3871,9 +3879,9 @@ end
             :mac => "44:38:39:00:00:d6",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18608',
+            :libvirt__tunnel_local_port => "#{ 19108 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17608',
+            :libvirt__tunnel_port => "#{ 17108 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for swp1 --> server05:eth1
@@ -3881,9 +3889,9 @@ end
             :mac => "44:38:39:00:00:03",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17502',
+            :libvirt__tunnel_local_port => "#{ 17002 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18502',
+            :libvirt__tunnel_port => "#{ 19002 + offset }",
             :libvirt__iface_name => 'swp1',
             auto_config: false
       # link for swp2 --> server06:eth1
@@ -3891,9 +3899,9 @@ end
             :mac => "44:38:39:00:00:1b",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17514',
+            :libvirt__tunnel_local_port => "#{ 17014 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18514',
+            :libvirt__tunnel_port => "#{ 19014 + offset }",
             :libvirt__iface_name => 'swp2',
             auto_config: false
       # link for swp20 --> exit02:swp20
@@ -3901,9 +3909,9 @@ end
             :mac => "44:38:39:00:00:55",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17543',
+            :libvirt__tunnel_local_port => "#{ 17043 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18543',
+            :libvirt__tunnel_port => "#{ 19043 + offset }",
             :libvirt__iface_name => 'swp20',
             auto_config: false
       # link for swp21 --> exit02:swp21
@@ -3911,9 +3919,9 @@ end
             :mac => "44:38:39:00:00:09",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '17505',
+            :libvirt__tunnel_local_port => "#{ 17005 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '18505',
+            :libvirt__tunnel_port => "#{ 19005 + offset }",
             :libvirt__iface_name => 'swp21',
             auto_config: false
       # link for swp49 --> spine01:swp5
@@ -3921,9 +3929,9 @@ end
             :mac => "44:38:39:00:00:92",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18573',
+            :libvirt__tunnel_local_port => "#{ 19073 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17573',
+            :libvirt__tunnel_port => "#{ 17073 + offset }",
             :libvirt__iface_name => 'swp49',
             auto_config: false
       # link for swp50 --> spine02:swp5
@@ -3931,9 +3939,9 @@ end
             :mac => "44:38:39:00:00:0c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18506',
+            :libvirt__tunnel_local_port => "#{ 19006 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17506',
+            :libvirt__tunnel_port => "#{ 17006 + offset }",
             :libvirt__iface_name => 'swp50',
             auto_config: false
       # link for swp51 --> super01:swp1
@@ -3941,9 +3949,9 @@ end
             :mac => "44:38:39:00:00:26",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18519',
+            :libvirt__tunnel_local_port => "#{ 19019 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17519',
+            :libvirt__tunnel_port => "#{ 17019 + offset }",
             :libvirt__iface_name => 'swp51',
             auto_config: false
       # link for swp52 --> super02:swp1
@@ -3951,9 +3959,9 @@ end
             :mac => "44:38:39:00:00:90",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18572',
+            :libvirt__tunnel_local_port => "#{ 19072 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17572',
+            :libvirt__tunnel_port => "#{ 17072 + offset }",
             :libvirt__iface_name => 'swp52',
             auto_config: false
 
@@ -4052,9 +4060,9 @@ end
             :mac => "44:38:39:00:00:a0",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18581',
+            :libvirt__tunnel_local_port => "#{ 19081 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17581',
+            :libvirt__tunnel_port => "#{ 17081 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf07:swp1
@@ -4062,9 +4070,9 @@ end
             :mac => "44:38:39:00:00:2c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18522',
+            :libvirt__tunnel_local_port => "#{ 19022 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17522',
+            :libvirt__tunnel_port => "#{ 17022 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf08:swp1
@@ -4072,9 +4080,9 @@ end
             :mac => "44:38:39:00:00:78",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18560',
+            :libvirt__tunnel_local_port => "#{ 19060 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17560',
+            :libvirt__tunnel_port => "#{ 17060 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4148,9 +4156,9 @@ end
             :mac => "44:38:39:00:00:a2",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18582',
+            :libvirt__tunnel_local_port => "#{ 19082 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17582',
+            :libvirt__tunnel_port => "#{ 17082 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf05:swp2
@@ -4158,9 +4166,9 @@ end
             :mac => "44:38:39:00:00:4a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18537',
+            :libvirt__tunnel_local_port => "#{ 19037 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17537',
+            :libvirt__tunnel_port => "#{ 17037 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf06:swp2
@@ -4168,9 +4176,9 @@ end
             :mac => "44:38:39:00:00:52",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18541',
+            :libvirt__tunnel_local_port => "#{ 19041 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17541',
+            :libvirt__tunnel_port => "#{ 17041 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4244,9 +4252,9 @@ end
             :mac => "44:38:39:00:00:a6",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18584',
+            :libvirt__tunnel_local_port => "#{ 19084 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17584',
+            :libvirt__tunnel_port => "#{ 17084 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf01:swp1
@@ -4254,9 +4262,9 @@ end
             :mac => "44:38:39:00:00:36",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18527',
+            :libvirt__tunnel_local_port => "#{ 19027 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17527',
+            :libvirt__tunnel_port => "#{ 17027 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf02:swp1
@@ -4264,9 +4272,9 @@ end
             :mac => "44:38:39:00:00:5a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18545',
+            :libvirt__tunnel_local_port => "#{ 19045 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17545',
+            :libvirt__tunnel_port => "#{ 17045 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4340,9 +4348,9 @@ end
             :mac => "44:38:39:00:00:a8",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18585',
+            :libvirt__tunnel_local_port => "#{ 19085 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17585',
+            :libvirt__tunnel_port => "#{ 17085 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf03:swp1
@@ -4350,9 +4358,9 @@ end
             :mac => "44:38:39:00:00:80",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18564',
+            :libvirt__tunnel_local_port => "#{ 19064 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17564',
+            :libvirt__tunnel_port => "#{ 17064 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf04:swp1
@@ -4360,9 +4368,9 @@ end
             :mac => "44:38:39:00:00:8c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18570',
+            :libvirt__tunnel_local_port => "#{ 19070 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17570',
+            :libvirt__tunnel_port => "#{ 17070 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4436,9 +4444,9 @@ end
             :mac => "44:38:39:00:00:aa",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18586',
+            :libvirt__tunnel_local_port => "#{ 19086 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17586',
+            :libvirt__tunnel_port => "#{ 17086 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf01:swp2
@@ -4446,9 +4454,9 @@ end
             :mac => "44:38:39:00:00:3c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18530',
+            :libvirt__tunnel_local_port => "#{ 19030 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17530',
+            :libvirt__tunnel_port => "#{ 17030 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf02:swp2
@@ -4456,9 +4464,9 @@ end
             :mac => "44:38:39:00:00:88",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18568',
+            :libvirt__tunnel_local_port => "#{ 19068 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17568',
+            :libvirt__tunnel_port => "#{ 17068 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4532,9 +4540,9 @@ end
             :mac => "44:38:39:00:00:ac",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18587',
+            :libvirt__tunnel_local_port => "#{ 19087 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17587',
+            :libvirt__tunnel_port => "#{ 17087 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> exit01:swp1
@@ -4542,9 +4550,9 @@ end
             :mac => "44:38:39:00:00:04",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18502',
+            :libvirt__tunnel_local_port => "#{ 19002 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17502',
+            :libvirt__tunnel_port => "#{ 17002 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> exit02:swp1
@@ -4552,9 +4560,9 @@ end
             :mac => "44:38:39:00:00:5c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18546',
+            :libvirt__tunnel_local_port => "#{ 19046 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17546',
+            :libvirt__tunnel_port => "#{ 17046 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4628,9 +4636,9 @@ end
             :mac => "44:38:39:00:00:ae",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18588',
+            :libvirt__tunnel_local_port => "#{ 19088 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17588',
+            :libvirt__tunnel_port => "#{ 17088 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf03:swp2
@@ -4638,9 +4646,9 @@ end
             :mac => "44:38:39:00:00:1e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18515',
+            :libvirt__tunnel_local_port => "#{ 19015 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17515',
+            :libvirt__tunnel_port => "#{ 17015 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf04:swp2
@@ -4648,9 +4656,9 @@ end
             :mac => "44:38:39:00:00:54",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18542',
+            :libvirt__tunnel_local_port => "#{ 19042 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17542',
+            :libvirt__tunnel_port => "#{ 17042 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4724,9 +4732,9 @@ end
             :mac => "44:38:39:00:00:b0",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18589',
+            :libvirt__tunnel_local_port => "#{ 19089 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17589',
+            :libvirt__tunnel_port => "#{ 17089 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf05:swp1
@@ -4734,9 +4742,9 @@ end
             :mac => "44:38:39:00:00:40",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18532',
+            :libvirt__tunnel_local_port => "#{ 19032 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17532',
+            :libvirt__tunnel_port => "#{ 17032 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf06:swp1
@@ -4744,9 +4752,9 @@ end
             :mac => "44:38:39:00:00:68",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18552',
+            :libvirt__tunnel_local_port => "#{ 19052 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17552',
+            :libvirt__tunnel_port => "#{ 17052 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4820,9 +4828,9 @@ end
             :mac => "44:38:39:00:00:b2",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18590',
+            :libvirt__tunnel_local_port => "#{ 19090 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17590',
+            :libvirt__tunnel_port => "#{ 17090 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> exit01:swp2
@@ -4830,9 +4838,9 @@ end
             :mac => "44:38:39:00:00:1c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18514',
+            :libvirt__tunnel_local_port => "#{ 19014 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17514',
+            :libvirt__tunnel_port => "#{ 17014 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> exit02:swp2
@@ -4840,9 +4848,9 @@ end
             :mac => "44:38:39:00:00:6e",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18555',
+            :libvirt__tunnel_local_port => "#{ 19055 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17555',
+            :libvirt__tunnel_port => "#{ 17055 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -4899,7 +4907,7 @@ end
     
     device.vm.hostname = "netq-ts" 
     
-    device.vm.box = "cumulus/ts"
+    device.vm.box = "ts-dev-20180905"
 
     device.vm.provider :libvirt do |v|
       v.nic_model_type = 'e1000' 
@@ -4916,9 +4924,9 @@ end
             :mac => "44:38:39:00:00:da",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18610',
+            :libvirt__tunnel_local_port => "#{ 19110 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17610',
+            :libvirt__tunnel_port => "#{ 17110 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
 
@@ -4981,9 +4989,9 @@ end
             :mac => "44:38:39:00:00:dc",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18611',
+            :libvirt__tunnel_local_port => "#{ 19111 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17611',
+            :libvirt__tunnel_port => "#{ 17111 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> exit03:swp2
@@ -4991,9 +4999,9 @@ end
             :mac => "44:38:39:00:00:38",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18528',
+            :libvirt__tunnel_local_port => "#{ 19028 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17528',
+            :libvirt__tunnel_port => "#{ 17028 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> exit04:swp2
@@ -5001,9 +5009,9 @@ end
             :mac => "44:38:39:00:00:4c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18538',
+            :libvirt__tunnel_local_port => "#{ 19038 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17538',
+            :libvirt__tunnel_port => "#{ 17038 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -5077,9 +5085,9 @@ end
             :mac => "44:38:39:00:00:de",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18612',
+            :libvirt__tunnel_local_port => "#{ 19112 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17612',
+            :libvirt__tunnel_port => "#{ 17112 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> leaf07:swp2
@@ -5087,9 +5095,9 @@ end
             :mac => "44:38:39:00:00:72",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18557',
+            :libvirt__tunnel_local_port => "#{ 19057 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17557',
+            :libvirt__tunnel_port => "#{ 17057 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> leaf08:swp2
@@ -5097,9 +5105,9 @@ end
             :mac => "44:38:39:00:00:8a",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18569',
+            :libvirt__tunnel_local_port => "#{ 19069 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17569',
+            :libvirt__tunnel_port => "#{ 17069 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
@@ -5173,9 +5181,9 @@ end
             :mac => "44:38:39:00:00:e0",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18613',
+            :libvirt__tunnel_local_port => "#{ 19113 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17613',
+            :libvirt__tunnel_port => "#{ 17113 + offset }",
             :libvirt__iface_name => 'eth0',
             auto_config: false
       # link for eth1 --> exit03:swp1
@@ -5183,9 +5191,9 @@ end
             :mac => "44:38:39:00:00:7c",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18562',
+            :libvirt__tunnel_local_port => "#{ 19062 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17562',
+            :libvirt__tunnel_port => "#{ 17062 + offset }",
             :libvirt__iface_name => 'eth1',
             auto_config: false
       # link for eth2 --> exit04:swp1
@@ -5193,9 +5201,9 @@ end
             :mac => "44:38:39:00:00:06",
             :libvirt__tunnel_type => 'udp',
             :libvirt__tunnel_local_ip => '127.0.0.1',
-            :libvirt__tunnel_local_port => '18503',
+            :libvirt__tunnel_local_port => "#{ 19003 + offset }",
             :libvirt__tunnel_ip => '127.0.0.1',
-            :libvirt__tunnel_port => '17503',
+            :libvirt__tunnel_port => "#{ 17003 + offset }",
             :libvirt__iface_name => 'eth2',
             auto_config: false
 
