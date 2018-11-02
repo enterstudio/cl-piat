@@ -51,5 +51,5 @@
   roles:
   - setup-server
   - server
-  - netq
+#  - netq
 ...
