@@ -1,17 +1,47 @@
 ---
+- apt_repository:
+    repo: ppa:ansible/ansible 
+
+- name: Install Ansible
+  apt:
+    name: ansible 
+    update_cache: yes
+
+- name: Install Iperf
+  apt:
+    name: iperf3
+    update_cache: yes
+
+- name: Install libnl-route
+  apt:
+    name: libnl-route-3-200
+    update_cache: yes
+
+- name: Install libnl-route
+  apt:
+    name: libnl-route-3-dev
+    update_cache: yes
+
+- name: Install LLDPd
+  apt:
+    name: lldpd
+    update_cache: yes
+
+- name: Correct LLDP Settings
+  lineinfile:
+    dest: /etc/lldpd.d/port_info.conf
+    line: "configure lldp portidsubtype ifname"
+    create: yes
+  notify: restart LLDP
+
+- name: Apply LLDP Settings
+  meta: flush_handlers
+
 - name: Check VRF configured
   shell: dpkg -l           
   register: vrf_check
   failed_when: no
   changed_when: no
-
-- name: Install HWE kernel
-  apt:
-    name: linux-generic-hwe-16.04
-    update_cache: yes
-    install_recommends: yes
-    state: present
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Install python packages for ifupdown2
   apt: name={{item}} state=present
@@ -40,9 +70,12 @@
     state: present 
   with_items:
     - /home/cumulus/ifupdown2_1.0~git20170314-1_all.deb
-    - /home/cumulus/iproute2_4.14.1-1~bpo9+1_amd64.deb
-    - /home/cumulus/vrf_1.2_all.deb
-    - /home/cumulus/mgmt-vrf_1.2_all.deb
+    - /home/cumulus/vrf_1.3_amd64.deb
+    - /home/cumulus/mgmt-vrf_1.3_all.deb
+    - /home/cumulus/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb
+    - /home/cumulus/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
+    - /home/cumulus/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
+    - /home/cumulus/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Sysctl l3mdev_accept
@@ -50,7 +83,15 @@
     name: net.ipv4.tcp_l3mdev_accept
     value: 1
     state: present
-    reload: no
+    reload: yes 
+  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+
+- name: Sysctl l3mdev_accept
+  sysctl:
+    name: net.ipv4.udp_l3mdev_accept
+    value: 1
+    state: present
+    reload: yes 
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: L4 hash policy 
@@ -68,63 +109,10 @@
     backup: yes
   when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
-- name: Reboot server 
-  shell: /sbin/shutdown -r +1 
-  async: 0
-  poll: 0
-  ignore_errors: true
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
-
-- name: Sleep for server to disconnect
-  pause:
-    seconds: 90 
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
-
-- name: Wait for hosts to be up 
-  wait_for:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    state: started
-    delay: 15 
-    timeout: 120
-  ignore_errors: true
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
-
-- name: Add Ansible Apt Key
-  apt_key:
-    id: 93C4A3FD7BB9C367
-    keyserver: keyserver.ubuntu.com
-
-- name: Add Ansible Repo
-  apt_repository:
-    repo: deb http://ppa.launchpad.net/ansible/ansible/ubuntu xenial main
-    state: present
-    update_cache: no
-
-- name: Install Ansible
-  apt:
-    name: ansible 
-    update_cache: yes
-
-- name: Install Iperf
-  apt:
-    name: iperf3
-    update_cache: yes
-
-- name: Install LLDPd
-  apt:
-    name: lldpd
-    update_cache: yes
-
-- name: Correct LLDP Settings
-  lineinfile:
-    dest: /etc/lldpd.d/port_info.conf
-    line: "configure lldp portidsubtype ifname"
-    create: yes
-  notify: restart LLDP
-
-- name: Apply LLDP Settings
-  meta: flush_handlers
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount
 
 - name: Copy interfaces configuration
   template:
@@ -145,4 +133,9 @@
     delay: 15
     timeout: 120
   ignore_errors: true
+
+- name: Add dns server 
+  lineinfile:
+    path: /etc/resolv.conf 
+    line: 'nameserver 192.168.200.1 # vrf mgmt'
 ...
