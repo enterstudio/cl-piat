@@ -22,17 +22,13 @@
   become: true
   roles:
   - oob
+  - netq
 
 - hosts: netq-ts
   become: true
   roles:
   - telemetry
   - netbox
-
-- hosts: oob 
-  become: true
-  roles:
-  - oob
 
 - hosts: spines,superspine
   become: true
@@ -51,5 +47,5 @@
   roles:
   - setup-server
   - server
-#  - netq
+  - netq
 ...

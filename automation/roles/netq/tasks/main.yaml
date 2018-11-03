@@ -11,7 +11,7 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb bionic netq-1.4
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.4
     state: present
     update_cache: no
   when: netq_installed.stdout.find('[installed]') == -1
@@ -36,6 +36,11 @@
   command: systemctl daemon-reload
   when: netq_installed.stdout.find('[installed]') == -1
 
+- name: copy netq config file
+  copy:
+    src: netq.yml
+    dest: /etc/netq/netq.yml
+
 - name: Configure NetQ in management VRF
   command: "{{item}}"
   with_items:
@@ -49,25 +54,9 @@
     - systemctl start netq-agent@mgmt
   when: netq_installed.stdout.find('[installed]') == -1
 
-- name: Add netq server IP
-  command: netq config add server 192.168.200.250 vrf mgmt
-  when: netq_installed.stdout.find('[installed]') == -1
-
-- name: NetQ config add stats 
-  command: netq config add agent stats 
-
 - name: Restart Rsyslog
   service:
     name: rsyslog
     state: restarted
-  when: netq_installed.stdout.find('[installed]') == -1
-
-- name: Restart NetQ Agent
-  command: netq config restart agent
-  when: netq_installed.stdout.find('[installed]') == -1
-
-- name: Pause to let NetQ service to start
-  pause:
-    seconds: 5
   when: netq_installed.stdout.find('[installed]') == -1
 ...
