@@ -65,7 +65,6 @@
     - test
   register: shell_result
   ignore_errors: True
-
-- debug:
+  debug:
     var: shell_result.stdout_lines
 ...
