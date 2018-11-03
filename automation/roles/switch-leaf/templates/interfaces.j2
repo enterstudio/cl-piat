@@ -77,7 +77,9 @@ iface bridge
 {% if node[inventory_hostname]["mlag"] is defined %} peerlink{% endif %}
 {% if node[inventory_hostname]["overlay"] is defined %}{%- for irb in node[inventory_hostname]["overlay"]["irb"] %}{% if node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"] is defined %} vni10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}{% endif %}{% if node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"] is defined %}{% if [node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]] not in l3vnis %} vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}{{ l3vnis.append( [node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]] ) }}{% endif %}{% endif %}{%- endfor %}{% endif %}
 
+{% if node[inventory_hostname]["overlay"] is defined %}
   bridge-vids {%- for irb in node[inventory_hostname]["overlay"]["irb"] %} {{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}{% endfor %}
+{% endif %}
 
   bridge-stp off
 
