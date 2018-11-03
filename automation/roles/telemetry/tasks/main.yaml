@@ -4,6 +4,7 @@
     name: ['git','screen']
     update_cache: yes
     state: present
+    force: yes
 
 - name: Enable NetQ stats collection 
   command: "{{item}}"
