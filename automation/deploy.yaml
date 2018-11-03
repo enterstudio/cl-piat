@@ -21,30 +21,31 @@
 - hosts: oob 
   become: true
   roles:
-  - oob
+  - oob-mgmt-server
 
 - hosts: netq-ts
   become: true
   roles:
-  - telemetry
-  - netbox
+  - setup-netq-ts
+  - app-grafana
+  - app-netbox
 
 - hosts: spines,superspine
   become: true
   roles:
   - setup-switch
-  - spine
+  - switch-spine
 
 - hosts: leafs,edge,router
   become: true 
   roles:
   - setup-switch
-  - leaf
+  - switch-leaf
 
 - hosts: servers 
   become: true 
   roles:
   - setup-server
-  - netq
-  - server
+  - app-netq
+  - server-multitenant
 ...

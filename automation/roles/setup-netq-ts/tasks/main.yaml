@@ -1,0 +1,22 @@
+---
+- name: copy apt sources.list
+  copy:
+    src: sources.list
+    dest: /etc/apt/sources.list
+
+- name: Install additional host packages
+  apt:
+    name: ['git','screen','python-pip']
+    update_cache: yes
+    state: present
+    force: yes
+
+- name: Install Python docker
+  command: pip install docker 
+
+- name: Enable NetQ stats collection 
+  command: "{{item}}"
+  with_items:
+    - systemctl enable netq-stats-pushd.service 
+    - systemctl start netq-stats-pushd.service
+...
