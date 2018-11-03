@@ -42,10 +42,17 @@
   - setup-switch
   - switch-leaf
 
-- hosts: servers 
+- hosts: servers-rack1,servers-rack3 
   become: true 
   roles:
   - setup-server
   - app-netq
   - server-multitenant
+
+- hosts: servers-rack2 
+  become: true 
+  roles:
+  - setup-server
+  - app-netq
+  - server-evpn
 ...

@@ -1,66 +1,70 @@
 node:
   server03:
-    id: 13
+    id: 3
     ports:
       eth0:
         dhcp:
         vrf: mgmt
       eth1:
       eth2:
-      uplink:
-        lag:
-        members:
-          - eth1
-          - eth2
-    apps:
-      1000:
+    tenants:
+      tenant1:
+        id: 4001
+      tenant2:
+        id: 4002
+      tenant3:
+        id: 4003
+    l2domains:
+      1010:
         prefix-id: 10
-        vrf: app1
-      1001:
+        tenant: tenant1
+      1011:
         prefix-id: 11
-        vrf: app2
-      1002:
+        tenant: tenant1
+      1012:
         prefix-id: 12
-        vrf: app3
-      1003:
+        tenant: tenant2
+      1013:
         prefix-id: 13
-        vrf: app4
-      1004:
+        tenant: tenant2
+      1014:
         prefix-id: 14
-        vrf: app5
-      1005:
+        tenant: tenant3
+      1015:
         prefix-id: 15
-        vrf: app6
+        tenant: tenant3
 
   server04:
-    id: 14
+    id: 4
     ports:
       eth0:
         dhcp:
         vrf: mgmt
       eth1:
       eth2:
-      uplink:
-        lag:
-        members:
-          - eth1
-          - eth2
-    apps:
-      1000:
+    tenants:
+      tenant1:
+        id: 4001
+      tenant2:
+        id: 4002
+      tenant3:
+        id: 4003
+    l2domains:
+      1010:
         prefix-id: 10
-        vrf: app1
-      1001:
+        tenant: tenant1
+      1011:
         prefix-id: 11
-        vrf: app2
-      1002:
+        tenant: tenant1
+      1012:
         prefix-id: 12
-        vrf: app3
-      1003:
+        tenant: tenant2
+      1013:
         prefix-id: 13
-        vrf: app4
-      1004:
+        tenant: tenant2
+      1014:
         prefix-id: 14
-        vrf: app5
-      1005:
+        tenant: tenant3
+      1015:
         prefix-id: 15
-        vrf: app6
+        tenant: tenant3
