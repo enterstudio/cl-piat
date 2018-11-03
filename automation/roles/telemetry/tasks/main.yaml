@@ -54,6 +54,7 @@
 - name: Import Grafana dashboard 
   grafana_dashboard:
     grafana_url: http://localhost:3000
+    grafana_password: 'CumulusLinux!'
     state: present
     overwrite: yes
     message: Updated by ansible
