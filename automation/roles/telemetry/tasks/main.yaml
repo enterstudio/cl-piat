@@ -4,9 +4,12 @@
     src: sources.list
     dest: /etc/apt/sources.list
 
+- name: Install Python docker
+  command: pip install docker 
+
 - name: Install additional host packages
   apt:
-    name: ['git','screen']
+    name: ['git','screen','python-pip']
     update_cache: yes
     state: present
     force: yes
