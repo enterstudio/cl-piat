@@ -54,11 +54,11 @@
 - name: Import Grafana dashboard 
   grafana_dashboard:
     grafana_url: http://localhost:3000
+    grafana_user: "admin"
     grafana_password: 'CumulusLinux!'
     state: present
     overwrite: yes
     message: Updated by ansible
-    slug: foo 
     path: ip-fabric.json
   tags:
     - test
