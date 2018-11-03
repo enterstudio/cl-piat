@@ -1,4 +1,9 @@
 ---
+- name: copy apt sources.list
+  copy:
+    src: sources.list
+    dest: /etc/apt/sources.list
+
 - name: Install additional host packages
   apt:
     name: ['git','screen']
