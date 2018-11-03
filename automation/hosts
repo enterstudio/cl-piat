@@ -43,7 +43,7 @@ server06 ansible_host=192.168.200.14
 spine02 ansible_host=192.168.200.25
 spine01 ansible_host=192.168.200.28
 
-[netq-ts]
+[netq-hosts]
 netq-ts ansible_host=192.168.200.250
 
 [oob]

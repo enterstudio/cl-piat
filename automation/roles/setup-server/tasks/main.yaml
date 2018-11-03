@@ -4,7 +4,7 @@
 
 - name: Install additional host packages
   apt:
-    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd'] 
+    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3'] 
     update_cache: yes
     state: present
 
