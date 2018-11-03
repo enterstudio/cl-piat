@@ -47,6 +47,7 @@
     - /home/cumulus/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
     - /home/cumulus/frr_4.0+cl3u3_amd64.deb
     - /home/cumulus/frr-doc_4.0+cl3u3_all.deb
+    - /home/cumulus/libjson-c2_0.11-4ubuntu2_amd64.deb
 
 - name: Sysctl l3mdev_accept
   sysctl:
