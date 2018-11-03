@@ -6,7 +6,7 @@
 
 - name: Add Cumulus Repo
   apt_repository:
-    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.3
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.4
     state: present
     update_cache: no
 
@@ -26,6 +26,11 @@
     name: cumulus-netq
     update_cache: yes
 
+- name: copy netq config file
+  copy:
+    src: netq.yml
+    dest: /etc/netq/netq.yml
+
 - name: Enable and start netqd 
   command: "{{item}}"
   with_items:
@@ -33,7 +38,7 @@
     - systemctl enable netqd
     - systemctl start netqd
 
-- name: Enable and start netq-agent 
+- name: Enable and start netq-agent
   command: "{{item}}"
   with_items:
     - systemctl stop netq-agent
@@ -44,14 +49,8 @@
   pause:
     seconds: 5
 
-- name: Add netq server IP
-  command: netq config add server 192.168.200.250
-
 - name: Restart Rsyslog
   service:
     name: rsyslog
     state: restarted
-
-- name: Restart NetQ Agent
-  command: netq config restart agent
 ...
