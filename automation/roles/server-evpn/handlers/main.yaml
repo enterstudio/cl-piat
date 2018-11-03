@@ -1,0 +1,19 @@
+- name: restart LLDP
+  service:
+    name: lldpd
+    state: restarted
+
+- name: reload networking
+  shell: sleep 2 && ifreload -a 
+  async: 1
+  poll: 0
+
+- name: restart frr
+  service:
+    name: frr
+    state: restarted
+
+- name: reload frr
+  service:
+    name: frr
+    state: reloaded

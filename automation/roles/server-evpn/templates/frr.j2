@@ -1,0 +1,45 @@
+frr version 3.1+cl3u3
+frr defaults datacenter
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+{% for tenant in node[inventory_hostname]["tenants"] -%}
+vrf {{tenant}}
+ vni 40{{node[inventory_hostname]["tenants"][tenant]["id"]}}
+{% endfor %}
+!
+interface eth1 
+ ipv6 nd ra-interval 10
+ no ipv6 nd suppress-ra
+interface eth2 
+ ipv6 nd ra-interval 10
+ no ipv6 nd suppress-ra
+
+router bgp 6550{{node[inventory_hostname]["id"]}}
+ bgp router-id 10.250.250.{{node[inventory_hostname]["id"]}}
+ bgp bestpath as-path multipath-relax
+ neighbor FABRIC peer-group
+ neighbor FABRIC remote-as external
+ neighbor FABRIC timers 1 3
+ neighbor eth1 interface peer-group FABRIC
+ neighbor eth2 interface peer-group FABRIC
+ !
+ address-family ipv4 unicast
+  redistribute connected route-map loopbacks
+ exit-address-family
+ !
+ address-family l2vpn evpn
+   neighbor FABRIC activate
+   advertise-all-vni
+   advertise ipv4 unicast
+   advertise ipv6 unicast
+ exit-address-family
+!
+route-map loopbacks permit 10
+ match interface lo
+!
+line vty
+!

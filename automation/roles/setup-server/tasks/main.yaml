@@ -45,6 +45,8 @@
     - /home/cumulus/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
     - /home/cumulus/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
     - /home/cumulus/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
+    - /home/cumulus/frr_4.0+cl3u3_amd64.deb
+    - /home/cumulus/frr-doc_4.0+cl3u3_all.deb
 
 - name: Sysctl l3mdev_accept
   sysctl:
