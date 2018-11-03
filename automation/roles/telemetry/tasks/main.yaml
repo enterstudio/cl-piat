@@ -51,14 +51,14 @@
     database: netq
     state: present
 
-# Dashboard import disabled due to bug in Ansible module: https://github.com/ansible/ansible/issues/39663
-
-#- name: Import Grafana dashboard 
-#  grafana_dashboard:
-#    grafana_url: http://localhost:3000
-#    state: present
-#    overwrite: yes
-#    message: Updated by ansible
-#    slug: foo 
-#    path: ip-fabric.json
+- name: Import Grafana dashboard 
+  grafana_dashboard:
+    grafana_url: http://localhost:3000
+    state: present
+    overwrite: yes
+    message: Updated by ansible
+    slug: foo 
+    path: ip-fabric.json
+  tags:
+    - test
 ...
