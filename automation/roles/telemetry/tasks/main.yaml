@@ -69,4 +69,6 @@
 - name: Debug
   debug:
     var: shell_result.stdout_lines
+  tags:
+    - test
 ...
