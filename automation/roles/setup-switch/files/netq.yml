@@ -3,6 +3,7 @@ backend:
   port: 6379
   role: master
   server: 192.168.200.250
+  vrf: mgmt
 netq-agent:
   stats: true
 notifier-filters:

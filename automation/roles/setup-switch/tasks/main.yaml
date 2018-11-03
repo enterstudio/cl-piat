@@ -1,47 +1,30 @@
 ---
-#  - name: ntp daemon state
-#    shell: systemctl status ntp@mgmt
-#    register: ntp_daemon_state
+- name: Configured NTP in management VRF
+  command: "{{item}}"
+  with_items:
+    - systemctl stop ntp.service
+    - systemctl disable ntp.service
+    - systemctl enable ntp@mgmt
+    - systemctl start ntp@mgmt
 
-  - name: Configured NTP in management VRF
-    command: "{{item}}"
-    with_items:
-      - systemctl stop ntp.service
-      - systemctl disable ntp.service
-      - systemctl enable ntp@mgmt
-      - systemctl start ntp@mgmt
-#    when:
-#      - ntp_daemon_state.stdout.find('active (running)') == -1
+- name: copy netq config file
+  copy:
+    src: netq.yml
+    dest: /etc/netq/netq.yml
 
-  - name: NetQ config
-    shell: netq config show server
-    register: netq_config 
+- name: Configure NetQ in management VRF
+  command: "{{item}}"
+  with_items:
+    - systemctl stop netqd.service
+    - systemctl disable netqd.service
+    - systemctl stop netq-agent.service
+    - systemctl disable netq-agent.service
+    - systemctl enable netqd@mgmt
+    - systemctl start netqd@mgmt
+    - systemctl enable netq-agent@mgmt
+    - systemctl start netq-agent@mgmt
 
-  - name: NetQ stats config
-    shell: cat /etc/netq/netq.yml
-    register: netq_stats_config
-
-  - name: Add netq server IP
-    command: netq config add server 192.168.200.250 vrf mgmt
-    when:
-      - netq_config.stdout.find('192.168.200.250') == -1
-      - netq_config.stdout.find('mgmt') == -1
-
-  - name: Enable NetQ stats
-    command: netq config add agent stats
-    when:
-      - netq_stats_config.stdout.find('stats') == -1
-
-  - name: NetQ config
-    shell: systemctl status netqd@mgmt
-    register: netq_daemon_state 
-
-  - name: Restart NetQ Agent
-    command: netq config restart agent
-    when:
-      - netq_daemon_state.stdout.find('active (running)') == -1
-
-  - name: Restart NetQ Agent
-    command: netq config restart agent
-    when:
-      - netq_stats_config.stdout.find('stats') == -1
+- name: Restart Rsyslog
+  service:
+    name: rsyslog
+    state: restarted
