@@ -6,6 +6,7 @@ service integrated-vtysh-config
 !
 log syslog informational
 !
+{% if node[inventory_hostname]["overlay"] is defined %}
 {% set vrfs = [] %}
 {% for irb in node[inventory_hostname]["overlay"]["irb"] -%}
 {% if node[inventory_hostname]["overlay"]["irb"][irb]["vrf"] is defined %}
@@ -16,6 +17,7 @@ vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
 {% endif %}
 {% endif %}
 {% endfor %}
+{% endif %}
 !
 {% if node[inventory_hostname]["routing"]["bgp"]["underlay"] is defined %}
 {% for interface in node[inventory_hostname]["routing"]["bgp"]["underlay"]["peers"] -%}
