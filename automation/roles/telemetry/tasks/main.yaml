@@ -64,11 +64,16 @@
   tags:
     - test
   register: shell_result
-  ignore_errors: True
 
 - name: Debug
   debug:
     var: shell_result.stdout_lines
+  tags:
+    - test
+
+- name: Debug2
+  debug:
+    var: shell_result.stderr_lines
   tags:
     - test
 ...
