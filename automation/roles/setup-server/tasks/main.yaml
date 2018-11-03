@@ -4,8 +4,9 @@
 
 - name: Install additional host packages
   apt:
-    name: [u'ansible', u'iperf3', u'libnl-route-3-200', u'libnl-route-3-dev', u'lldpd'] 
+    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd'] 
     update_cache: yes
+    state: present
 
 - name: Correct LLDP Settings
   lineinfile:
@@ -19,12 +20,12 @@
 
 - name: Install python packages for ifupdown2
   apt: 
-    name: [u'python2.7', u'python-argcomplete', u'python-ipaddr']
+    name: ['python2.7','python-argcomplete','python-ipaddr']
     state: present
 
 - name: Remove ifupdown1
   apt: 
-    name: [u'ifupdown', u'ifenslave']
+    name: ['ifupdown','ifenslave']
     state: absent
 
 - name: Copy deb packages
