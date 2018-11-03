@@ -68,18 +68,17 @@
     reload: no
 
 - name: Copy interfaces configuration
-  template:
-    src: interfaces.j2
+  copy:
+    src: interfaces
     dest: /etc/network/interfaces
-    backup: yes
-
-- name: Add dns server 
-  lineinfile:
-    path: /etc/resolv.conf 
-    line: 'nameserver 192.168.200.1 # vrf mgmt'
 
 - name: Reboot system
   reboot:
     reboot_timeout: 1200
     test_command: mount
+
+- name: Add dns server 
+  lineinfile:
+    path: /etc/resolv.conf 
+    line: 'nameserver 192.168.200.1 # vrf mgmt'
 ...
