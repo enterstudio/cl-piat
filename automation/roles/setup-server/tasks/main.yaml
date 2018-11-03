@@ -2,29 +2,9 @@
 - apt_repository:
     repo: ppa:ansible/ansible 
 
-- name: Install Ansible
+- name: Install additional host packages
   apt:
-    name: ansible 
-    update_cache: yes
-
-- name: Install Iperf
-  apt:
-    name: iperf3
-    update_cache: yes
-
-- name: Install libnl-route
-  apt:
-    name: libnl-route-3-200
-    update_cache: yes
-
-- name: Install libnl-route
-  apt:
-    name: libnl-route-3-dev
-    update_cache: yes
-
-- name: Install LLDPd
-  apt:
-    name: lldpd
+    name: [u'ansible', u'iperf3', u'libnl-route-3-200', u'libnl-route-3-dev', u'lldpd'] 
     update_cache: yes
 
 - name: Correct LLDP Settings
@@ -37,32 +17,20 @@
 - name: Apply LLDP Settings
   meta: flush_handlers
 
-- name: Check VRF configured
-  shell: dpkg -l           
-  register: vrf_check
-  failed_when: no
-  changed_when: no
-
 - name: Install python packages for ifupdown2
-  apt: name={{item}} state=present
-  with_items:
-    - python2.7
-    - python-argcomplete
-    - python-ipaddr
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+  apt: 
+    name: [u'python2.7', u'python-argcomplete', u'python-ipaddr']
+    state: present
 
 - name: Remove ifupdown1
-  apt: name={{item}} state=absent
-  with_items:
-    - ifupdown
-    - ifenslave
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
+  apt: 
+    name: [u'ifupdown', u'ifenslave']
+    state: absent
 
 - name: Copy deb packages
   copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
   with_fileglob:
     - files/*.deb
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Install ifupdown2 & Vrf tools
   apt: 
@@ -76,7 +44,6 @@
     - /home/cumulus/linux-headers-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
     - /home/cumulus/linux-modules-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
     - /home/cumulus/linux-image-unsigned-4.19.0-041900-generic_4.19.0-041900.201810221809_amd64.deb
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Sysctl l3mdev_accept
   sysctl:
@@ -84,7 +51,6 @@
     value: 1
     state: present
     reload: yes 
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Sysctl l3mdev_accept
   sysctl:
@@ -92,7 +58,6 @@
     value: 1
     state: present
     reload: yes 
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: L4 hash policy 
   sysctl:
@@ -100,42 +65,20 @@
     value: 1
     state: present
     reload: no
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
 
 - name: Copy interfaces configuration
   template:
     src: interfaces.j2
     dest: /etc/network/interfaces
     backup: yes
-  when: vrf_check.stdout.find('Linux tools for VRF') == -1
-
-- name: Reboot system
-  reboot:
-    reboot_timeout: 1200
-    test_command: mount
-
-- name: Copy interfaces configuration
-  template:
-    src: interfaces.j2
-    dest: /etc/network/interfaces
-    backup: yes
-  notify: reload networking
-
-- name: Sleep for server to disconnect
-  pause:
-    seconds: 5
-
-- name: Wait for hosts to be up
-  wait_for:
-    host: "{{ inventory_hostname }}"
-    port: 22
-    state: started
-    delay: 15
-    timeout: 120
-  ignore_errors: true
 
 - name: Add dns server 
   lineinfile:
     path: /etc/resolv.conf 
     line: 'nameserver 192.168.200.1 # vrf mgmt'
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount
 ...
