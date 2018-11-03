@@ -50,30 +50,4 @@
     url: http://192.168.200.250:8086
     database: netq
     state: present
-
-- name: Import Grafana dashboard 
-  grafana_dashboard:
-    grafana_url: http://localhost:3000
-    grafana_user: "admin"
-    grafana_password: 'CumulusLinux!'
-    org_id: 1
-    state: present
-    overwrite: yes
-    message: Updated by ansible
-    path: ip-fabric.json
-  tags:
-    - test
-  register: shell_result
-
-- name: Debug
-  debug:
-    var: shell_result.stdout_lines
-  tags:
-    - test
-
-- name: Debug2
-  debug:
-    var: shell_result.stderr_lines
-  tags:
-    - test
 ...
