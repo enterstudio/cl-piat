@@ -22,7 +22,6 @@
   become: true
   roles:
   - oob
-  - netq
 
 - hosts: netq-ts
   become: true
@@ -46,6 +45,6 @@
   become: true 
   roles:
   - setup-server
-  - server
   - netq
+  - server
 ...
