@@ -8,8 +8,10 @@
 auto lo
 iface lo inet loopback
    address {{node[inventory_hostname]["routing"]["lo"]}}
+{% if node[inventory_hostname]["overlay"] is defined %}
 {% if node[inventory_hostname]["overlay"]["anycast-ip"] is defined %}
    clagd-vxlan-anycast-ip {{ node[inventory_hostname]["overlay"]["anycast-ip"]|replace("/32", "")}}
+{% endif %}
 {% endif %}
 
 auto eth0
