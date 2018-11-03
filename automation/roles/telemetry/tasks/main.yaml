@@ -1,13 +1,9 @@
 ---
-- name: Install Screen 
+- name: Install additional host packages
   apt:
-    name: screen
+    name: ['git','screen']
     update_cache: yes
-
-- name: Install Git
-  apt:
-    name: git-core
-    update_cache: yes
+    state: present
 
 - name: Enable NetQ stats collection 
   command: "{{item}}"

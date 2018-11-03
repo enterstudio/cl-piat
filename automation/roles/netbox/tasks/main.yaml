@@ -1,10 +1,4 @@
 ---
-- name: Install additional host packages
-  apt:
-    name: ['git']
-    update_cache: yes
-    state: present
-
 - name: Netbox state 
   shell: docker ps
   register: netbox_state 
