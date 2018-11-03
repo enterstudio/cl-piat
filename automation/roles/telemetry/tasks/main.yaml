@@ -63,4 +63,8 @@
     path: ip-fabric.json
   tags:
     - test
+  register: shell_result
+
+- debug:
+    var: shell_result.stdout_lines
 ...
