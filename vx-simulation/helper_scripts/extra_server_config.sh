@@ -19,6 +19,7 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "note: ubuntu device detected"
       #Install LLDP
       apt-get update -qy && apt-get install lldpd -qy
+      apt-get install python -qy
       echo "configure lldp portidsubtype ifname" > /etc/lldpd.d/port_info.conf
 
       #Replace existing network interfaces file
@@ -38,6 +39,7 @@ if [ "$HOSTNAME" != netq-ts ]; then
       echo -e "post-up chown -R cumulus:cumulus /home/cumulus/.ssh" >> /etc/network/interfaces.d/eth0.cfg
 
       echo "retry 1;" >> /etc/dhcp/dhclient.conf
+      
   fi
 
   #Test for Fedora-Based Host
