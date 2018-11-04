@@ -42,12 +42,12 @@
         - { app: 'app1', prefix: '11', destination: '40'} 
         - { app: 'app1', prefix: '11', destination: '15'} 
         - { app: 'app1', prefix: '11', destination: '16'} 
-        - { app: 'app3', prefix: '12', destination: '11'} 
-        - { app: 'app3', prefix: '12', destination: '12'} 
-        - { app: 'app3', prefix: '12', destination: '30'} 
-        - { app: 'app3', prefix: '12', destination: '40'} 
-        - { app: 'app3', prefix: '12', destination: '15'} 
-        - { app: 'app3', prefix: '12', destination: '16'} 
+        - { app: 'app3', prefix: '13', destination: '11'} 
+        - { app: 'app3', prefix: '13', destination: '12'} 
+        - { app: 'app3', prefix: '13', destination: '30'} 
+        - { app: 'app3', prefix: '13', destination: '40'} 
+        - { app: 'app3', prefix: '13', destination: '15'} 
+        - { app: 'app3', prefix: '13', destination: '16'} 
 
     - name: IPv6 Iperf traffic 
       command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
@@ -58,12 +58,12 @@
         - { app: 'app1', prefix: '11', destination: '40'} 
         - { app: 'app1', prefix: '11', destination: '15'} 
         - { app: 'app1', prefix: '11', destination: '16'} 
-        - { app: 'app3', prefix: '12', destination: '11'} 
-        - { app: 'app3', prefix: '12', destination: '12'} 
-        - { app: 'app3', prefix: '12', destination: '30'} 
-        - { app: 'app3', prefix: '12', destination: '40'} 
-        - { app: 'app3', prefix: '12', destination: '15'} 
-        - { app: 'app3', prefix: '12', destination: '16'} 
+        - { app: 'app3', prefix: '13', destination: '11'} 
+        - { app: 'app3', prefix: '13', destination: '12'} 
+        - { app: 'app3', prefix: '13', destination: '30'} 
+        - { app: 'app3', prefix: '13', destination: '40'} 
+        - { app: 'app3', prefix: '13', destination: '15'} 
+        - { app: 'app3', prefix: '13', destination: '16'} 
 
 - hosts: servers-rack2 
   become: yes
