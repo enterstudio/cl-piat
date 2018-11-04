@@ -1,0 +1,21 @@
+---
+- hosts: spines,superspine
+  become: true
+  roles:
+  - switch-spine
+
+- hosts: leafs,edge,router
+  become: true 
+  roles:
+  - switch-leaf
+
+- hosts: servers-rack1,servers-rack3 
+  become: true 
+  roles:
+  - server-multitenant
+
+- hosts: servers-rack2 
+  become: true 
+  roles:
+  - server-evpn
+...

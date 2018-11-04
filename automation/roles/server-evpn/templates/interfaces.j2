@@ -58,8 +58,8 @@ iface vni10{{l2domain}}
 
 auto vlan{{l2domain}}
 iface vlan{{l2domain}}
-    address 172.30.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1/24
-    address fc00:100:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1/64
+    address 192.168.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1/24
+    address fc00:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1/64
     vlan-id {{l2domain}}
     vlan-raw-device bridge
     vrf {{node[inventory_hostname]["l2domains"][l2domain]["tenant"]}}
@@ -67,11 +67,11 @@ iface vlan{{l2domain}}
     post-up ip netns add vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
     post-up ip link add veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 type veth peer name veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
     post-up ip link set veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 netns vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}
-    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip address add 172.30.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.{{node[inventory_hostname]["id"]}}0/24 dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
-    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 address add fc00:100:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::{{node[inventory_hostname]["id"]}}0/64 dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
+    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip address add 192.168.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.{{node[inventory_hostname]["id"]}}0/24 dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
+    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 address add fc00:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::{{node[inventory_hostname]["id"]}}0/64 dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1
     post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip link set veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}1 up
-    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip route add default via 172.30.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1
-    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 route add default via fc00:100:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1
+    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip route add default via 192.168.{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}.1
+    post-up ip netns exec vm{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}} ip -6 route add default via fc00:{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}::1
 
     post-up ip link set dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0 master bridge
     post-up bridge vlan del vid 1 dev veth{{node[inventory_hostname]["l2domains"][l2domain]["prefix-id"]}}0
