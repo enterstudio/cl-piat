@@ -19,7 +19,7 @@ iface eth2
 
 auto bridge
 iface bridge
-    bridge-ports vni404001 vni404002 vni404003 vni101010 vni101011 vni101012 vni101013 vni101014 vni101015
+    bridge-ports vni404001 vni404002 vni404003 vni101000 vni101001 vni101002 vni101003 vni101004 vni101005
     bridge-vlan-aware yes
     bridge-vids {{ node[inventory_hostname]["l2domains"] | join(" ") }}
 

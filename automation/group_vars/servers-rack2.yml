@@ -15,22 +15,22 @@ node:
       tenant3:
         id: 4003
     l2domains:
-      1010:
+      1000:
         prefix-id: 10
         tenant: tenant1
-      1011:
+      1001:
         prefix-id: 11
         tenant: tenant1
-      1012:
+      1002:
         prefix-id: 12
         tenant: tenant2
-      1013:
+      1003:
         prefix-id: 13
         tenant: tenant2
-      1014:
+      1004:
         prefix-id: 14
         tenant: tenant3
-      1015:
+      1005:
         prefix-id: 15
         tenant: tenant3
 
@@ -50,21 +50,21 @@ node:
       tenant3:
         id: 4003
     l2domains:
-      1010:
+      1000:
         prefix-id: 10
         tenant: tenant1
-      1011:
+      1001:
         prefix-id: 11
         tenant: tenant1
-      1012:
+      1002:
         prefix-id: 12
         tenant: tenant2
-      1013:
+      1003:
         prefix-id: 13
         tenant: tenant2
-      1014:
+      1004:
         prefix-id: 14
         tenant: tenant3
-      1015:
+      1005:
         prefix-id: 15
         tenant: tenant3
