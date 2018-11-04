@@ -18,6 +18,7 @@
     src: interfaces.j2
     dest: /etc/network/interfaces
     backup: yes
+  notify: reload networking 
 
 - name: Copy FRR daemons file
   copy:
