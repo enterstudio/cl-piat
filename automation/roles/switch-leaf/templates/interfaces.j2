@@ -92,6 +92,7 @@ auto peerlink
 iface peerlink
   bond-slaves {{ node[inventory_hostname]["mlag"]["members"] | join(" ") }}
   mtu 9216
+  bridge-learning off
 
 auto peerlink.4094
 iface peerlink.4094
