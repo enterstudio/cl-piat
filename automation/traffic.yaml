@@ -32,6 +32,18 @@
         - { app: 'app4', port: '50005'} 
         - { app: 'app4', port: '40006'} 
         - { app: 'app4', port: '50006'} 
+        - { app: 'app6', port: '40001'} 
+        - { app: 'app6', port: '50001'} 
+        - { app: 'app6', port: '40002'} 
+        - { app: 'app6', port: '50002'} 
+        - { app: 'app6', port: '40003'} 
+        - { app: 'app6', port: '50003'} 
+        - { app: 'app6', port: '40004'} 
+        - { app: 'app6', port: '50004'} 
+        - { app: 'app6', port: '40005'} 
+        - { app: 'app6', port: '50005'} 
+        - { app: 'app6', port: '40006'} 
+        - { app: 'app6', port: '50006'} 
 
 - hosts: servers-rack2 
   become: yes
@@ -67,6 +79,18 @@
         - { app: 'vm13', port: '50005'} 
         - { app: 'vm13', port: '40006'} 
         - { app: 'vm13', port: '50006'} 
+        - { app: 'vm15', port: '40001'} 
+        - { app: 'vm15', port: '50001'} 
+        - { app: 'vm15', port: '40002'} 
+        - { app: 'vm15', port: '50002'} 
+        - { app: 'vm15', port: '40003'} 
+        - { app: 'vm15', port: '50003'} 
+        - { app: 'vm15', port: '40004'} 
+        - { app: 'vm15', port: '50004'} 
+        - { app: 'vm15', port: '40005'} 
+        - { app: 'vm15', port: '50005'} 
+        - { app: 'vm15', port: '40006'} 
+        - { app: 'vm15', port: '50006'} 
 
 
 - hosts: servers-rack1,servers-rack3 
@@ -87,6 +111,12 @@
         - { app: 'app3', prefix: '13', destination: '40'} 
         - { app: 'app3', prefix: '13', destination: '15'} 
         - { app: 'app3', prefix: '13', destination: '16'} 
+        - { app: 'app5', prefix: '15', destination: '11'} 
+        - { app: 'app5', prefix: '15', destination: '12'} 
+        - { app: 'app5', prefix: '15', destination: '30'} 
+        - { app: 'app5', prefix: '15', destination: '40'} 
+        - { app: 'app5', prefix: '15', destination: '15'} 
+        - { app: 'app5', prefix: '15', destination: '16'} 
 
 #    - name: IPv6 Iperf traffic 
 #      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 5 -t 420 -b 5k -Z -M 1350 -w 8192
@@ -122,6 +152,12 @@
         - { app: 'vm12', prefix: '13', destination: '40'} 
         - { app: 'vm12', prefix: '13', destination: '15'} 
         - { app: 'vm12', prefix: '13', destination: '16'} 
+        - { app: 'vm14', prefix: '15', destination: '11'} 
+        - { app: 'vm14', prefix: '15', destination: '12'} 
+        - { app: 'vm14', prefix: '15', destination: '30'} 
+        - { app: 'vm14', prefix: '15', destination: '40'} 
+        - { app: 'vm14', prefix: '15', destination: '15'} 
+        - { app: 'vm14', prefix: '15', destination: '16'} 
 
 #    - name: IPv6 Iperf traffic 
 #      command: screen -dm ip netns exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 5 -t 420 -b 5k -Z -M 1350 -w 8192 
