@@ -72,14 +72,14 @@
     name: net.ipv4.fib_multipath_hash_policy
     value: 1
     state: present
-    reload: no
+    reload: yes 
 
 - name: Enable IPv6 
   sysctl:
     name: net.ipv6.conf.all.disable_ipv6
     value: 0
     state: present
-    reload: no
+    reload: yes
 
 - name: Copy interfaces configuration
   copy:

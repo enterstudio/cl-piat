@@ -101,7 +101,7 @@
         - { app: 'vm13', port: '50006'} 
 
     - name: IPv4 Iperf traffic 
-      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 400{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
+      command: screen -dm ip netns exec "{{ item.app }}" iperf3 -p 400{{ inventory_hostname[-2:] }} -c 192.168."{{ item.prefix }}"."{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
       loop:
         - { app: 'vm10', prefix: '11', destination: '11'} 
         - { app: 'vm10', prefix: '11', destination: '12'} 
@@ -117,7 +117,7 @@
         - { app: 'vm12', prefix: '12', destination: '16'} 
 
     - name: IPv6 Iperf traffic 
-      command: screen -dm ip vrf exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
+      command: screen -dm ip netns exec "{{ item.app }}" iperf3 -p 500{{ inventory_hostname[-2:] }} -c fc00:"{{ item.prefix }}"::"{{ item.destination }}" -P 8 -t 300 -b 10k -M 1460 -w 8192
       loop:
         - { app: 'vm10', prefix: '11', destination: '11'} 
         - { app: 'vm10', prefix: '11', destination: '12'} 
