@@ -1,4 +1,11 @@
 ---
+- name: Set IPv4 L4 hashing
+  sysctl:
+    name: net.ipv4.fib_multipath_hash_policy
+    value: 1
+    state: present
+    reload: yes
+
 - name: Configured NTP in management VRF
   command: "{{item}}"
   with_items:

@@ -4,7 +4,7 @@
 
 - name: Install additional host packages
   apt:
-    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3'] 
+    name: ['ansible','iperf3','libnl-route-3-200','libnl-route-3-dev','lldpd','libjson-c3','traceroute'] 
     update_cache: yes
     state: present
 
@@ -23,10 +23,13 @@
     name: ['python2.7','python-argcomplete','python-ipaddr']
     state: present
 
-- name: Remove ifupdown1
+- name: Remove ifupdown1 and netplan
   apt: 
-    name: ['ifupdown','ifenslave']
+    name: ['ifupdown','ifenslave','netplan.io']
     state: absent
+
+- name: Remove netplan files
+  shell: rm -vfr /usr/share/netplan /etc/netplan
 
 - name: Copy deb packages
   copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
