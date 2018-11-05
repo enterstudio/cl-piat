@@ -38,6 +38,7 @@ iface {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
 
 auto vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
 iface vni40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
+    mtu 9000
     bridge-access {{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}} 
     bridge-arp-nd-suppress on
     bridge-learning off
@@ -52,6 +53,7 @@ iface dummysvi40{{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
     vlan-id {{node[inventory_hostname]["overlay"]["irb"][irb]["l3vni"]}}
     vlan-raw-device bridge
     vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
+    mtu 9000
 
 {{ vrfs.append( [node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]] ) }}
 {% endif %}
@@ -133,6 +135,7 @@ iface vni10{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
 
 auto vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
 iface vlan{{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
+    mtu 9000
     vrf {{node[inventory_hostname]["overlay"]["irb"][irb]["vrf"]}}
     vlan-id {{node[inventory_hostname]["overlay"]["irb"][irb]["l2vni"]}}
     vlan-raw-device bridge
