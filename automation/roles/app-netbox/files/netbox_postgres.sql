@@ -55,14 +55,15 @@ SET default_transaction_read_only = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.2
--- Dumped by pg_dump version 10.2
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -81,8 +82,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -91,19 +90,19 @@ SET default_with_oids = false;
 -- Name: auth_group; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_group (
+CREATE TABLE public.auth_group (
     id integer NOT NULL,
     name character varying(80) NOT NULL
 );
 
 
-ALTER TABLE auth_group OWNER TO netbox;
+ALTER TABLE public.auth_group OWNER TO netbox;
 
 --
 -- Name: auth_group_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_group_id_seq
+CREATE SEQUENCE public.auth_group_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -112,33 +111,33 @@ CREATE SEQUENCE auth_group_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_group_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_group_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_group_id_seq OWNED BY auth_group.id;
+ALTER SEQUENCE public.auth_group_id_seq OWNED BY public.auth_group.id;
 
 
 --
 -- Name: auth_group_permissions; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_group_permissions (
+CREATE TABLE public.auth_group_permissions (
     id integer NOT NULL,
     group_id integer NOT NULL,
     permission_id integer NOT NULL
 );
 
 
-ALTER TABLE auth_group_permissions OWNER TO netbox;
+ALTER TABLE public.auth_group_permissions OWNER TO netbox;
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_group_permissions_id_seq
+CREATE SEQUENCE public.auth_group_permissions_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -147,20 +146,20 @@ CREATE SEQUENCE auth_group_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_group_permissions_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_group_permissions_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_group_permissions_id_seq OWNED BY auth_group_permissions.id;
+ALTER SEQUENCE public.auth_group_permissions_id_seq OWNED BY public.auth_group_permissions.id;
 
 
 --
 -- Name: auth_permission; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_permission (
+CREATE TABLE public.auth_permission (
     id integer NOT NULL,
     name character varying(255) NOT NULL,
     content_type_id integer NOT NULL,
@@ -168,13 +167,13 @@ CREATE TABLE auth_permission (
 );
 
 
-ALTER TABLE auth_permission OWNER TO netbox;
+ALTER TABLE public.auth_permission OWNER TO netbox;
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_permission_id_seq
+CREATE SEQUENCE public.auth_permission_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -183,20 +182,20 @@ CREATE SEQUENCE auth_permission_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_permission_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_permission_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_permission_id_seq OWNED BY auth_permission.id;
+ALTER SEQUENCE public.auth_permission_id_seq OWNED BY public.auth_permission.id;
 
 
 --
 -- Name: auth_user; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_user (
+CREATE TABLE public.auth_user (
     id integer NOT NULL,
     password character varying(128) NOT NULL,
     last_login timestamp with time zone,
@@ -211,26 +210,26 @@ CREATE TABLE auth_user (
 );
 
 
-ALTER TABLE auth_user OWNER TO netbox;
+ALTER TABLE public.auth_user OWNER TO netbox;
 
 --
 -- Name: auth_user_groups; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_user_groups (
+CREATE TABLE public.auth_user_groups (
     id integer NOT NULL,
     user_id integer NOT NULL,
     group_id integer NOT NULL
 );
 
 
-ALTER TABLE auth_user_groups OWNER TO netbox;
+ALTER TABLE public.auth_user_groups OWNER TO netbox;
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_user_groups_id_seq
+CREATE SEQUENCE public.auth_user_groups_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -239,20 +238,20 @@ CREATE SEQUENCE auth_user_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_user_groups_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_user_groups_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_user_groups_id_seq OWNED BY auth_user_groups.id;
+ALTER SEQUENCE public.auth_user_groups_id_seq OWNED BY public.auth_user_groups.id;
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_user_id_seq
+CREATE SEQUENCE public.auth_user_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -261,33 +260,33 @@ CREATE SEQUENCE auth_user_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_user_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_user_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_user_id_seq OWNED BY auth_user.id;
+ALTER SEQUENCE public.auth_user_id_seq OWNED BY public.auth_user.id;
 
 
 --
 -- Name: auth_user_user_permissions; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE auth_user_user_permissions (
+CREATE TABLE public.auth_user_user_permissions (
     id integer NOT NULL,
     user_id integer NOT NULL,
     permission_id integer NOT NULL
 );
 
 
-ALTER TABLE auth_user_user_permissions OWNER TO netbox;
+ALTER TABLE public.auth_user_user_permissions OWNER TO netbox;
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE auth_user_user_permissions_id_seq
+CREATE SEQUENCE public.auth_user_user_permissions_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -296,20 +295,20 @@ CREATE SEQUENCE auth_user_user_permissions_id_seq
     CACHE 1;
 
 
-ALTER TABLE auth_user_user_permissions_id_seq OWNER TO netbox;
+ALTER TABLE public.auth_user_user_permissions_id_seq OWNER TO netbox;
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE auth_user_user_permissions_id_seq OWNED BY auth_user_user_permissions.id;
+ALTER SEQUENCE public.auth_user_user_permissions_id_seq OWNED BY public.auth_user_user_permissions.id;
 
 
 --
 -- Name: circuits_circuit; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE circuits_circuit (
+CREATE TABLE public.circuits_circuit (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -327,13 +326,13 @@ CREATE TABLE circuits_circuit (
 );
 
 
-ALTER TABLE circuits_circuit OWNER TO netbox;
+ALTER TABLE public.circuits_circuit OWNER TO netbox;
 
 --
 -- Name: circuits_circuit_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE circuits_circuit_id_seq
+CREATE SEQUENCE public.circuits_circuit_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -342,20 +341,20 @@ CREATE SEQUENCE circuits_circuit_id_seq
     CACHE 1;
 
 
-ALTER TABLE circuits_circuit_id_seq OWNER TO netbox;
+ALTER TABLE public.circuits_circuit_id_seq OWNER TO netbox;
 
 --
 -- Name: circuits_circuit_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE circuits_circuit_id_seq OWNED BY circuits_circuit.id;
+ALTER SEQUENCE public.circuits_circuit_id_seq OWNED BY public.circuits_circuit.id;
 
 
 --
 -- Name: circuits_circuittermination; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE circuits_circuittermination (
+CREATE TABLE public.circuits_circuittermination (
     id integer NOT NULL,
     term_side character varying(1) NOT NULL,
     port_speed integer NOT NULL,
@@ -370,13 +369,13 @@ CREATE TABLE circuits_circuittermination (
 );
 
 
-ALTER TABLE circuits_circuittermination OWNER TO netbox;
+ALTER TABLE public.circuits_circuittermination OWNER TO netbox;
 
 --
 -- Name: circuits_circuittermination_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE circuits_circuittermination_id_seq
+CREATE SEQUENCE public.circuits_circuittermination_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -385,33 +384,33 @@ CREATE SEQUENCE circuits_circuittermination_id_seq
     CACHE 1;
 
 
-ALTER TABLE circuits_circuittermination_id_seq OWNER TO netbox;
+ALTER TABLE public.circuits_circuittermination_id_seq OWNER TO netbox;
 
 --
 -- Name: circuits_circuittermination_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE circuits_circuittermination_id_seq OWNED BY circuits_circuittermination.id;
+ALTER SEQUENCE public.circuits_circuittermination_id_seq OWNED BY public.circuits_circuittermination.id;
 
 
 --
 -- Name: circuits_circuittype; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE circuits_circuittype (
+CREATE TABLE public.circuits_circuittype (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE circuits_circuittype OWNER TO netbox;
+ALTER TABLE public.circuits_circuittype OWNER TO netbox;
 
 --
 -- Name: circuits_circuittype_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE circuits_circuittype_id_seq
+CREATE SEQUENCE public.circuits_circuittype_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -420,20 +419,20 @@ CREATE SEQUENCE circuits_circuittype_id_seq
     CACHE 1;
 
 
-ALTER TABLE circuits_circuittype_id_seq OWNER TO netbox;
+ALTER TABLE public.circuits_circuittype_id_seq OWNER TO netbox;
 
 --
 -- Name: circuits_circuittype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE circuits_circuittype_id_seq OWNED BY circuits_circuittype.id;
+ALTER SEQUENCE public.circuits_circuittype_id_seq OWNED BY public.circuits_circuittype.id;
 
 
 --
 -- Name: circuits_provider; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE circuits_provider (
+CREATE TABLE public.circuits_provider (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -448,13 +447,13 @@ CREATE TABLE circuits_provider (
 );
 
 
-ALTER TABLE circuits_provider OWNER TO netbox;
+ALTER TABLE public.circuits_provider OWNER TO netbox;
 
 --
 -- Name: circuits_provider_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE circuits_provider_id_seq
+CREATE SEQUENCE public.circuits_provider_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -463,20 +462,20 @@ CREATE SEQUENCE circuits_provider_id_seq
     CACHE 1;
 
 
-ALTER TABLE circuits_provider_id_seq OWNER TO netbox;
+ALTER TABLE public.circuits_provider_id_seq OWNER TO netbox;
 
 --
 -- Name: circuits_provider_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE circuits_provider_id_seq OWNED BY circuits_provider.id;
+ALTER SEQUENCE public.circuits_provider_id_seq OWNED BY public.circuits_provider.id;
 
 
 --
 -- Name: dcim_consoleport; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_consoleport (
+CREATE TABLE public.dcim_consoleport (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     connection_status boolean,
@@ -485,13 +484,13 @@ CREATE TABLE dcim_consoleport (
 );
 
 
-ALTER TABLE dcim_consoleport OWNER TO netbox;
+ALTER TABLE public.dcim_consoleport OWNER TO netbox;
 
 --
 -- Name: dcim_consoleport_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_consoleport_id_seq
+CREATE SEQUENCE public.dcim_consoleport_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -500,33 +499,33 @@ CREATE SEQUENCE dcim_consoleport_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_consoleport_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_consoleport_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_consoleport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_consoleport_id_seq OWNED BY dcim_consoleport.id;
+ALTER SEQUENCE public.dcim_consoleport_id_seq OWNED BY public.dcim_consoleport.id;
 
 
 --
 -- Name: dcim_consoleporttemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_consoleporttemplate (
+CREATE TABLE public.dcim_consoleporttemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_type_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_consoleporttemplate OWNER TO netbox;
+ALTER TABLE public.dcim_consoleporttemplate OWNER TO netbox;
 
 --
 -- Name: dcim_consoleporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_consoleporttemplate_id_seq
+CREATE SEQUENCE public.dcim_consoleporttemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -535,33 +534,33 @@ CREATE SEQUENCE dcim_consoleporttemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_consoleporttemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_consoleporttemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_consoleporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_consoleporttemplate_id_seq OWNED BY dcim_consoleporttemplate.id;
+ALTER SEQUENCE public.dcim_consoleporttemplate_id_seq OWNED BY public.dcim_consoleporttemplate.id;
 
 
 --
 -- Name: dcim_consoleserverport; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_consoleserverport (
+CREATE TABLE public.dcim_consoleserverport (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_consoleserverport OWNER TO netbox;
+ALTER TABLE public.dcim_consoleserverport OWNER TO netbox;
 
 --
 -- Name: dcim_consoleserverport_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_consoleserverport_id_seq
+CREATE SEQUENCE public.dcim_consoleserverport_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -570,33 +569,33 @@ CREATE SEQUENCE dcim_consoleserverport_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_consoleserverport_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_consoleserverport_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_consoleserverport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_consoleserverport_id_seq OWNED BY dcim_consoleserverport.id;
+ALTER SEQUENCE public.dcim_consoleserverport_id_seq OWNED BY public.dcim_consoleserverport.id;
 
 
 --
 -- Name: dcim_consoleserverporttemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_consoleserverporttemplate (
+CREATE TABLE public.dcim_consoleserverporttemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_type_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_consoleserverporttemplate OWNER TO netbox;
+ALTER TABLE public.dcim_consoleserverporttemplate OWNER TO netbox;
 
 --
 -- Name: dcim_consoleserverporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_consoleserverporttemplate_id_seq
+CREATE SEQUENCE public.dcim_consoleserverporttemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -605,20 +604,20 @@ CREATE SEQUENCE dcim_consoleserverporttemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_consoleserverporttemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_consoleserverporttemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_consoleserverporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_consoleserverporttemplate_id_seq OWNED BY dcim_consoleserverporttemplate.id;
+ALTER SEQUENCE public.dcim_consoleserverporttemplate_id_seq OWNED BY public.dcim_consoleserverporttemplate.id;
 
 
 --
 -- Name: dcim_device; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_device (
+CREATE TABLE public.dcim_device (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -649,13 +648,13 @@ CREATE TABLE dcim_device (
 );
 
 
-ALTER TABLE dcim_device OWNER TO netbox;
+ALTER TABLE public.dcim_device OWNER TO netbox;
 
 --
 -- Name: dcim_device_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_device_id_seq
+CREATE SEQUENCE public.dcim_device_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -664,20 +663,20 @@ CREATE SEQUENCE dcim_device_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_device_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_device_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_device_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_device_id_seq OWNED BY dcim_device.id;
+ALTER SEQUENCE public.dcim_device_id_seq OWNED BY public.dcim_device.id;
 
 
 --
 -- Name: dcim_devicebay; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_devicebay (
+CREATE TABLE public.dcim_devicebay (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_id integer NOT NULL,
@@ -685,13 +684,13 @@ CREATE TABLE dcim_devicebay (
 );
 
 
-ALTER TABLE dcim_devicebay OWNER TO netbox;
+ALTER TABLE public.dcim_devicebay OWNER TO netbox;
 
 --
 -- Name: dcim_devicebay_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_devicebay_id_seq
+CREATE SEQUENCE public.dcim_devicebay_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -700,33 +699,33 @@ CREATE SEQUENCE dcim_devicebay_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_devicebay_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_devicebay_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_devicebay_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_devicebay_id_seq OWNED BY dcim_devicebay.id;
+ALTER SEQUENCE public.dcim_devicebay_id_seq OWNED BY public.dcim_devicebay.id;
 
 
 --
 -- Name: dcim_devicebaytemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_devicebaytemplate (
+CREATE TABLE public.dcim_devicebaytemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_type_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_devicebaytemplate OWNER TO netbox;
+ALTER TABLE public.dcim_devicebaytemplate OWNER TO netbox;
 
 --
 -- Name: dcim_devicebaytemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_devicebaytemplate_id_seq
+CREATE SEQUENCE public.dcim_devicebaytemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -735,20 +734,20 @@ CREATE SEQUENCE dcim_devicebaytemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_devicebaytemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_devicebaytemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_devicebaytemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_devicebaytemplate_id_seq OWNED BY dcim_devicebaytemplate.id;
+ALTER SEQUENCE public.dcim_devicebaytemplate_id_seq OWNED BY public.dcim_devicebaytemplate.id;
 
 
 --
 -- Name: dcim_devicerole; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_devicerole (
+CREATE TABLE public.dcim_devicerole (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -757,13 +756,13 @@ CREATE TABLE dcim_devicerole (
 );
 
 
-ALTER TABLE dcim_devicerole OWNER TO netbox;
+ALTER TABLE public.dcim_devicerole OWNER TO netbox;
 
 --
 -- Name: dcim_devicerole_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_devicerole_id_seq
+CREATE SEQUENCE public.dcim_devicerole_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -772,20 +771,20 @@ CREATE SEQUENCE dcim_devicerole_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_devicerole_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_devicerole_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_devicerole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_devicerole_id_seq OWNED BY dcim_devicerole.id;
+ALTER SEQUENCE public.dcim_devicerole_id_seq OWNED BY public.dcim_devicerole.id;
 
 
 --
 -- Name: dcim_devicetype; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_devicetype (
+CREATE TABLE public.dcim_devicetype (
     id integer NOT NULL,
     model character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -804,13 +803,13 @@ CREATE TABLE dcim_devicetype (
 );
 
 
-ALTER TABLE dcim_devicetype OWNER TO netbox;
+ALTER TABLE public.dcim_devicetype OWNER TO netbox;
 
 --
 -- Name: dcim_devicetype_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_devicetype_id_seq
+CREATE SEQUENCE public.dcim_devicetype_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -819,20 +818,20 @@ CREATE SEQUENCE dcim_devicetype_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_devicetype_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_devicetype_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_devicetype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_devicetype_id_seq OWNED BY dcim_devicetype.id;
+ALTER SEQUENCE public.dcim_devicetype_id_seq OWNED BY public.dcim_devicetype.id;
 
 
 --
 -- Name: dcim_interface; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_interface (
+CREATE TABLE public.dcim_interface (
     id integer NOT NULL,
     name character varying(64) NOT NULL,
     form_factor smallint NOT NULL,
@@ -852,13 +851,13 @@ CREATE TABLE dcim_interface (
 );
 
 
-ALTER TABLE dcim_interface OWNER TO netbox;
+ALTER TABLE public.dcim_interface OWNER TO netbox;
 
 --
 -- Name: dcim_interface_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_interface_id_seq
+CREATE SEQUENCE public.dcim_interface_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -867,33 +866,33 @@ CREATE SEQUENCE dcim_interface_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_interface_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_interface_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_interface_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_interface_id_seq OWNED BY dcim_interface.id;
+ALTER SEQUENCE public.dcim_interface_id_seq OWNED BY public.dcim_interface.id;
 
 
 --
 -- Name: dcim_interface_tagged_vlans; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_interface_tagged_vlans (
+CREATE TABLE public.dcim_interface_tagged_vlans (
     id integer NOT NULL,
     interface_id integer NOT NULL,
     vlan_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_interface_tagged_vlans OWNER TO netbox;
+ALTER TABLE public.dcim_interface_tagged_vlans OWNER TO netbox;
 
 --
 -- Name: dcim_interface_tagged_vlans_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_interface_tagged_vlans_id_seq
+CREATE SEQUENCE public.dcim_interface_tagged_vlans_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -902,20 +901,20 @@ CREATE SEQUENCE dcim_interface_tagged_vlans_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_interface_tagged_vlans_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_interface_tagged_vlans_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_interface_tagged_vlans_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_interface_tagged_vlans_id_seq OWNED BY dcim_interface_tagged_vlans.id;
+ALTER SEQUENCE public.dcim_interface_tagged_vlans_id_seq OWNED BY public.dcim_interface_tagged_vlans.id;
 
 
 --
 -- Name: dcim_interfaceconnection; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_interfaceconnection (
+CREATE TABLE public.dcim_interfaceconnection (
     id integer NOT NULL,
     connection_status boolean NOT NULL,
     interface_a_id integer NOT NULL,
@@ -923,13 +922,13 @@ CREATE TABLE dcim_interfaceconnection (
 );
 
 
-ALTER TABLE dcim_interfaceconnection OWNER TO netbox;
+ALTER TABLE public.dcim_interfaceconnection OWNER TO netbox;
 
 --
 -- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_interfaceconnection_id_seq
+CREATE SEQUENCE public.dcim_interfaceconnection_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -938,20 +937,20 @@ CREATE SEQUENCE dcim_interfaceconnection_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_interfaceconnection_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_interfaceconnection_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_interfaceconnection_id_seq OWNED BY dcim_interfaceconnection.id;
+ALTER SEQUENCE public.dcim_interfaceconnection_id_seq OWNED BY public.dcim_interfaceconnection.id;
 
 
 --
 -- Name: dcim_interfacetemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_interfacetemplate (
+CREATE TABLE public.dcim_interfacetemplate (
     id integer NOT NULL,
     name character varying(64) NOT NULL,
     form_factor smallint NOT NULL,
@@ -961,13 +960,13 @@ CREATE TABLE dcim_interfacetemplate (
 );
 
 
-ALTER TABLE dcim_interfacetemplate OWNER TO netbox;
+ALTER TABLE public.dcim_interfacetemplate OWNER TO netbox;
 
 --
 -- Name: dcim_interfacetemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_interfacetemplate_id_seq
+CREATE SEQUENCE public.dcim_interfacetemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -976,20 +975,20 @@ CREATE SEQUENCE dcim_interfacetemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_interfacetemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_interfacetemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_interfacetemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_interfacetemplate_id_seq OWNED BY dcim_interfacetemplate.id;
+ALTER SEQUENCE public.dcim_interfacetemplate_id_seq OWNED BY public.dcim_interfacetemplate.id;
 
 
 --
 -- Name: dcim_inventoryitem; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_inventoryitem (
+CREATE TABLE public.dcim_inventoryitem (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     part_id character varying(50) NOT NULL,
@@ -1003,26 +1002,26 @@ CREATE TABLE dcim_inventoryitem (
 );
 
 
-ALTER TABLE dcim_inventoryitem OWNER TO netbox;
+ALTER TABLE public.dcim_inventoryitem OWNER TO netbox;
 
 --
 -- Name: dcim_manufacturer; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_manufacturer (
+CREATE TABLE public.dcim_manufacturer (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE dcim_manufacturer OWNER TO netbox;
+ALTER TABLE public.dcim_manufacturer OWNER TO netbox;
 
 --
 -- Name: dcim_manufacturer_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_manufacturer_id_seq
+CREATE SEQUENCE public.dcim_manufacturer_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1031,20 +1030,20 @@ CREATE SEQUENCE dcim_manufacturer_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_manufacturer_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_manufacturer_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_manufacturer_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_manufacturer_id_seq OWNED BY dcim_manufacturer.id;
+ALTER SEQUENCE public.dcim_manufacturer_id_seq OWNED BY public.dcim_manufacturer.id;
 
 
 --
 -- Name: dcim_module_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_module_id_seq
+CREATE SEQUENCE public.dcim_module_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1053,20 +1052,20 @@ CREATE SEQUENCE dcim_module_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_module_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_module_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_module_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_module_id_seq OWNED BY dcim_inventoryitem.id;
+ALTER SEQUENCE public.dcim_module_id_seq OWNED BY public.dcim_inventoryitem.id;
 
 
 --
 -- Name: dcim_platform; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_platform (
+CREATE TABLE public.dcim_platform (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -1076,13 +1075,13 @@ CREATE TABLE dcim_platform (
 );
 
 
-ALTER TABLE dcim_platform OWNER TO netbox;
+ALTER TABLE public.dcim_platform OWNER TO netbox;
 
 --
 -- Name: dcim_platform_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_platform_id_seq
+CREATE SEQUENCE public.dcim_platform_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1091,33 +1090,33 @@ CREATE SEQUENCE dcim_platform_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_platform_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_platform_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_platform_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_platform_id_seq OWNED BY dcim_platform.id;
+ALTER SEQUENCE public.dcim_platform_id_seq OWNED BY public.dcim_platform.id;
 
 
 --
 -- Name: dcim_poweroutlet; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_poweroutlet (
+CREATE TABLE public.dcim_poweroutlet (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_poweroutlet OWNER TO netbox;
+ALTER TABLE public.dcim_poweroutlet OWNER TO netbox;
 
 --
 -- Name: dcim_poweroutlet_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_poweroutlet_id_seq
+CREATE SEQUENCE public.dcim_poweroutlet_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1126,33 +1125,33 @@ CREATE SEQUENCE dcim_poweroutlet_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_poweroutlet_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_poweroutlet_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_poweroutlet_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_poweroutlet_id_seq OWNED BY dcim_poweroutlet.id;
+ALTER SEQUENCE public.dcim_poweroutlet_id_seq OWNED BY public.dcim_poweroutlet.id;
 
 
 --
 -- Name: dcim_poweroutlettemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_poweroutlettemplate (
+CREATE TABLE public.dcim_poweroutlettemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_type_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_poweroutlettemplate OWNER TO netbox;
+ALTER TABLE public.dcim_poweroutlettemplate OWNER TO netbox;
 
 --
 -- Name: dcim_poweroutlettemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_poweroutlettemplate_id_seq
+CREATE SEQUENCE public.dcim_poweroutlettemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1161,20 +1160,20 @@ CREATE SEQUENCE dcim_poweroutlettemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_poweroutlettemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_poweroutlettemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_poweroutlettemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_poweroutlettemplate_id_seq OWNED BY dcim_poweroutlettemplate.id;
+ALTER SEQUENCE public.dcim_poweroutlettemplate_id_seq OWNED BY public.dcim_poweroutlettemplate.id;
 
 
 --
 -- Name: dcim_powerport; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_powerport (
+CREATE TABLE public.dcim_powerport (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     connection_status boolean,
@@ -1183,13 +1182,13 @@ CREATE TABLE dcim_powerport (
 );
 
 
-ALTER TABLE dcim_powerport OWNER TO netbox;
+ALTER TABLE public.dcim_powerport OWNER TO netbox;
 
 --
 -- Name: dcim_powerport_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_powerport_id_seq
+CREATE SEQUENCE public.dcim_powerport_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1198,33 +1197,33 @@ CREATE SEQUENCE dcim_powerport_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_powerport_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_powerport_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_powerport_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_powerport_id_seq OWNED BY dcim_powerport.id;
+ALTER SEQUENCE public.dcim_powerport_id_seq OWNED BY public.dcim_powerport.id;
 
 
 --
 -- Name: dcim_powerporttemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_powerporttemplate (
+CREATE TABLE public.dcim_powerporttemplate (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     device_type_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_powerporttemplate OWNER TO netbox;
+ALTER TABLE public.dcim_powerporttemplate OWNER TO netbox;
 
 --
 -- Name: dcim_powerporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_powerporttemplate_id_seq
+CREATE SEQUENCE public.dcim_powerporttemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1233,20 +1232,20 @@ CREATE SEQUENCE dcim_powerporttemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_powerporttemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_powerporttemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_powerporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_powerporttemplate_id_seq OWNED BY dcim_powerporttemplate.id;
+ALTER SEQUENCE public.dcim_powerporttemplate_id_seq OWNED BY public.dcim_powerporttemplate.id;
 
 
 --
 -- Name: dcim_rack; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_rack (
+CREATE TABLE public.dcim_rack (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -1268,13 +1267,13 @@ CREATE TABLE dcim_rack (
 );
 
 
-ALTER TABLE dcim_rack OWNER TO netbox;
+ALTER TABLE public.dcim_rack OWNER TO netbox;
 
 --
 -- Name: dcim_rack_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_rack_id_seq
+CREATE SEQUENCE public.dcim_rack_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1283,20 +1282,20 @@ CREATE SEQUENCE dcim_rack_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_rack_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_rack_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_rack_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_rack_id_seq OWNED BY dcim_rack.id;
+ALTER SEQUENCE public.dcim_rack_id_seq OWNED BY public.dcim_rack.id;
 
 
 --
 -- Name: dcim_rackgroup; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_rackgroup (
+CREATE TABLE public.dcim_rackgroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -1304,13 +1303,13 @@ CREATE TABLE dcim_rackgroup (
 );
 
 
-ALTER TABLE dcim_rackgroup OWNER TO netbox;
+ALTER TABLE public.dcim_rackgroup OWNER TO netbox;
 
 --
 -- Name: dcim_rackgroup_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_rackgroup_id_seq
+CREATE SEQUENCE public.dcim_rackgroup_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1319,20 +1318,20 @@ CREATE SEQUENCE dcim_rackgroup_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_rackgroup_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_rackgroup_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_rackgroup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_rackgroup_id_seq OWNED BY dcim_rackgroup.id;
+ALTER SEQUENCE public.dcim_rackgroup_id_seq OWNED BY public.dcim_rackgroup.id;
 
 
 --
 -- Name: dcim_rackreservation; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_rackreservation (
+CREATE TABLE public.dcim_rackreservation (
     id integer NOT NULL,
     units smallint[] NOT NULL,
     created timestamp with time zone NOT NULL,
@@ -1343,13 +1342,13 @@ CREATE TABLE dcim_rackreservation (
 );
 
 
-ALTER TABLE dcim_rackreservation OWNER TO netbox;
+ALTER TABLE public.dcim_rackreservation OWNER TO netbox;
 
 --
 -- Name: dcim_rackreservation_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_rackreservation_id_seq
+CREATE SEQUENCE public.dcim_rackreservation_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1358,20 +1357,20 @@ CREATE SEQUENCE dcim_rackreservation_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_rackreservation_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_rackreservation_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_rackreservation_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_rackreservation_id_seq OWNED BY dcim_rackreservation.id;
+ALTER SEQUENCE public.dcim_rackreservation_id_seq OWNED BY public.dcim_rackreservation.id;
 
 
 --
 -- Name: dcim_rackrole; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_rackrole (
+CREATE TABLE public.dcim_rackrole (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -1379,13 +1378,13 @@ CREATE TABLE dcim_rackrole (
 );
 
 
-ALTER TABLE dcim_rackrole OWNER TO netbox;
+ALTER TABLE public.dcim_rackrole OWNER TO netbox;
 
 --
 -- Name: dcim_rackrole_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_rackrole_id_seq
+CREATE SEQUENCE public.dcim_rackrole_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1394,20 +1393,20 @@ CREATE SEQUENCE dcim_rackrole_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_rackrole_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_rackrole_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_rackrole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_rackrole_id_seq OWNED BY dcim_rackrole.id;
+ALTER SEQUENCE public.dcim_rackrole_id_seq OWNED BY public.dcim_rackrole.id;
 
 
 --
 -- Name: dcim_region; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_region (
+CREATE TABLE public.dcim_region (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -1423,13 +1422,13 @@ CREATE TABLE dcim_region (
 );
 
 
-ALTER TABLE dcim_region OWNER TO netbox;
+ALTER TABLE public.dcim_region OWNER TO netbox;
 
 --
 -- Name: dcim_region_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_region_id_seq
+CREATE SEQUENCE public.dcim_region_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1438,20 +1437,20 @@ CREATE SEQUENCE dcim_region_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_region_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_region_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_region_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_region_id_seq OWNED BY dcim_region.id;
+ALTER SEQUENCE public.dcim_region_id_seq OWNED BY public.dcim_region.id;
 
 
 --
 -- Name: dcim_site; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_site (
+CREATE TABLE public.dcim_site (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -1474,13 +1473,13 @@ CREATE TABLE dcim_site (
 );
 
 
-ALTER TABLE dcim_site OWNER TO netbox;
+ALTER TABLE public.dcim_site OWNER TO netbox;
 
 --
 -- Name: dcim_site_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_site_id_seq
+CREATE SEQUENCE public.dcim_site_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1489,33 +1488,33 @@ CREATE SEQUENCE dcim_site_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_site_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_site_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_site_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_site_id_seq OWNED BY dcim_site.id;
+ALTER SEQUENCE public.dcim_site_id_seq OWNED BY public.dcim_site.id;
 
 
 --
 -- Name: dcim_virtualchassis; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE dcim_virtualchassis (
+CREATE TABLE public.dcim_virtualchassis (
     id integer NOT NULL,
     domain character varying(30) NOT NULL,
     master_id integer NOT NULL
 );
 
 
-ALTER TABLE dcim_virtualchassis OWNER TO netbox;
+ALTER TABLE public.dcim_virtualchassis OWNER TO netbox;
 
 --
 -- Name: dcim_virtualchassis_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE dcim_virtualchassis_id_seq
+CREATE SEQUENCE public.dcim_virtualchassis_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1524,20 +1523,20 @@ CREATE SEQUENCE dcim_virtualchassis_id_seq
     CACHE 1;
 
 
-ALTER TABLE dcim_virtualchassis_id_seq OWNER TO netbox;
+ALTER TABLE public.dcim_virtualchassis_id_seq OWNER TO netbox;
 
 --
 -- Name: dcim_virtualchassis_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE dcim_virtualchassis_id_seq OWNED BY dcim_virtualchassis.id;
+ALTER SEQUENCE public.dcim_virtualchassis_id_seq OWNED BY public.dcim_virtualchassis.id;
 
 
 --
 -- Name: django_admin_log; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE django_admin_log (
+CREATE TABLE public.django_admin_log (
     id integer NOT NULL,
     action_time timestamp with time zone NOT NULL,
     object_id text,
@@ -1550,13 +1549,13 @@ CREATE TABLE django_admin_log (
 );
 
 
-ALTER TABLE django_admin_log OWNER TO netbox;
+ALTER TABLE public.django_admin_log OWNER TO netbox;
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE django_admin_log_id_seq
+CREATE SEQUENCE public.django_admin_log_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1565,33 +1564,33 @@ CREATE SEQUENCE django_admin_log_id_seq
     CACHE 1;
 
 
-ALTER TABLE django_admin_log_id_seq OWNER TO netbox;
+ALTER TABLE public.django_admin_log_id_seq OWNER TO netbox;
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE django_admin_log_id_seq OWNED BY django_admin_log.id;
+ALTER SEQUENCE public.django_admin_log_id_seq OWNED BY public.django_admin_log.id;
 
 
 --
 -- Name: django_content_type; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE django_content_type (
+CREATE TABLE public.django_content_type (
     id integer NOT NULL,
     app_label character varying(100) NOT NULL,
     model character varying(100) NOT NULL
 );
 
 
-ALTER TABLE django_content_type OWNER TO netbox;
+ALTER TABLE public.django_content_type OWNER TO netbox;
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE django_content_type_id_seq
+CREATE SEQUENCE public.django_content_type_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1600,20 +1599,20 @@ CREATE SEQUENCE django_content_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE django_content_type_id_seq OWNER TO netbox;
+ALTER TABLE public.django_content_type_id_seq OWNER TO netbox;
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE django_content_type_id_seq OWNED BY django_content_type.id;
+ALTER SEQUENCE public.django_content_type_id_seq OWNED BY public.django_content_type.id;
 
 
 --
 -- Name: django_migrations; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE django_migrations (
+CREATE TABLE public.django_migrations (
     id integer NOT NULL,
     app character varying(255) NOT NULL,
     name character varying(255) NOT NULL,
@@ -1621,13 +1620,13 @@ CREATE TABLE django_migrations (
 );
 
 
-ALTER TABLE django_migrations OWNER TO netbox;
+ALTER TABLE public.django_migrations OWNER TO netbox;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE django_migrations_id_seq
+CREATE SEQUENCE public.django_migrations_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1636,33 +1635,33 @@ CREATE SEQUENCE django_migrations_id_seq
     CACHE 1;
 
 
-ALTER TABLE django_migrations_id_seq OWNER TO netbox;
+ALTER TABLE public.django_migrations_id_seq OWNER TO netbox;
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE django_migrations_id_seq OWNED BY django_migrations.id;
+ALTER SEQUENCE public.django_migrations_id_seq OWNED BY public.django_migrations.id;
 
 
 --
 -- Name: django_session; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE django_session (
+CREATE TABLE public.django_session (
     session_key character varying(40) NOT NULL,
     session_data text NOT NULL,
     expire_date timestamp with time zone NOT NULL
 );
 
 
-ALTER TABLE django_session OWNER TO netbox;
+ALTER TABLE public.django_session OWNER TO netbox;
 
 --
 -- Name: extras_customfield; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_customfield (
+CREATE TABLE public.extras_customfield (
     id integer NOT NULL,
     type smallint NOT NULL,
     name character varying(50) NOT NULL,
@@ -1678,13 +1677,13 @@ CREATE TABLE extras_customfield (
 );
 
 
-ALTER TABLE extras_customfield OWNER TO netbox;
+ALTER TABLE public.extras_customfield OWNER TO netbox;
 
 --
 -- Name: extras_customfield_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_customfield_id_seq
+CREATE SEQUENCE public.extras_customfield_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1693,33 +1692,33 @@ CREATE SEQUENCE extras_customfield_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_customfield_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_customfield_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_customfield_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_customfield_id_seq OWNED BY extras_customfield.id;
+ALTER SEQUENCE public.extras_customfield_id_seq OWNED BY public.extras_customfield.id;
 
 
 --
 -- Name: extras_customfield_obj_type; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_customfield_obj_type (
+CREATE TABLE public.extras_customfield_obj_type (
     id integer NOT NULL,
     customfield_id integer NOT NULL,
     contenttype_id integer NOT NULL
 );
 
 
-ALTER TABLE extras_customfield_obj_type OWNER TO netbox;
+ALTER TABLE public.extras_customfield_obj_type OWNER TO netbox;
 
 --
 -- Name: extras_customfield_obj_type_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_customfield_obj_type_id_seq
+CREATE SEQUENCE public.extras_customfield_obj_type_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1728,20 +1727,20 @@ CREATE SEQUENCE extras_customfield_obj_type_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_customfield_obj_type_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_customfield_obj_type_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_customfield_obj_type_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_customfield_obj_type_id_seq OWNED BY extras_customfield_obj_type.id;
+ALTER SEQUENCE public.extras_customfield_obj_type_id_seq OWNED BY public.extras_customfield_obj_type.id;
 
 
 --
 -- Name: extras_customfieldchoice; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_customfieldchoice (
+CREATE TABLE public.extras_customfieldchoice (
     id integer NOT NULL,
     value character varying(100) NOT NULL,
     weight smallint NOT NULL,
@@ -1750,13 +1749,13 @@ CREATE TABLE extras_customfieldchoice (
 );
 
 
-ALTER TABLE extras_customfieldchoice OWNER TO netbox;
+ALTER TABLE public.extras_customfieldchoice OWNER TO netbox;
 
 --
 -- Name: extras_customfieldchoice_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_customfieldchoice_id_seq
+CREATE SEQUENCE public.extras_customfieldchoice_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1765,20 +1764,20 @@ CREATE SEQUENCE extras_customfieldchoice_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_customfieldchoice_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_customfieldchoice_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_customfieldchoice_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_customfieldchoice_id_seq OWNED BY extras_customfieldchoice.id;
+ALTER SEQUENCE public.extras_customfieldchoice_id_seq OWNED BY public.extras_customfieldchoice.id;
 
 
 --
 -- Name: extras_customfieldvalue; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_customfieldvalue (
+CREATE TABLE public.extras_customfieldvalue (
     id integer NOT NULL,
     obj_id integer NOT NULL,
     serialized_value character varying(255) NOT NULL,
@@ -1788,13 +1787,13 @@ CREATE TABLE extras_customfieldvalue (
 );
 
 
-ALTER TABLE extras_customfieldvalue OWNER TO netbox;
+ALTER TABLE public.extras_customfieldvalue OWNER TO netbox;
 
 --
 -- Name: extras_customfieldvalue_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_customfieldvalue_id_seq
+CREATE SEQUENCE public.extras_customfieldvalue_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1803,20 +1802,20 @@ CREATE SEQUENCE extras_customfieldvalue_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_customfieldvalue_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_customfieldvalue_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_customfieldvalue_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_customfieldvalue_id_seq OWNED BY extras_customfieldvalue.id;
+ALTER SEQUENCE public.extras_customfieldvalue_id_seq OWNED BY public.extras_customfieldvalue.id;
 
 
 --
 -- Name: extras_exporttemplate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_exporttemplate (
+CREATE TABLE public.extras_exporttemplate (
     id integer NOT NULL,
     name character varying(100) NOT NULL,
     template_code text NOT NULL,
@@ -1827,13 +1826,13 @@ CREATE TABLE extras_exporttemplate (
 );
 
 
-ALTER TABLE extras_exporttemplate OWNER TO netbox;
+ALTER TABLE public.extras_exporttemplate OWNER TO netbox;
 
 --
 -- Name: extras_exporttemplate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_exporttemplate_id_seq
+CREATE SEQUENCE public.extras_exporttemplate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1842,20 +1841,20 @@ CREATE SEQUENCE extras_exporttemplate_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_exporttemplate_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_exporttemplate_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_exporttemplate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_exporttemplate_id_seq OWNED BY extras_exporttemplate.id;
+ALTER SEQUENCE public.extras_exporttemplate_id_seq OWNED BY public.extras_exporttemplate.id;
 
 
 --
 -- Name: extras_graph; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_graph (
+CREATE TABLE public.extras_graph (
     id integer NOT NULL,
     type smallint NOT NULL,
     weight smallint NOT NULL,
@@ -1867,13 +1866,13 @@ CREATE TABLE extras_graph (
 );
 
 
-ALTER TABLE extras_graph OWNER TO netbox;
+ALTER TABLE public.extras_graph OWNER TO netbox;
 
 --
 -- Name: extras_graph_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_graph_id_seq
+CREATE SEQUENCE public.extras_graph_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1882,20 +1881,20 @@ CREATE SEQUENCE extras_graph_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_graph_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_graph_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_graph_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_graph_id_seq OWNED BY extras_graph.id;
+ALTER SEQUENCE public.extras_graph_id_seq OWNED BY public.extras_graph.id;
 
 
 --
 -- Name: extras_imageattachment; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_imageattachment (
+CREATE TABLE public.extras_imageattachment (
     id integer NOT NULL,
     object_id integer NOT NULL,
     image character varying(100) NOT NULL,
@@ -1910,13 +1909,13 @@ CREATE TABLE extras_imageattachment (
 );
 
 
-ALTER TABLE extras_imageattachment OWNER TO netbox;
+ALTER TABLE public.extras_imageattachment OWNER TO netbox;
 
 --
 -- Name: extras_imageattachment_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_imageattachment_id_seq
+CREATE SEQUENCE public.extras_imageattachment_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1925,20 +1924,20 @@ CREATE SEQUENCE extras_imageattachment_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_imageattachment_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_imageattachment_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_imageattachment_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_imageattachment_id_seq OWNED BY extras_imageattachment.id;
+ALTER SEQUENCE public.extras_imageattachment_id_seq OWNED BY public.extras_imageattachment.id;
 
 
 --
 -- Name: extras_reportresult; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_reportresult (
+CREATE TABLE public.extras_reportresult (
     id integer NOT NULL,
     report character varying(255) NOT NULL,
     created timestamp with time zone NOT NULL,
@@ -1948,13 +1947,13 @@ CREATE TABLE extras_reportresult (
 );
 
 
-ALTER TABLE extras_reportresult OWNER TO netbox;
+ALTER TABLE public.extras_reportresult OWNER TO netbox;
 
 --
 -- Name: extras_reportresult_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_reportresult_id_seq
+CREATE SEQUENCE public.extras_reportresult_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -1963,20 +1962,20 @@ CREATE SEQUENCE extras_reportresult_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_reportresult_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_reportresult_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_reportresult_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_reportresult_id_seq OWNED BY extras_reportresult.id;
+ALTER SEQUENCE public.extras_reportresult_id_seq OWNED BY public.extras_reportresult.id;
 
 
 --
 -- Name: extras_topologymap; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_topologymap (
+CREATE TABLE public.extras_topologymap (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -1988,13 +1987,13 @@ CREATE TABLE extras_topologymap (
 );
 
 
-ALTER TABLE extras_topologymap OWNER TO netbox;
+ALTER TABLE public.extras_topologymap OWNER TO netbox;
 
 --
 -- Name: extras_topologymap_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_topologymap_id_seq
+CREATE SEQUENCE public.extras_topologymap_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2003,20 +2002,20 @@ CREATE SEQUENCE extras_topologymap_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_topologymap_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_topologymap_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_topologymap_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_topologymap_id_seq OWNED BY extras_topologymap.id;
+ALTER SEQUENCE public.extras_topologymap_id_seq OWNED BY public.extras_topologymap.id;
 
 
 --
 -- Name: extras_useraction; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE extras_useraction (
+CREATE TABLE public.extras_useraction (
     id integer NOT NULL,
     "time" timestamp with time zone NOT NULL,
     object_id integer,
@@ -2029,13 +2028,13 @@ CREATE TABLE extras_useraction (
 );
 
 
-ALTER TABLE extras_useraction OWNER TO netbox;
+ALTER TABLE public.extras_useraction OWNER TO netbox;
 
 --
 -- Name: extras_useraction_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE extras_useraction_id_seq
+CREATE SEQUENCE public.extras_useraction_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2044,20 +2043,20 @@ CREATE SEQUENCE extras_useraction_id_seq
     CACHE 1;
 
 
-ALTER TABLE extras_useraction_id_seq OWNER TO netbox;
+ALTER TABLE public.extras_useraction_id_seq OWNER TO netbox;
 
 --
 -- Name: extras_useraction_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE extras_useraction_id_seq OWNED BY extras_useraction.id;
+ALTER SEQUENCE public.extras_useraction_id_seq OWNED BY public.extras_useraction.id;
 
 
 --
 -- Name: ipam_aggregate; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_aggregate (
+CREATE TABLE public.ipam_aggregate (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2070,13 +2069,13 @@ CREATE TABLE ipam_aggregate (
 );
 
 
-ALTER TABLE ipam_aggregate OWNER TO netbox;
+ALTER TABLE public.ipam_aggregate OWNER TO netbox;
 
 --
 -- Name: ipam_aggregate_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_aggregate_id_seq
+CREATE SEQUENCE public.ipam_aggregate_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2085,20 +2084,20 @@ CREATE SEQUENCE ipam_aggregate_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_aggregate_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_aggregate_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_aggregate_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_aggregate_id_seq OWNED BY ipam_aggregate.id;
+ALTER SEQUENCE public.ipam_aggregate_id_seq OWNED BY public.ipam_aggregate.id;
 
 
 --
 -- Name: ipam_ipaddress; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_ipaddress (
+CREATE TABLE public.ipam_ipaddress (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2117,13 +2116,13 @@ CREATE TABLE ipam_ipaddress (
 );
 
 
-ALTER TABLE ipam_ipaddress OWNER TO netbox;
+ALTER TABLE public.ipam_ipaddress OWNER TO netbox;
 
 --
 -- Name: ipam_ipaddress_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_ipaddress_id_seq
+CREATE SEQUENCE public.ipam_ipaddress_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2132,20 +2131,20 @@ CREATE SEQUENCE ipam_ipaddress_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_ipaddress_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_ipaddress_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_ipaddress_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_ipaddress_id_seq OWNED BY ipam_ipaddress.id;
+ALTER SEQUENCE public.ipam_ipaddress_id_seq OWNED BY public.ipam_ipaddress.id;
 
 
 --
 -- Name: ipam_prefix; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_prefix (
+CREATE TABLE public.ipam_prefix (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2164,13 +2163,13 @@ CREATE TABLE ipam_prefix (
 );
 
 
-ALTER TABLE ipam_prefix OWNER TO netbox;
+ALTER TABLE public.ipam_prefix OWNER TO netbox;
 
 --
 -- Name: ipam_prefix_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_prefix_id_seq
+CREATE SEQUENCE public.ipam_prefix_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2179,20 +2178,20 @@ CREATE SEQUENCE ipam_prefix_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_prefix_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_prefix_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_prefix_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_prefix_id_seq OWNED BY ipam_prefix.id;
+ALTER SEQUENCE public.ipam_prefix_id_seq OWNED BY public.ipam_prefix.id;
 
 
 --
 -- Name: ipam_rir; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_rir (
+CREATE TABLE public.ipam_rir (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -2200,13 +2199,13 @@ CREATE TABLE ipam_rir (
 );
 
 
-ALTER TABLE ipam_rir OWNER TO netbox;
+ALTER TABLE public.ipam_rir OWNER TO netbox;
 
 --
 -- Name: ipam_rir_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_rir_id_seq
+CREATE SEQUENCE public.ipam_rir_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2215,20 +2214,20 @@ CREATE SEQUENCE ipam_rir_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_rir_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_rir_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_rir_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_rir_id_seq OWNED BY ipam_rir.id;
+ALTER SEQUENCE public.ipam_rir_id_seq OWNED BY public.ipam_rir.id;
 
 
 --
 -- Name: ipam_role; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_role (
+CREATE TABLE public.ipam_role (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -2237,13 +2236,13 @@ CREATE TABLE ipam_role (
 );
 
 
-ALTER TABLE ipam_role OWNER TO netbox;
+ALTER TABLE public.ipam_role OWNER TO netbox;
 
 --
 -- Name: ipam_role_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_role_id_seq
+CREATE SEQUENCE public.ipam_role_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2252,20 +2251,20 @@ CREATE SEQUENCE ipam_role_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_role_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_role_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_role_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_role_id_seq OWNED BY ipam_role.id;
+ALTER SEQUENCE public.ipam_role_id_seq OWNED BY public.ipam_role.id;
 
 
 --
 -- Name: ipam_service; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_service (
+CREATE TABLE public.ipam_service (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2280,13 +2279,13 @@ CREATE TABLE ipam_service (
 );
 
 
-ALTER TABLE ipam_service OWNER TO netbox;
+ALTER TABLE public.ipam_service OWNER TO netbox;
 
 --
 -- Name: ipam_service_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_service_id_seq
+CREATE SEQUENCE public.ipam_service_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2295,33 +2294,33 @@ CREATE SEQUENCE ipam_service_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_service_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_service_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_service_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_service_id_seq OWNED BY ipam_service.id;
+ALTER SEQUENCE public.ipam_service_id_seq OWNED BY public.ipam_service.id;
 
 
 --
 -- Name: ipam_service_ipaddresses; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_service_ipaddresses (
+CREATE TABLE public.ipam_service_ipaddresses (
     id integer NOT NULL,
     service_id integer NOT NULL,
     ipaddress_id integer NOT NULL
 );
 
 
-ALTER TABLE ipam_service_ipaddresses OWNER TO netbox;
+ALTER TABLE public.ipam_service_ipaddresses OWNER TO netbox;
 
 --
 -- Name: ipam_service_ipaddresses_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_service_ipaddresses_id_seq
+CREATE SEQUENCE public.ipam_service_ipaddresses_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2330,20 +2329,20 @@ CREATE SEQUENCE ipam_service_ipaddresses_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_service_ipaddresses_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_service_ipaddresses_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_service_ipaddresses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_service_ipaddresses_id_seq OWNED BY ipam_service_ipaddresses.id;
+ALTER SEQUENCE public.ipam_service_ipaddresses_id_seq OWNED BY public.ipam_service_ipaddresses.id;
 
 
 --
 -- Name: ipam_vlan; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_vlan (
+CREATE TABLE public.ipam_vlan (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2360,13 +2359,13 @@ CREATE TABLE ipam_vlan (
 );
 
 
-ALTER TABLE ipam_vlan OWNER TO netbox;
+ALTER TABLE public.ipam_vlan OWNER TO netbox;
 
 --
 -- Name: ipam_vlan_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_vlan_id_seq
+CREATE SEQUENCE public.ipam_vlan_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2375,20 +2374,20 @@ CREATE SEQUENCE ipam_vlan_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_vlan_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_vlan_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_vlan_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_vlan_id_seq OWNED BY ipam_vlan.id;
+ALTER SEQUENCE public.ipam_vlan_id_seq OWNED BY public.ipam_vlan.id;
 
 
 --
 -- Name: ipam_vlangroup; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_vlangroup (
+CREATE TABLE public.ipam_vlangroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL,
@@ -2396,13 +2395,13 @@ CREATE TABLE ipam_vlangroup (
 );
 
 
-ALTER TABLE ipam_vlangroup OWNER TO netbox;
+ALTER TABLE public.ipam_vlangroup OWNER TO netbox;
 
 --
 -- Name: ipam_vlangroup_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_vlangroup_id_seq
+CREATE SEQUENCE public.ipam_vlangroup_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2411,20 +2410,20 @@ CREATE SEQUENCE ipam_vlangroup_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_vlangroup_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_vlangroup_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_vlangroup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_vlangroup_id_seq OWNED BY ipam_vlangroup.id;
+ALTER SEQUENCE public.ipam_vlangroup_id_seq OWNED BY public.ipam_vlangroup.id;
 
 
 --
 -- Name: ipam_vrf; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE ipam_vrf (
+CREATE TABLE public.ipam_vrf (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2436,13 +2435,13 @@ CREATE TABLE ipam_vrf (
 );
 
 
-ALTER TABLE ipam_vrf OWNER TO netbox;
+ALTER TABLE public.ipam_vrf OWNER TO netbox;
 
 --
 -- Name: ipam_vrf_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE ipam_vrf_id_seq
+CREATE SEQUENCE public.ipam_vrf_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2451,20 +2450,20 @@ CREATE SEQUENCE ipam_vrf_id_seq
     CACHE 1;
 
 
-ALTER TABLE ipam_vrf_id_seq OWNER TO netbox;
+ALTER TABLE public.ipam_vrf_id_seq OWNER TO netbox;
 
 --
 -- Name: ipam_vrf_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE ipam_vrf_id_seq OWNED BY ipam_vrf.id;
+ALTER SEQUENCE public.ipam_vrf_id_seq OWNED BY public.ipam_vrf.id;
 
 
 --
 -- Name: secrets_secret; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_secret (
+CREATE TABLE public.secrets_secret (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2476,13 +2475,13 @@ CREATE TABLE secrets_secret (
 );
 
 
-ALTER TABLE secrets_secret OWNER TO netbox;
+ALTER TABLE public.secrets_secret OWNER TO netbox;
 
 --
 -- Name: secrets_secret_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_secret_id_seq
+CREATE SEQUENCE public.secrets_secret_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2491,46 +2490,46 @@ CREATE SEQUENCE secrets_secret_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_secret_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_secret_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_secret_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_secret_id_seq OWNED BY secrets_secret.id;
+ALTER SEQUENCE public.secrets_secret_id_seq OWNED BY public.secrets_secret.id;
 
 
 --
 -- Name: secrets_secretrole; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_secretrole (
+CREATE TABLE public.secrets_secretrole (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE secrets_secretrole OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_groups; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_secretrole_groups (
+CREATE TABLE public.secrets_secretrole_groups (
     id integer NOT NULL,
     secretrole_id integer NOT NULL,
     group_id integer NOT NULL
 );
 
 
-ALTER TABLE secrets_secretrole_groups OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole_groups OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_groups_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_secretrole_groups_id_seq
+CREATE SEQUENCE public.secrets_secretrole_groups_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2539,20 +2538,20 @@ CREATE SEQUENCE secrets_secretrole_groups_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_secretrole_groups_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole_groups_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_secretrole_groups_id_seq OWNED BY secrets_secretrole_groups.id;
+ALTER SEQUENCE public.secrets_secretrole_groups_id_seq OWNED BY public.secrets_secretrole_groups.id;
 
 
 --
 -- Name: secrets_secretrole_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_secretrole_id_seq
+CREATE SEQUENCE public.secrets_secretrole_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2561,33 +2560,33 @@ CREATE SEQUENCE secrets_secretrole_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_secretrole_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_secretrole_id_seq OWNED BY secrets_secretrole.id;
+ALTER SEQUENCE public.secrets_secretrole_id_seq OWNED BY public.secrets_secretrole.id;
 
 
 --
 -- Name: secrets_secretrole_users; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_secretrole_users (
+CREATE TABLE public.secrets_secretrole_users (
     id integer NOT NULL,
     secretrole_id integer NOT NULL,
     user_id integer NOT NULL
 );
 
 
-ALTER TABLE secrets_secretrole_users OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole_users OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_users_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_secretrole_users_id_seq
+CREATE SEQUENCE public.secrets_secretrole_users_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2596,20 +2595,20 @@ CREATE SEQUENCE secrets_secretrole_users_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_secretrole_users_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_secretrole_users_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_secretrole_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_secretrole_users_id_seq OWNED BY secrets_secretrole_users.id;
+ALTER SEQUENCE public.secrets_secretrole_users_id_seq OWNED BY public.secrets_secretrole_users.id;
 
 
 --
 -- Name: secrets_sessionkey; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_sessionkey (
+CREATE TABLE public.secrets_sessionkey (
     id integer NOT NULL,
     cipher bytea NOT NULL,
     hash character varying(128) NOT NULL,
@@ -2618,13 +2617,13 @@ CREATE TABLE secrets_sessionkey (
 );
 
 
-ALTER TABLE secrets_sessionkey OWNER TO netbox;
+ALTER TABLE public.secrets_sessionkey OWNER TO netbox;
 
 --
 -- Name: secrets_sessionkey_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_sessionkey_id_seq
+CREATE SEQUENCE public.secrets_sessionkey_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2633,20 +2632,20 @@ CREATE SEQUENCE secrets_sessionkey_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_sessionkey_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_sessionkey_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_sessionkey_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_sessionkey_id_seq OWNED BY secrets_sessionkey.id;
+ALTER SEQUENCE public.secrets_sessionkey_id_seq OWNED BY public.secrets_sessionkey.id;
 
 
 --
 -- Name: secrets_userkey; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE secrets_userkey (
+CREATE TABLE public.secrets_userkey (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2656,13 +2655,13 @@ CREATE TABLE secrets_userkey (
 );
 
 
-ALTER TABLE secrets_userkey OWNER TO netbox;
+ALTER TABLE public.secrets_userkey OWNER TO netbox;
 
 --
 -- Name: secrets_userkey_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE secrets_userkey_id_seq
+CREATE SEQUENCE public.secrets_userkey_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2671,20 +2670,20 @@ CREATE SEQUENCE secrets_userkey_id_seq
     CACHE 1;
 
 
-ALTER TABLE secrets_userkey_id_seq OWNER TO netbox;
+ALTER TABLE public.secrets_userkey_id_seq OWNER TO netbox;
 
 --
 -- Name: secrets_userkey_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE secrets_userkey_id_seq OWNED BY secrets_userkey.id;
+ALTER SEQUENCE public.secrets_userkey_id_seq OWNED BY public.secrets_userkey.id;
 
 
 --
 -- Name: tenancy_tenant; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE tenancy_tenant (
+CREATE TABLE public.tenancy_tenant (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2696,13 +2695,13 @@ CREATE TABLE tenancy_tenant (
 );
 
 
-ALTER TABLE tenancy_tenant OWNER TO netbox;
+ALTER TABLE public.tenancy_tenant OWNER TO netbox;
 
 --
 -- Name: tenancy_tenant_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE tenancy_tenant_id_seq
+CREATE SEQUENCE public.tenancy_tenant_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2711,33 +2710,33 @@ CREATE SEQUENCE tenancy_tenant_id_seq
     CACHE 1;
 
 
-ALTER TABLE tenancy_tenant_id_seq OWNER TO netbox;
+ALTER TABLE public.tenancy_tenant_id_seq OWNER TO netbox;
 
 --
 -- Name: tenancy_tenant_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE tenancy_tenant_id_seq OWNED BY tenancy_tenant.id;
+ALTER SEQUENCE public.tenancy_tenant_id_seq OWNED BY public.tenancy_tenant.id;
 
 
 --
 -- Name: tenancy_tenantgroup; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE tenancy_tenantgroup (
+CREATE TABLE public.tenancy_tenantgroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE tenancy_tenantgroup OWNER TO netbox;
+ALTER TABLE public.tenancy_tenantgroup OWNER TO netbox;
 
 --
 -- Name: tenancy_tenantgroup_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE tenancy_tenantgroup_id_seq
+CREATE SEQUENCE public.tenancy_tenantgroup_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2746,20 +2745,20 @@ CREATE SEQUENCE tenancy_tenantgroup_id_seq
     CACHE 1;
 
 
-ALTER TABLE tenancy_tenantgroup_id_seq OWNER TO netbox;
+ALTER TABLE public.tenancy_tenantgroup_id_seq OWNER TO netbox;
 
 --
 -- Name: tenancy_tenantgroup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE tenancy_tenantgroup_id_seq OWNED BY tenancy_tenantgroup.id;
+ALTER SEQUENCE public.tenancy_tenantgroup_id_seq OWNED BY public.tenancy_tenantgroup.id;
 
 
 --
 -- Name: users_token; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE users_token (
+CREATE TABLE public.users_token (
     id integer NOT NULL,
     created timestamp with time zone NOT NULL,
     expires timestamp with time zone,
@@ -2770,13 +2769,13 @@ CREATE TABLE users_token (
 );
 
 
-ALTER TABLE users_token OWNER TO netbox;
+ALTER TABLE public.users_token OWNER TO netbox;
 
 --
 -- Name: users_token_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE users_token_id_seq
+CREATE SEQUENCE public.users_token_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2785,20 +2784,20 @@ CREATE SEQUENCE users_token_id_seq
     CACHE 1;
 
 
-ALTER TABLE users_token_id_seq OWNER TO netbox;
+ALTER TABLE public.users_token_id_seq OWNER TO netbox;
 
 --
 -- Name: users_token_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE users_token_id_seq OWNED BY users_token.id;
+ALTER SEQUENCE public.users_token_id_seq OWNED BY public.users_token.id;
 
 
 --
 -- Name: virtualization_cluster; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE virtualization_cluster (
+CREATE TABLE public.virtualization_cluster (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2810,13 +2809,13 @@ CREATE TABLE virtualization_cluster (
 );
 
 
-ALTER TABLE virtualization_cluster OWNER TO netbox;
+ALTER TABLE public.virtualization_cluster OWNER TO netbox;
 
 --
 -- Name: virtualization_cluster_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE virtualization_cluster_id_seq
+CREATE SEQUENCE public.virtualization_cluster_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2825,33 +2824,33 @@ CREATE SEQUENCE virtualization_cluster_id_seq
     CACHE 1;
 
 
-ALTER TABLE virtualization_cluster_id_seq OWNER TO netbox;
+ALTER TABLE public.virtualization_cluster_id_seq OWNER TO netbox;
 
 --
 -- Name: virtualization_cluster_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE virtualization_cluster_id_seq OWNED BY virtualization_cluster.id;
+ALTER SEQUENCE public.virtualization_cluster_id_seq OWNED BY public.virtualization_cluster.id;
 
 
 --
 -- Name: virtualization_clustergroup; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE virtualization_clustergroup (
+CREATE TABLE public.virtualization_clustergroup (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE virtualization_clustergroup OWNER TO netbox;
+ALTER TABLE public.virtualization_clustergroup OWNER TO netbox;
 
 --
 -- Name: virtualization_clustergroup_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE virtualization_clustergroup_id_seq
+CREATE SEQUENCE public.virtualization_clustergroup_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2860,33 +2859,33 @@ CREATE SEQUENCE virtualization_clustergroup_id_seq
     CACHE 1;
 
 
-ALTER TABLE virtualization_clustergroup_id_seq OWNER TO netbox;
+ALTER TABLE public.virtualization_clustergroup_id_seq OWNER TO netbox;
 
 --
 -- Name: virtualization_clustergroup_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE virtualization_clustergroup_id_seq OWNED BY virtualization_clustergroup.id;
+ALTER SEQUENCE public.virtualization_clustergroup_id_seq OWNED BY public.virtualization_clustergroup.id;
 
 
 --
 -- Name: virtualization_clustertype; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE virtualization_clustertype (
+CREATE TABLE public.virtualization_clustertype (
     id integer NOT NULL,
     name character varying(50) NOT NULL,
     slug character varying(50) NOT NULL
 );
 
 
-ALTER TABLE virtualization_clustertype OWNER TO netbox;
+ALTER TABLE public.virtualization_clustertype OWNER TO netbox;
 
 --
 -- Name: virtualization_clustertype_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE virtualization_clustertype_id_seq
+CREATE SEQUENCE public.virtualization_clustertype_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2895,20 +2894,20 @@ CREATE SEQUENCE virtualization_clustertype_id_seq
     CACHE 1;
 
 
-ALTER TABLE virtualization_clustertype_id_seq OWNER TO netbox;
+ALTER TABLE public.virtualization_clustertype_id_seq OWNER TO netbox;
 
 --
 -- Name: virtualization_clustertype_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE virtualization_clustertype_id_seq OWNED BY virtualization_clustertype.id;
+ALTER SEQUENCE public.virtualization_clustertype_id_seq OWNED BY public.virtualization_clustertype.id;
 
 
 --
 -- Name: virtualization_virtualmachine; Type: TABLE; Schema: public; Owner: netbox
 --
 
-CREATE TABLE virtualization_virtualmachine (
+CREATE TABLE public.virtualization_virtualmachine (
     id integer NOT NULL,
     created date NOT NULL,
     last_updated timestamp with time zone NOT NULL,
@@ -2931,13 +2930,13 @@ CREATE TABLE virtualization_virtualmachine (
 );
 
 
-ALTER TABLE virtualization_virtualmachine OWNER TO netbox;
+ALTER TABLE public.virtualization_virtualmachine OWNER TO netbox;
 
 --
 -- Name: virtualization_virtualmachine_id_seq; Type: SEQUENCE; Schema: public; Owner: netbox
 --
 
-CREATE SEQUENCE virtualization_virtualmachine_id_seq
+CREATE SEQUENCE public.virtualization_virtualmachine_id_seq
     AS integer
     START WITH 1
     INCREMENT BY 1
@@ -2946,531 +2945,531 @@ CREATE SEQUENCE virtualization_virtualmachine_id_seq
     CACHE 1;
 
 
-ALTER TABLE virtualization_virtualmachine_id_seq OWNER TO netbox;
+ALTER TABLE public.virtualization_virtualmachine_id_seq OWNER TO netbox;
 
 --
 -- Name: virtualization_virtualmachine_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: netbox
 --
 
-ALTER SEQUENCE virtualization_virtualmachine_id_seq OWNED BY virtualization_virtualmachine.id;
+ALTER SEQUENCE public.virtualization_virtualmachine_id_seq OWNED BY public.virtualization_virtualmachine.id;
 
 
 --
 -- Name: auth_group id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group ALTER COLUMN id SET DEFAULT nextval('auth_group_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group ALTER COLUMN id SET DEFAULT nextval('public.auth_group_id_seq'::regclass);
 
 
 --
 -- Name: auth_group_permissions id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('auth_group_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_group_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_group_permissions_id_seq'::regclass);
 
 
 --
 -- Name: auth_permission id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_permission ALTER COLUMN id SET DEFAULT nextval('auth_permission_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_permission ALTER COLUMN id SET DEFAULT nextval('public.auth_permission_id_seq'::regclass);
 
 
 --
 -- Name: auth_user id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user ALTER COLUMN id SET DEFAULT nextval('auth_user_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user ALTER COLUMN id SET DEFAULT nextval('public.auth_user_id_seq'::regclass);
 
 
 --
 -- Name: auth_user_groups id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_groups ALTER COLUMN id SET DEFAULT nextval('auth_user_groups_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user_groups ALTER COLUMN id SET DEFAULT nextval('public.auth_user_groups_id_seq'::regclass);
 
 
 --
 -- Name: auth_user_user_permissions id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('auth_user_user_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.auth_user_user_permissions ALTER COLUMN id SET DEFAULT nextval('public.auth_user_user_permissions_id_seq'::regclass);
 
 
 --
 -- Name: circuits_circuit id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit ALTER COLUMN id SET DEFAULT nextval('circuits_circuit_id_seq'::regclass);
+ALTER TABLE ONLY public.circuits_circuit ALTER COLUMN id SET DEFAULT nextval('public.circuits_circuit_id_seq'::regclass);
 
 
 --
 -- Name: circuits_circuittermination id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination ALTER COLUMN id SET DEFAULT nextval('circuits_circuittermination_id_seq'::regclass);
+ALTER TABLE ONLY public.circuits_circuittermination ALTER COLUMN id SET DEFAULT nextval('public.circuits_circuittermination_id_seq'::regclass);
 
 
 --
 -- Name: circuits_circuittype id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittype ALTER COLUMN id SET DEFAULT nextval('circuits_circuittype_id_seq'::regclass);
+ALTER TABLE ONLY public.circuits_circuittype ALTER COLUMN id SET DEFAULT nextval('public.circuits_circuittype_id_seq'::regclass);
 
 
 --
 -- Name: circuits_provider id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_provider ALTER COLUMN id SET DEFAULT nextval('circuits_provider_id_seq'::regclass);
+ALTER TABLE ONLY public.circuits_provider ALTER COLUMN id SET DEFAULT nextval('public.circuits_provider_id_seq'::regclass);
 
 
 --
 -- Name: dcim_consoleport id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport ALTER COLUMN id SET DEFAULT nextval('dcim_consoleport_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_consoleport ALTER COLUMN id SET DEFAULT nextval('public.dcim_consoleport_id_seq'::regclass);
 
 
 --
 -- Name: dcim_consoleporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleporttemplate ALTER COLUMN id SET DEFAULT nextval('dcim_consoleporttemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_consoleporttemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_consoleporttemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_consoleserverport id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverport ALTER COLUMN id SET DEFAULT nextval('dcim_consoleserverport_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_consoleserverport ALTER COLUMN id SET DEFAULT nextval('public.dcim_consoleserverport_id_seq'::regclass);
 
 
 --
 -- Name: dcim_consoleserverporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverporttemplate ALTER COLUMN id SET DEFAULT nextval('dcim_consoleserverporttemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_consoleserverporttemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_consoleserverporttemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_device id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device ALTER COLUMN id SET DEFAULT nextval('dcim_device_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_device ALTER COLUMN id SET DEFAULT nextval('public.dcim_device_id_seq'::regclass);
 
 
 --
 -- Name: dcim_devicebay id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay ALTER COLUMN id SET DEFAULT nextval('dcim_devicebay_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_devicebay ALTER COLUMN id SET DEFAULT nextval('public.dcim_devicebay_id_seq'::regclass);
 
 
 --
 -- Name: dcim_devicebaytemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebaytemplate ALTER COLUMN id SET DEFAULT nextval('dcim_devicebaytemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_devicebaytemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_devicebaytemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_devicerole id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicerole ALTER COLUMN id SET DEFAULT nextval('dcim_devicerole_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_devicerole ALTER COLUMN id SET DEFAULT nextval('public.dcim_devicerole_id_seq'::regclass);
 
 
 --
 -- Name: dcim_devicetype id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicetype ALTER COLUMN id SET DEFAULT nextval('dcim_devicetype_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_devicetype ALTER COLUMN id SET DEFAULT nextval('public.dcim_devicetype_id_seq'::regclass);
 
 
 --
 -- Name: dcim_interface id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface ALTER COLUMN id SET DEFAULT nextval('dcim_interface_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_interface ALTER COLUMN id SET DEFAULT nextval('public.dcim_interface_id_seq'::regclass);
 
 
 --
 -- Name: dcim_interface_tagged_vlans id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface_tagged_vlans ALTER COLUMN id SET DEFAULT nextval('dcim_interface_tagged_vlans_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_interface_tagged_vlans ALTER COLUMN id SET DEFAULT nextval('public.dcim_interface_tagged_vlans_id_seq'::regclass);
 
 
 --
 -- Name: dcim_interfaceconnection id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection ALTER COLUMN id SET DEFAULT nextval('dcim_interfaceconnection_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_interfaceconnection ALTER COLUMN id SET DEFAULT nextval('public.dcim_interfaceconnection_id_seq'::regclass);
 
 
 --
 -- Name: dcim_interfacetemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfacetemplate ALTER COLUMN id SET DEFAULT nextval('dcim_interfacetemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_interfacetemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_interfacetemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_inventoryitem id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem ALTER COLUMN id SET DEFAULT nextval('dcim_module_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_inventoryitem ALTER COLUMN id SET DEFAULT nextval('public.dcim_module_id_seq'::regclass);
 
 
 --
 -- Name: dcim_manufacturer id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_manufacturer ALTER COLUMN id SET DEFAULT nextval('dcim_manufacturer_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_manufacturer ALTER COLUMN id SET DEFAULT nextval('public.dcim_manufacturer_id_seq'::regclass);
 
 
 --
 -- Name: dcim_platform id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_platform ALTER COLUMN id SET DEFAULT nextval('dcim_platform_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_platform ALTER COLUMN id SET DEFAULT nextval('public.dcim_platform_id_seq'::regclass);
 
 
 --
 -- Name: dcim_poweroutlet id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlet ALTER COLUMN id SET DEFAULT nextval('dcim_poweroutlet_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_poweroutlet ALTER COLUMN id SET DEFAULT nextval('public.dcim_poweroutlet_id_seq'::regclass);
 
 
 --
 -- Name: dcim_poweroutlettemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlettemplate ALTER COLUMN id SET DEFAULT nextval('dcim_poweroutlettemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_poweroutlettemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_poweroutlettemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_powerport id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport ALTER COLUMN id SET DEFAULT nextval('dcim_powerport_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_powerport ALTER COLUMN id SET DEFAULT nextval('public.dcim_powerport_id_seq'::regclass);
 
 
 --
 -- Name: dcim_powerporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerporttemplate ALTER COLUMN id SET DEFAULT nextval('dcim_powerporttemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_powerporttemplate ALTER COLUMN id SET DEFAULT nextval('public.dcim_powerporttemplate_id_seq'::regclass);
 
 
 --
 -- Name: dcim_rack id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack ALTER COLUMN id SET DEFAULT nextval('dcim_rack_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_rack ALTER COLUMN id SET DEFAULT nextval('public.dcim_rack_id_seq'::regclass);
 
 
 --
 -- Name: dcim_rackgroup id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackgroup ALTER COLUMN id SET DEFAULT nextval('dcim_rackgroup_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_rackgroup ALTER COLUMN id SET DEFAULT nextval('public.dcim_rackgroup_id_seq'::regclass);
 
 
 --
 -- Name: dcim_rackreservation id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackreservation ALTER COLUMN id SET DEFAULT nextval('dcim_rackreservation_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_rackreservation ALTER COLUMN id SET DEFAULT nextval('public.dcim_rackreservation_id_seq'::regclass);
 
 
 --
 -- Name: dcim_rackrole id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackrole ALTER COLUMN id SET DEFAULT nextval('dcim_rackrole_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_rackrole ALTER COLUMN id SET DEFAULT nextval('public.dcim_rackrole_id_seq'::regclass);
 
 
 --
 -- Name: dcim_region id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_region ALTER COLUMN id SET DEFAULT nextval('dcim_region_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_region ALTER COLUMN id SET DEFAULT nextval('public.dcim_region_id_seq'::regclass);
 
 
 --
 -- Name: dcim_site id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site ALTER COLUMN id SET DEFAULT nextval('dcim_site_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_site ALTER COLUMN id SET DEFAULT nextval('public.dcim_site_id_seq'::regclass);
 
 
 --
 -- Name: dcim_virtualchassis id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_virtualchassis ALTER COLUMN id SET DEFAULT nextval('dcim_virtualchassis_id_seq'::regclass);
+ALTER TABLE ONLY public.dcim_virtualchassis ALTER COLUMN id SET DEFAULT nextval('public.dcim_virtualchassis_id_seq'::regclass);
 
 
 --
 -- Name: django_admin_log id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_admin_log ALTER COLUMN id SET DEFAULT nextval('django_admin_log_id_seq'::regclass);
+ALTER TABLE ONLY public.django_admin_log ALTER COLUMN id SET DEFAULT nextval('public.django_admin_log_id_seq'::regclass);
 
 
 --
 -- Name: django_content_type id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_content_type ALTER COLUMN id SET DEFAULT nextval('django_content_type_id_seq'::regclass);
+ALTER TABLE ONLY public.django_content_type ALTER COLUMN id SET DEFAULT nextval('public.django_content_type_id_seq'::regclass);
 
 
 --
 -- Name: django_migrations id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_migrations ALTER COLUMN id SET DEFAULT nextval('django_migrations_id_seq'::regclass);
+ALTER TABLE ONLY public.django_migrations ALTER COLUMN id SET DEFAULT nextval('public.django_migrations_id_seq'::regclass);
 
 
 --
 -- Name: extras_customfield id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield ALTER COLUMN id SET DEFAULT nextval('extras_customfield_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_customfield ALTER COLUMN id SET DEFAULT nextval('public.extras_customfield_id_seq'::regclass);
 
 
 --
 -- Name: extras_customfield_obj_type id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield_obj_type ALTER COLUMN id SET DEFAULT nextval('extras_customfield_obj_type_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_customfield_obj_type ALTER COLUMN id SET DEFAULT nextval('public.extras_customfield_obj_type_id_seq'::regclass);
 
 
 --
 -- Name: extras_customfieldchoice id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldchoice ALTER COLUMN id SET DEFAULT nextval('extras_customfieldchoice_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_customfieldchoice ALTER COLUMN id SET DEFAULT nextval('public.extras_customfieldchoice_id_seq'::regclass);
 
 
 --
 -- Name: extras_customfieldvalue id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldvalue ALTER COLUMN id SET DEFAULT nextval('extras_customfieldvalue_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_customfieldvalue ALTER COLUMN id SET DEFAULT nextval('public.extras_customfieldvalue_id_seq'::regclass);
 
 
 --
 -- Name: extras_exporttemplate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_exporttemplate ALTER COLUMN id SET DEFAULT nextval('extras_exporttemplate_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_exporttemplate ALTER COLUMN id SET DEFAULT nextval('public.extras_exporttemplate_id_seq'::regclass);
 
 
 --
 -- Name: extras_graph id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_graph ALTER COLUMN id SET DEFAULT nextval('extras_graph_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_graph ALTER COLUMN id SET DEFAULT nextval('public.extras_graph_id_seq'::regclass);
 
 
 --
 -- Name: extras_imageattachment id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_imageattachment ALTER COLUMN id SET DEFAULT nextval('extras_imageattachment_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_imageattachment ALTER COLUMN id SET DEFAULT nextval('public.extras_imageattachment_id_seq'::regclass);
 
 
 --
 -- Name: extras_reportresult id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_reportresult ALTER COLUMN id SET DEFAULT nextval('extras_reportresult_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_reportresult ALTER COLUMN id SET DEFAULT nextval('public.extras_reportresult_id_seq'::regclass);
 
 
 --
 -- Name: extras_topologymap id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_topologymap ALTER COLUMN id SET DEFAULT nextval('extras_topologymap_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_topologymap ALTER COLUMN id SET DEFAULT nextval('public.extras_topologymap_id_seq'::regclass);
 
 
 --
 -- Name: extras_useraction id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_useraction ALTER COLUMN id SET DEFAULT nextval('extras_useraction_id_seq'::regclass);
+ALTER TABLE ONLY public.extras_useraction ALTER COLUMN id SET DEFAULT nextval('public.extras_useraction_id_seq'::regclass);
 
 
 --
 -- Name: ipam_aggregate id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_aggregate ALTER COLUMN id SET DEFAULT nextval('ipam_aggregate_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_aggregate ALTER COLUMN id SET DEFAULT nextval('public.ipam_aggregate_id_seq'::regclass);
 
 
 --
 -- Name: ipam_ipaddress id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress ALTER COLUMN id SET DEFAULT nextval('ipam_ipaddress_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_ipaddress ALTER COLUMN id SET DEFAULT nextval('public.ipam_ipaddress_id_seq'::regclass);
 
 
 --
 -- Name: ipam_prefix id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix ALTER COLUMN id SET DEFAULT nextval('ipam_prefix_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_prefix ALTER COLUMN id SET DEFAULT nextval('public.ipam_prefix_id_seq'::regclass);
 
 
 --
 -- Name: ipam_rir id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_rir ALTER COLUMN id SET DEFAULT nextval('ipam_rir_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_rir ALTER COLUMN id SET DEFAULT nextval('public.ipam_rir_id_seq'::regclass);
 
 
 --
 -- Name: ipam_role id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_role ALTER COLUMN id SET DEFAULT nextval('ipam_role_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_role ALTER COLUMN id SET DEFAULT nextval('public.ipam_role_id_seq'::regclass);
 
 
 --
 -- Name: ipam_service id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service ALTER COLUMN id SET DEFAULT nextval('ipam_service_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_service ALTER COLUMN id SET DEFAULT nextval('public.ipam_service_id_seq'::regclass);
 
 
 --
 -- Name: ipam_service_ipaddresses id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service_ipaddresses ALTER COLUMN id SET DEFAULT nextval('ipam_service_ipaddresses_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_service_ipaddresses ALTER COLUMN id SET DEFAULT nextval('public.ipam_service_ipaddresses_id_seq'::regclass);
 
 
 --
 -- Name: ipam_vlan id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan ALTER COLUMN id SET DEFAULT nextval('ipam_vlan_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_vlan ALTER COLUMN id SET DEFAULT nextval('public.ipam_vlan_id_seq'::regclass);
 
 
 --
 -- Name: ipam_vlangroup id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlangroup ALTER COLUMN id SET DEFAULT nextval('ipam_vlangroup_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_vlangroup ALTER COLUMN id SET DEFAULT nextval('public.ipam_vlangroup_id_seq'::regclass);
 
 
 --
 -- Name: ipam_vrf id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vrf ALTER COLUMN id SET DEFAULT nextval('ipam_vrf_id_seq'::regclass);
+ALTER TABLE ONLY public.ipam_vrf ALTER COLUMN id SET DEFAULT nextval('public.ipam_vrf_id_seq'::regclass);
 
 
 --
 -- Name: secrets_secret id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secret ALTER COLUMN id SET DEFAULT nextval('secrets_secret_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_secret ALTER COLUMN id SET DEFAULT nextval('public.secrets_secret_id_seq'::regclass);
 
 
 --
 -- Name: secrets_secretrole id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole ALTER COLUMN id SET DEFAULT nextval('secrets_secretrole_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_secretrole ALTER COLUMN id SET DEFAULT nextval('public.secrets_secretrole_id_seq'::regclass);
 
 
 --
 -- Name: secrets_secretrole_groups id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_groups ALTER COLUMN id SET DEFAULT nextval('secrets_secretrole_groups_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_secretrole_groups ALTER COLUMN id SET DEFAULT nextval('public.secrets_secretrole_groups_id_seq'::regclass);
 
 
 --
 -- Name: secrets_secretrole_users id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_users ALTER COLUMN id SET DEFAULT nextval('secrets_secretrole_users_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_secretrole_users ALTER COLUMN id SET DEFAULT nextval('public.secrets_secretrole_users_id_seq'::regclass);
 
 
 --
 -- Name: secrets_sessionkey id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_sessionkey ALTER COLUMN id SET DEFAULT nextval('secrets_sessionkey_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_sessionkey ALTER COLUMN id SET DEFAULT nextval('public.secrets_sessionkey_id_seq'::regclass);
 
 
 --
 -- Name: secrets_userkey id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_userkey ALTER COLUMN id SET DEFAULT nextval('secrets_userkey_id_seq'::regclass);
+ALTER TABLE ONLY public.secrets_userkey ALTER COLUMN id SET DEFAULT nextval('public.secrets_userkey_id_seq'::regclass);
 
 
 --
 -- Name: tenancy_tenant id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenant ALTER COLUMN id SET DEFAULT nextval('tenancy_tenant_id_seq'::regclass);
+ALTER TABLE ONLY public.tenancy_tenant ALTER COLUMN id SET DEFAULT nextval('public.tenancy_tenant_id_seq'::regclass);
 
 
 --
 -- Name: tenancy_tenantgroup id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenantgroup ALTER COLUMN id SET DEFAULT nextval('tenancy_tenantgroup_id_seq'::regclass);
+ALTER TABLE ONLY public.tenancy_tenantgroup ALTER COLUMN id SET DEFAULT nextval('public.tenancy_tenantgroup_id_seq'::regclass);
 
 
 --
 -- Name: users_token id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY users_token ALTER COLUMN id SET DEFAULT nextval('users_token_id_seq'::regclass);
+ALTER TABLE ONLY public.users_token ALTER COLUMN id SET DEFAULT nextval('public.users_token_id_seq'::regclass);
 
 
 --
 -- Name: virtualization_cluster id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster ALTER COLUMN id SET DEFAULT nextval('virtualization_cluster_id_seq'::regclass);
+ALTER TABLE ONLY public.virtualization_cluster ALTER COLUMN id SET DEFAULT nextval('public.virtualization_cluster_id_seq'::regclass);
 
 
 --
 -- Name: virtualization_clustergroup id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustergroup ALTER COLUMN id SET DEFAULT nextval('virtualization_clustergroup_id_seq'::regclass);
+ALTER TABLE ONLY public.virtualization_clustergroup ALTER COLUMN id SET DEFAULT nextval('public.virtualization_clustergroup_id_seq'::regclass);
 
 
 --
 -- Name: virtualization_clustertype id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustertype ALTER COLUMN id SET DEFAULT nextval('virtualization_clustertype_id_seq'::regclass);
+ALTER TABLE ONLY public.virtualization_clustertype ALTER COLUMN id SET DEFAULT nextval('public.virtualization_clustertype_id_seq'::regclass);
 
 
 --
 -- Name: virtualization_virtualmachine id; Type: DEFAULT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine ALTER COLUMN id SET DEFAULT nextval('virtualization_virtualmachine_id_seq'::regclass);
+ALTER TABLE ONLY public.virtualization_virtualmachine ALTER COLUMN id SET DEFAULT nextval('public.virtualization_virtualmachine_id_seq'::regclass);
 
 
 --
 -- Data for Name: auth_group; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_group (id, name) FROM stdin;
+COPY public.auth_group (id, name) FROM stdin;
 \.
 
 
@@ -3478,7 +3477,7 @@ COPY auth_group (id, name) FROM stdin;
 -- Data for Name: auth_group_permissions; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
+COPY public.auth_group_permissions (id, group_id, permission_id) FROM stdin;
 \.
 
 
@@ -3486,7 +3485,7 @@ COPY auth_group_permissions (id, group_id, permission_id) FROM stdin;
 -- Data for Name: auth_permission; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
+COPY public.auth_permission (id, name, content_type_id, codename) FROM stdin;
 1	Can add log entry	1	add_logentry
 2	Can change log entry	1	change_logentry
 3	Can delete log entry	1	delete_logentry
@@ -3689,8 +3688,8 @@ COPY auth_permission (id, name, content_type_id, codename) FROM stdin;
 -- Data for Name: auth_user; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
-1	pbkdf2_sha256$36000$W5RibUfmeFJa$6HgqQ7rDj/0CL9MOYMk4TqVl3iQTF7OXq8oN8S5Ml/M=	2018-06-09 08:06:39.465297+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
+COPY public.auth_user (id, password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) FROM stdin;
+1	pbkdf2_sha256$36000$W5RibUfmeFJa$6HgqQ7rDj/0CL9MOYMk4TqVl3iQTF7OXq8oN8S5Ml/M=	2018-11-07 16:46:12.848292+00	t	admin			admin@example.com	t	t	2018-06-03 16:17:44.788445+00
 \.
 
 
@@ -3698,7 +3697,7 @@ COPY auth_user (id, password, last_login, is_superuser, username, first_name, la
 -- Data for Name: auth_user_groups; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_user_groups (id, user_id, group_id) FROM stdin;
+COPY public.auth_user_groups (id, user_id, group_id) FROM stdin;
 \.
 
 
@@ -3706,7 +3705,7 @@ COPY auth_user_groups (id, user_id, group_id) FROM stdin;
 -- Data for Name: auth_user_user_permissions; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
+COPY public.auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 \.
 
 
@@ -3714,7 +3713,7 @@ COPY auth_user_user_permissions (id, user_id, permission_id) FROM stdin;
 -- Data for Name: circuits_circuit; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY circuits_circuit (id, created, last_updated, cid, install_date, commit_rate, comments, provider_id, type_id, tenant_id, description, status) FROM stdin;
+COPY public.circuits_circuit (id, created, last_updated, cid, install_date, commit_rate, comments, provider_id, type_id, tenant_id, description, status) FROM stdin;
 \.
 
 
@@ -3722,7 +3721,7 @@ COPY circuits_circuit (id, created, last_updated, cid, install_date, commit_rate
 -- Data for Name: circuits_circuittermination; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY circuits_circuittermination (id, term_side, port_speed, upstream_speed, xconnect_id, pp_info, circuit_id, interface_id, site_id) FROM stdin;
+COPY public.circuits_circuittermination (id, term_side, port_speed, upstream_speed, xconnect_id, pp_info, circuit_id, interface_id, site_id) FROM stdin;
 \.
 
 
@@ -3730,7 +3729,7 @@ COPY circuits_circuittermination (id, term_side, port_speed, upstream_speed, xco
 -- Data for Name: circuits_circuittype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY circuits_circuittype (id, name, slug) FROM stdin;
+COPY public.circuits_circuittype (id, name, slug) FROM stdin;
 \.
 
 
@@ -3738,7 +3737,7 @@ COPY circuits_circuittype (id, name, slug) FROM stdin;
 -- Data for Name: circuits_provider; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY circuits_provider (id, created, last_updated, name, slug, asn, account, portal_url, noc_contact, admin_contact, comments) FROM stdin;
+COPY public.circuits_provider (id, created, last_updated, name, slug, asn, account, portal_url, noc_contact, admin_contact, comments) FROM stdin;
 \.
 
 
@@ -3746,7 +3745,7 @@ COPY circuits_provider (id, created, last_updated, name, slug, asn, account, por
 -- Data for Name: dcim_consoleport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_consoleport (id, name, connection_status, cs_port_id, device_id) FROM stdin;
+COPY public.dcim_consoleport (id, name, connection_status, cs_port_id, device_id) FROM stdin;
 \.
 
 
@@ -3754,7 +3753,7 @@ COPY dcim_consoleport (id, name, connection_status, cs_port_id, device_id) FROM 
 -- Data for Name: dcim_consoleporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_consoleporttemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_consoleporttemplate (id, name, device_type_id) FROM stdin;
 \.
 
 
@@ -3762,7 +3761,7 @@ COPY dcim_consoleporttemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_consoleserverport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_consoleserverport (id, name, device_id) FROM stdin;
+COPY public.dcim_consoleserverport (id, name, device_id) FROM stdin;
 \.
 
 
@@ -3770,7 +3769,7 @@ COPY dcim_consoleserverport (id, name, device_id) FROM stdin;
 -- Data for Name: dcim_consoleserverporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_consoleserverporttemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_consoleserverporttemplate (id, name, device_type_id) FROM stdin;
 \.
 
 
@@ -3778,13 +3777,10 @@ COPY dcim_consoleserverporttemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_device; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_device (id, created, last_updated, name, serial, "position", face, status, comments, device_role_id, device_type_id, platform_id, rack_id, primary_ip4_id, primary_ip6_id, tenant_id, asset_tag, site_id, cluster_id, virtual_chassis_id, vc_position, vc_priority) FROM stdin;
-1	2018-06-03	2018-06-03 17:23:34.161724+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
-4	2018-06-08	2018-06-08 20:59:29.138163+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
+COPY public.dcim_device (id, created, last_updated, name, serial, "position", face, status, comments, device_role_id, device_type_id, platform_id, rack_id, primary_ip4_id, primary_ip6_id, tenant_id, asset_tag, site_id, cluster_id, virtual_chassis_id, vc_position, vc_priority) FROM stdin;
 5	2018-06-08	2018-06-08 21:58:28.048198+00	spine01		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
 6	2018-06-08	2018-06-08 22:35:21.708373+00	spine02		\N	\N	1		2	1	\N	2	\N	\N	\N	\N	1	\N	\N	\N	\N
 7	2018-06-08	2018-06-09 07:42:23.365687+00	leaf03		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
-8	2018-06-09	2018-06-09 07:42:45.680094+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
 9	2018-06-09	2018-06-09 08:14:35.463472+00	exit01		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
 10	2018-06-09	2018-06-09 08:14:44.548963+00	exit02		\N	\N	1		1	1	\N	4	\N	\N	\N	\N	1	\N	\N	\N	\N
 11	2018-06-09	2018-06-09 08:15:21.61264+00	super01		\N	\N	1		2	1	\N	5	\N	\N	\N	\N	1	\N	\N	\N	\N
@@ -3793,6 +3789,9 @@ COPY dcim_device (id, created, last_updated, name, serial, "position", face, sta
 14	2018-06-09	2018-06-09 10:56:18.10712+00	edge02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 15	2018-06-09	2018-06-09 10:56:18.130143+00	rtr01		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
 16	2018-06-09	2018-06-09 10:56:18.153524+00	rtr02		\N	\N	0		1	1	\N	6	\N	\N	\N	\N	1	\N	\N	\N	\N
+1	2018-06-03	2018-11-07 16:57:09.294214+00	leaf01		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
+4	2018-06-08	2018-11-07 16:57:09.324612+00	leaf02		\N	\N	1		1	1	1	1	\N	\N	\N	\N	1	\N	\N	\N	\N
+8	2018-06-09	2018-11-08 18:52:42.84008+00	leaf04		\N	\N	1		1	1	\N	3	\N	\N	\N	\N	1	\N	\N	\N	\N
 \.
 
 
@@ -3800,7 +3799,7 @@ COPY dcim_device (id, created, last_updated, name, serial, "position", face, sta
 -- Data for Name: dcim_devicebay; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_devicebay (id, name, device_id, installed_device_id) FROM stdin;
+COPY public.dcim_devicebay (id, name, device_id, installed_device_id) FROM stdin;
 \.
 
 
@@ -3808,7 +3807,7 @@ COPY dcim_devicebay (id, name, device_id, installed_device_id) FROM stdin;
 -- Data for Name: dcim_devicebaytemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_devicebaytemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_devicebaytemplate (id, name, device_type_id) FROM stdin;
 \.
 
 
@@ -3816,7 +3815,7 @@ COPY dcim_devicebaytemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_devicerole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_devicerole (id, name, slug, color, vm_role) FROM stdin;
+COPY public.dcim_devicerole (id, name, slug, color, vm_role) FROM stdin;
 1	Leaf	leaf	aa1409	f
 2	Spine	spine	aa1409	f
 \.
@@ -3826,7 +3825,7 @@ COPY dcim_devicerole (id, name, slug, color, vm_role) FROM stdin;
 -- Data for Name: dcim_devicetype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_devicetype (id, model, slug, u_height, is_full_depth, is_console_server, is_pdu, is_network_device, manufacturer_id, subdevice_role, part_number, comments, interface_ordering) FROM stdin;
+COPY public.dcim_devicetype (id, model, slug, u_height, is_full_depth, is_console_server, is_pdu, is_network_device, manufacturer_id, subdevice_role, part_number, comments, interface_ordering) FROM stdin;
 1	Cumulus VX	cumulus-vx	0	f	f	f	t	1	\N			1
 \.
 
@@ -3835,7 +3834,7 @@ COPY dcim_devicetype (id, model, slug, u_height, is_full_depth, is_console_serve
 -- Data for Name: dcim_interface; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, mac_address, lag_id, enabled, mtu, virtual_machine_id, mode, untagged_vlan_id) FROM stdin;
+COPY public.dcim_interface (id, name, form_factor, mgmt_only, description, device_id, mac_address, lag_id, enabled, mtu, virtual_machine_id, mode, untagged_vlan_id) FROM stdin;
 2	swp1	1000	f		1	\N	1	t	\N	\N	\N	\N
 108	irb2501	0	f	bgp_external	13	\N	\N	t	\N	\N	100	7
 4	lo	0	f		1	\N	\N	t	\N	\N	\N	\N
@@ -3849,7 +3848,6 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 110	irb2503	0	f	bgp_external	13	\N	\N	t	\N	\N	100	9
 13	swp2	1000	f		1	\N	12	t	\N	\N	\N	\N
 111	irb2504	0	f	bgp_external	13	\N	\N	t	\N	\N	100	19
-56	bond02	200	f		8	\N	\N	t	\N	\N	200	\N
 3	irb1000	0	f		1	\N	\N	t	\N	\N	100	1
 137	irb1002	0	f		1	\N	\N	t	\N	\N	100	3
 5	peerlink	200	f		1	44:38:39:ff:01:02	\N	t	\N	\N	\N	\N
@@ -3858,7 +3856,6 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 11	swp50	1000	f	bgp_underlay	1	\N	\N	t	\N	\N	\N	\N
 16	bond02	200	f		4	\N	\N	t	\N	\N	200	\N
 69	bond02	200	f		9	\N	\N	t	\N	\N	200	\N
-42	bond01	200	f		7	\N	\N	t	\N	\N	200	\N
 17	clagd-vxlan-anycast-ip	0	f		4	\N	\N	t	\N	\N	\N	\N
 71	irb1000	0	f		9	\N	\N	t	\N	\N	100	1
 19	lo	0	f		4	\N	\N	t	\N	\N	\N	\N
@@ -3885,29 +3882,19 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 39	swp4	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
 40	swp5	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
 41	swp6	1000	f	bgp_underlay	6	\N	\N	t	\N	\N	\N	\N
-44	clagd-vxlan-anycast-ip	0	f		7	\N	\N	t	\N	\N	\N	\N
-45	irb1000	0	f		7	\N	\N	t	\N	\N	100	1
 46	lo	0	f		7	\N	\N	t	\N	\N	\N	\N
 48	peerlink.4094	0	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
-49	swp1	1000	f		7	\N	42	t	\N	\N	\N	\N
-50	swp2	1000	f		7	\N	43	t	\N	\N	\N	\N
 51	swp20	1000	f		7	\N	47	t	\N	\N	\N	\N
 52	swp21	1000	f		7	\N	47	t	\N	\N	\N	\N
 53	swp49	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
 54	swp50	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
 81	bond01	200	f		10	\N	\N	t	\N	\N	200	\N
-43	bond02	200	f		7	\N	\N	t	\N	\N	200	\N
 70	clagd-vxlan-anycast-ip	0	f		9	\N	\N	t	\N	\N	\N	\N
-55	bond01	200	f		8	\N	\N	t	\N	\N	200	\N
-57	clagd-vxlan-anycast-ip	0	f		8	\N	\N	t	\N	\N	\N	\N
 1	bond01	200	f		1	\N	\N	t	\N	\N	200	\N
-58	irb1000	0	f		8	\N	\N	t	\N	\N	100	1
 59	lo	0	f		8	\N	\N	t	\N	\N	\N	\N
 60	peerlink	200	f		8	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
 47	peerlink	200	f		7	44:38:39:ff:01:34	\N	t	\N	\N	\N	\N
 61	peerlink.4094	0	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
-62	swp1	1000	f		8	\N	55	t	\N	\N	\N	\N
-63	swp2	1000	f		8	\N	56	t	\N	\N	\N	\N
 64	swp20	1000	f		8	\N	60	t	\N	\N	\N	\N
 65	swp21	1000	f		8	\N	60	t	\N	\N	\N	\N
 66	swp49	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
@@ -3952,6 +3939,8 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 129	swp2	1000	f		16	\N	\N	t	\N	\N	200	\N
 120	swp1	1000	f		15	\N	\N	t	\N	\N	200	\N
 121	swp2	1000	f		15	\N	\N	t	\N	\N	200	\N
+62	swp1	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
+63	swp2	1000	f	bgp_underlay	8	\N	\N	t	\N	\N	\N	\N
 122	irb2501	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	7
 123	irb2502	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	8
 124	irb2505	0	f	bgp_underlay	15	\N	\N	t	\N	\N	100	11
@@ -3974,17 +3963,7 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 112	irb2505	0	f	bgp_external	14	\N	\N	t	\N	\N	100	11
 145	irb1005	0	f		4	\N	\N	t	\N	\N	100	6
 113	irb2506	0	f	bgp_external	14	\N	\N	t	\N	\N	100	12
-146	irb1001	0	f		7	\N	\N	t	\N	\N	100	2
-147	irb1002	0	f		7	\N	\N	t	\N	\N	100	3
 114	irb2507	0	f	bgp_external	14	\N	\N	t	\N	\N	100	13
-148	irb1003	0	f		7	\N	\N	t	\N	\N	100	4
-149	irb1004	0	f		7	\N	\N	t	\N	\N	100	5
-150	irb1005	0	f		7	\N	\N	t	\N	\N	100	6
-151	irb1001	0	f		8	\N	\N	t	\N	\N	100	2
-152	irb1002	0	f		8	\N	\N	t	\N	\N	100	3
-153	irb1003	0	f		8	\N	\N	t	\N	\N	100	4
-154	irb1004	0	f		8	\N	\N	t	\N	\N	100	5
-155	irb1005	0	f		8	\N	\N	t	\N	\N	100	6
 156	irb1001	0	f		9	\N	\N	t	\N	\N	100	2
 157	irb1002	0	f		9	\N	\N	t	\N	\N	100	3
 158	irb1003	0	f		9	\N	\N	t	\N	\N	100	4
@@ -4004,6 +3983,8 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 167	swp52	1000	f	bgp_underlay	9	\N	\N	t	\N	\N	\N	\N
 168	swp51	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
 169	swp52	1000	f	bgp_underlay	10	\N	\N	t	\N	\N	\N	\N
+49	swp1	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
+50	swp2	1000	f	bgp_underlay	7	\N	\N	t	\N	\N	\N	\N
 \.
 
 
@@ -4011,7 +3992,7 @@ COPY dcim_interface (id, name, form_factor, mgmt_only, description, device_id, m
 -- Data for Name: dcim_interface_tagged_vlans; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
+COPY public.dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 3	1	2
 4	1	1
 5	12	1
@@ -4020,14 +4001,6 @@ COPY dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 8	15	2
 9	16	1
 10	16	2
-11	42	1
-12	42	2
-13	43	1
-14	43	2
-15	55	1
-16	55	2
-17	56	1
-18	56	2
 19	68	1
 20	68	2
 21	69	1
@@ -4064,22 +4037,6 @@ COPY dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 62	16	4
 63	16	5
 64	16	6
-65	42	3
-66	42	4
-67	42	5
-68	42	6
-69	43	3
-70	43	4
-71	43	5
-72	43	6
-73	55	3
-74	55	4
-75	55	5
-76	55	6
-77	56	3
-78	56	4
-79	56	5
-80	56	6
 81	68	3
 82	68	4
 83	68	5
@@ -4107,7 +4064,7 @@ COPY dcim_interface_tagged_vlans (id, interface_id, vlan_id) FROM stdin;
 -- Data for Name: dcim_interfaceconnection; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_interfaceconnection (id, connection_status, interface_a_id, interface_b_id) FROM stdin;
+COPY public.dcim_interfaceconnection (id, connection_status, interface_a_id, interface_b_id) FROM stdin;
 \.
 
 
@@ -4115,7 +4072,7 @@ COPY dcim_interfaceconnection (id, connection_status, interface_a_id, interface_
 -- Data for Name: dcim_interfacetemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_interfacetemplate (id, name, form_factor, mgmt_only, device_type_id) FROM stdin;
+COPY public.dcim_interfacetemplate (id, name, form_factor, mgmt_only, device_type_id) FROM stdin;
 \.
 
 
@@ -4123,7 +4080,7 @@ COPY dcim_interfacetemplate (id, name, form_factor, mgmt_only, device_type_id) F
 -- Data for Name: dcim_inventoryitem; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_inventoryitem (id, name, part_id, serial, discovered, device_id, parent_id, manufacturer_id, asset_tag, description) FROM stdin;
+COPY public.dcim_inventoryitem (id, name, part_id, serial, discovered, device_id, parent_id, manufacturer_id, asset_tag, description) FROM stdin;
 \.
 
 
@@ -4131,7 +4088,7 @@ COPY dcim_inventoryitem (id, name, part_id, serial, discovered, device_id, paren
 -- Data for Name: dcim_manufacturer; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_manufacturer (id, name, slug) FROM stdin;
+COPY public.dcim_manufacturer (id, name, slug) FROM stdin;
 1	Cumulus Networks	cumulus-networks
 \.
 
@@ -4140,7 +4097,7 @@ COPY dcim_manufacturer (id, name, slug) FROM stdin;
 -- Data for Name: dcim_platform; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_platform (id, name, slug, rpc_client, napalm_driver, manufacturer_id) FROM stdin;
+COPY public.dcim_platform (id, name, slug, rpc_client, napalm_driver, manufacturer_id) FROM stdin;
 1	Cumulus VX	cumulus-vx			1
 \.
 
@@ -4149,7 +4106,7 @@ COPY dcim_platform (id, name, slug, rpc_client, napalm_driver, manufacturer_id) 
 -- Data for Name: dcim_poweroutlet; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_poweroutlet (id, name, device_id) FROM stdin;
+COPY public.dcim_poweroutlet (id, name, device_id) FROM stdin;
 \.
 
 
@@ -4157,7 +4114,7 @@ COPY dcim_poweroutlet (id, name, device_id) FROM stdin;
 -- Data for Name: dcim_poweroutlettemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_poweroutlettemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_poweroutlettemplate (id, name, device_type_id) FROM stdin;
 \.
 
 
@@ -4165,7 +4122,7 @@ COPY dcim_poweroutlettemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_powerport; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_powerport (id, name, connection_status, device_id, power_outlet_id) FROM stdin;
+COPY public.dcim_powerport (id, name, connection_status, device_id, power_outlet_id) FROM stdin;
 \.
 
 
@@ -4173,7 +4130,7 @@ COPY dcim_powerport (id, name, connection_status, device_id, power_outlet_id) FR
 -- Data for Name: dcim_powerporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_powerporttemplate (id, name, device_type_id) FROM stdin;
+COPY public.dcim_powerporttemplate (id, name, device_type_id) FROM stdin;
 \.
 
 
@@ -4181,7 +4138,7 @@ COPY dcim_powerporttemplate (id, name, device_type_id) FROM stdin;
 -- Data for Name: dcim_rack; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_rack (id, created, last_updated, name, facility_id, u_height, comments, group_id, site_id, tenant_id, type, width, role_id, desc_units, serial) FROM stdin;
+COPY public.dcim_rack (id, created, last_updated, name, facility_id, u_height, comments, group_id, site_id, tenant_id, type, width, role_id, desc_units, serial) FROM stdin;
 1	2018-06-03	2018-06-09 00:29:07.362749+00	Rack1-pod1	\N	42		1	1	\N	\N	19	\N	f	
 2	2018-06-08	2018-06-09 00:29:24.68451+00	Spine-pod1	\N	42		1	1	\N	\N	19	\N	f	
 3	2018-06-09	2018-06-09 07:40:04.44653+00	Rack2-pod1	\N	42		1	1	\N	\N	19	\N	f	
@@ -4196,7 +4153,7 @@ COPY dcim_rack (id, created, last_updated, name, facility_id, u_height, comments
 -- Data for Name: dcim_rackgroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_rackgroup (id, name, slug, site_id) FROM stdin;
+COPY public.dcim_rackgroup (id, name, slug, site_id) FROM stdin;
 1	Pod1	pod1	1
 2	Edge	edge	1
 3	Superspine	superspine	1
@@ -4207,7 +4164,7 @@ COPY dcim_rackgroup (id, name, slug, site_id) FROM stdin;
 -- Data for Name: dcim_rackreservation; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_rackreservation (id, units, created, description, rack_id, user_id, tenant_id) FROM stdin;
+COPY public.dcim_rackreservation (id, units, created, description, rack_id, user_id, tenant_id) FROM stdin;
 \.
 
 
@@ -4215,7 +4172,7 @@ COPY dcim_rackreservation (id, units, created, description, rack_id, user_id, te
 -- Data for Name: dcim_rackrole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_rackrole (id, name, slug, color) FROM stdin;
+COPY public.dcim_rackrole (id, name, slug, color) FROM stdin;
 \.
 
 
@@ -4223,7 +4180,7 @@ COPY dcim_rackrole (id, name, slug, color) FROM stdin;
 -- Data for Name: dcim_region; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id) FROM stdin;
+COPY public.dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id) FROM stdin;
 \.
 
 
@@ -4231,7 +4188,7 @@ COPY dcim_region (id, name, slug, lft, rght, tree_id, level, parent_id) FROM std
 -- Data for Name: dcim_site; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_site (id, created, last_updated, name, slug, facility, asn, physical_address, shipping_address, comments, tenant_id, contact_email, contact_name, contact_phone, region_id, description, status, time_zone) FROM stdin;
+COPY public.dcim_site (id, created, last_updated, name, slug, facility, asn, physical_address, shipping_address, comments, tenant_id, contact_email, contact_name, contact_phone, region_id, description, status, time_zone) FROM stdin;
 1	2018-06-03	2018-06-03 16:38:35.013009+00	Virtual Topology	virtual-topology		\N				\N				\N		1	
 \.
 
@@ -4240,7 +4197,7 @@ COPY dcim_site (id, created, last_updated, name, slug, facility, asn, physical_a
 -- Data for Name: dcim_virtualchassis; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY dcim_virtualchassis (id, domain, master_id) FROM stdin;
+COPY public.dcim_virtualchassis (id, domain, master_id) FROM stdin;
 \.
 
 
@@ -4248,7 +4205,7 @@ COPY dcim_virtualchassis (id, domain, master_id) FROM stdin;
 -- Data for Name: django_admin_log; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
+COPY public.django_admin_log (id, action_time, object_id, object_repr, action_flag, change_message, content_type_id, user_id) FROM stdin;
 1	2018-06-03 16:25:40.914279+00	1	Asn	1	[{"added": {}}]	50	1
 2	2018-06-03 16:27:46.686262+00	1	Asn	3		50	1
 3	2018-06-03 16:29:13.64178+00	2	Asn	1	[{"added": {}}]	50	1
@@ -4263,7 +4220,7 @@ COPY django_admin_log (id, action_time, object_id, object_repr, action_flag, cha
 -- Data for Name: django_content_type; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY django_content_type (id, app_label, model) FROM stdin;
+COPY public.django_content_type (id, app_label, model) FROM stdin;
 1	admin	logentry
 2	auth	permission
 3	auth	group
@@ -4336,7 +4293,7 @@ COPY django_content_type (id, app_label, model) FROM stdin;
 -- Data for Name: django_migrations; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY django_migrations (id, app, name, applied) FROM stdin;
+COPY public.django_migrations (id, app, name, applied) FROM stdin;
 1	contenttypes	0001_initial	2018-06-03 16:17:20.578801+00
 2	auth	0001_initial	2018-06-03 16:17:20.689919+00
 3	admin	0001_initial	2018-06-03 16:17:20.842157+00
@@ -4465,9 +4422,10 @@ COPY django_migrations (id, app, name, applied) FROM stdin;
 -- Data for Name: django_session; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY django_session (session_key, session_data, expire_date) FROM stdin;
+COPY public.django_session (session_key, session_data, expire_date) FROM stdin;
 czyfvr6s07tikkqorkj3cpuefj8ggdh5	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-06-17 16:20:42.39863+00
 w0iodv1mnxosfpa14r1ci8g3q6r0smwc	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-06-23 08:06:39.472226+00
+4cq56ympmhiax6s49ruxg8k4uzlpdske	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjdjMmQwNzp7Il9hdXRoX3VzZXJfaWQiOiIxIiwiX2F1dGhfdXNlcl9iYWNrZW5kIjoiZGphbmdvLmNvbnRyaWIuYXV0aC5iYWNrZW5kcy5Nb2RlbEJhY2tlbmQiLCJfYXV0aF91c2VyX2hhc2giOiI5M2RiMmMyMzFiY2M3NmQzZjkyMmRmNDA0MmM5OGQ0NzU0NzJkOTVmIn0=	2018-11-21 16:46:12.853948+00
 \.
 
 
@@ -4475,7 +4433,7 @@ w0iodv1mnxosfpa14r1ci8g3q6r0smwc	OWRmMzZkNzJiNGNjYzNkNjJmYTkyMmU0MGQ3MTZmNmZhNjd
 -- Data for Name: extras_customfield; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_customfield (id, type, name, label, description, required, "default", weight, filter_logic) FROM stdin;
+COPY public.extras_customfield (id, type, name, label, description, required, "default", weight, filter_logic) FROM stdin;
 2	200	ASN			f		100	1
 4	100	clag_backup_ip			f		100	1
 3	100	clag_peer_ip			f		100	1
@@ -4486,7 +4444,7 @@ COPY extras_customfield (id, type, name, label, description, required, "default"
 -- Data for Name: extras_customfield_obj_type; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_customfield_obj_type (id, customfield_id, contenttype_id) FROM stdin;
+COPY public.extras_customfield_obj_type (id, customfield_id, contenttype_id) FROM stdin;
 2	2	15
 3	3	38
 4	4	38
@@ -4497,7 +4455,7 @@ COPY extras_customfield_obj_type (id, customfield_id, contenttype_id) FROM stdin
 -- Data for Name: extras_customfieldchoice; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_customfieldchoice (id, value, weight, field_id) FROM stdin;
+COPY public.extras_customfieldchoice (id, value, weight, field_id) FROM stdin;
 \.
 
 
@@ -4505,7 +4463,7 @@ COPY extras_customfieldchoice (id, value, weight, field_id) FROM stdin;
 -- Data for Name: extras_customfieldvalue; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj_type_id) FROM stdin;
+COPY public.extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj_type_id) FROM stdin;
 1	1	65111	2	15
 4	7	192.168.200.19	4	38
 5	7	169.254.1.2	3	38
@@ -4519,7 +4477,6 @@ COPY extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj_type_i
 15	27	192.168.200.20	4	38
 16	27	169.254.1.1	3	38
 11	7	65121	2	15
-14	8	65122	2	15
 17	9	65131	2	15
 18	10	65132	2	15
 19	11	65901	2	15
@@ -4532,6 +4489,7 @@ COPY extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj_type_i
 26	36	169.254.1.2	3	38
 27	43	192.168.200.32	4	38
 28	43	169.254.1.1	3	38
+14	8	65122	2	15
 \.
 
 
@@ -4539,7 +4497,7 @@ COPY extras_customfieldvalue (id, obj_id, serialized_value, field_id, obj_type_i
 -- Data for Name: extras_exporttemplate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_exporttemplate (id, name, template_code, mime_type, file_extension, content_type_id, description) FROM stdin;
+COPY public.extras_exporttemplate (id, name, template_code, mime_type, file_extension, content_type_id, description) FROM stdin;
 \.
 
 
@@ -4547,7 +4505,7 @@ COPY extras_exporttemplate (id, name, template_code, mime_type, file_extension, 
 -- Data for Name: extras_graph; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_graph (id, type, weight, name, source, link) FROM stdin;
+COPY public.extras_graph (id, type, weight, name, source, link) FROM stdin;
 \.
 
 
@@ -4555,7 +4513,7 @@ COPY extras_graph (id, type, weight, name, source, link) FROM stdin;
 -- Data for Name: extras_imageattachment; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_imageattachment (id, object_id, image, image_height, image_width, name, created, content_type_id) FROM stdin;
+COPY public.extras_imageattachment (id, object_id, image, image_height, image_width, name, created, content_type_id) FROM stdin;
 \.
 
 
@@ -4563,7 +4521,7 @@ COPY extras_imageattachment (id, object_id, image, image_height, image_width, na
 -- Data for Name: extras_reportresult; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_reportresult (id, report, created, failed, data, user_id) FROM stdin;
+COPY public.extras_reportresult (id, report, created, failed, data, user_id) FROM stdin;
 \.
 
 
@@ -4571,7 +4529,7 @@ COPY extras_reportresult (id, report, created, failed, data, user_id) FROM stdin
 -- Data for Name: extras_topologymap; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_topologymap (id, name, slug, device_patterns, description, site_id, type) FROM stdin;
+COPY public.extras_topologymap (id, name, slug, device_patterns, description, site_id, type) FROM stdin;
 \.
 
 
@@ -4579,7 +4537,7 @@ COPY extras_topologymap (id, name, slug, device_patterns, description, site_id, 
 -- Data for Name: extras_useraction; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY extras_useraction (id, "time", object_id, action, message, content_type_id, user_id) FROM stdin;
+COPY public.extras_useraction (id, "time", object_id, action, message, content_type_id, user_id) FROM stdin;
 1	2018-06-03 16:31:55.138526+00	1	1	Created device role <a href="/dcim/devices/?role=leaf">Leaf</a>	16	1
 2	2018-06-03 16:32:09.473146+00	2	1	Created device role <a href="/dcim/devices/?role=spine">Spine</a>	16	1
 3	2018-06-03 16:33:42.610914+00	1	1	Created manufacturer <a href="/dcim/device-types/?manufacturer=cumulus-networks">Cumulus Networks</a>	21	1
@@ -5139,6 +5097,16 @@ COPY extras_useraction (id, "time", object_id, action, message, content_type_id,
 557	2018-06-09 21:28:29.637133+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
 558	2018-06-09 21:28:34.781746+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
 559	2018-06-09 21:28:37.608935+00	82	3	Modified interface <a href="/dcim/devices/10/">bond02</a>	18	1
+560	2018-11-07 16:49:56.651752+00	\N	4	Updated 2 devices	15	1
+561	2018-11-07 16:57:09.332252+00	\N	4	Updated 2 devices	15	1
+562	2018-11-07 18:40:11.942846+00	8	3	Modified device <a href="/dcim/devices/8/">leaf04</a>	15	1
+563	2018-11-08 18:52:42.84896+00	\N	4	Updated 1 devices	15	1
+564	2018-11-08 18:56:19.417461+00	\N	6	Deleted 9 interfaces	18	1
+565	2018-11-08 18:56:39.379376+00	49	3	Modified interface <a href="/dcim/devices/7/">swp1</a>	18	1
+566	2018-11-08 18:56:50.186742+00	50	3	Modified interface <a href="/dcim/devices/7/">swp2</a>	18	1
+567	2018-11-08 18:57:37.569131+00	\N	6	Deleted 9 interfaces	18	1
+568	2018-11-08 18:57:48.794184+00	62	3	Modified interface <a href="/dcim/devices/8/">swp1</a>	18	1
+569	2018-11-08 18:57:56.647329+00	63	3	Modified interface <a href="/dcim/devices/8/">swp2</a>	18	1
 \.
 
 
@@ -5146,7 +5114,7 @@ COPY extras_useraction (id, "time", object_id, action, message, content_type_id,
 -- Data for Name: ipam_aggregate; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_aggregate (id, created, last_updated, family, prefix, date_added, description, rir_id) FROM stdin;
+COPY public.ipam_aggregate (id, created, last_updated, family, prefix, date_added, description, rir_id) FROM stdin;
 \.
 
 
@@ -5154,7 +5122,7 @@ COPY ipam_aggregate (id, created, last_updated, family, prefix, date_added, desc
 -- Data for Name: ipam_ipaddress; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_ipaddress (id, created, last_updated, family, address, description, interface_id, nat_inside_id, vrf_id, tenant_id, status, role) FROM stdin;
+COPY public.ipam_ipaddress (id, created, last_updated, family, address, description, interface_id, nat_inside_id, vrf_id, tenant_id, status, role) FROM stdin;
 56	2018-06-09	2018-06-09 10:48:20.743316+00	4	192.168.12.2/24		137	\N	2	2	1	\N
 62	2018-06-09	2018-06-09 10:48:39.040862+00	4	192.168.13.2/24		138	\N	2	2	1	\N
 68	2018-06-09	2018-06-09 10:49:40.251921+00	4	192.168.14.2/24		139	\N	3	3	1	\N
@@ -5185,9 +5153,6 @@ COPY ipam_ipaddress (id, created, last_updated, family, address, description, in
 75	2018-06-09	2018-06-09 20:01:13.646992+00	4	192.168.15.3/24		145	\N	3	3	1	\N
 10	2018-06-03	2018-06-08 21:24:46.126106+00	4	10.100.100.12		9	\N	\N	\N	1	30
 15	2018-06-08	2018-06-08 21:30:04.433543+00	4	10.100.100.12		17	\N	\N	\N	1	30
-136	2018-06-09	2018-06-09 20:02:38.996446+00	6	fc00:11::1/64		146	\N	1	1	1	41
-138	2018-06-09	2018-06-09 20:03:08.868356+00	6	fc00:12::1/64		147	\N	2	2	1	\N
-140	2018-06-09	2018-06-09 20:03:47.057687+00	6	fc00:13::1/64		148	\N	2	2	1	41
 18	2018-06-08	2018-06-08 22:36:50.542167+00	4	10.10.20.1		28	\N	\N	\N	1	10
 19	2018-06-08	2018-06-08 22:38:33.425144+00	4	10.10.20.2		35	\N	\N	\N	1	10
 16	2018-06-08	2018-06-08 23:21:39.662181+00	4	192.168.10.1/24		3	\N	1	1	1	41
@@ -5199,38 +5164,15 @@ COPY ipam_ipaddress (id, created, last_updated, family, address, description, in
 6	2018-06-03	2018-06-08 23:22:46.362188+00	6	fc00:10::3/64		18	\N	1	1	1	\N
 21	2018-06-08	2018-06-08 23:59:01.661535+00	4	10.10.10.3		46	\N	\N	\N	1	10
 22	2018-06-09	2018-06-09 00:00:28.026116+00	4	169.254.1.1/30		48	\N	\N	\N	1	\N
-23	2018-06-09	2018-06-09 00:01:47.726622+00	4	192.168.10.1/24		45	\N	1	1	1	41
-24	2018-06-09	2018-06-09 00:02:40.541963+00	4	192.168.10.4/24		45	\N	1	1	1	\N
-25	2018-06-09	2018-06-09 00:03:02.085679+00	6	fc00:10::1/64		45	\N	1	1	1	41
-26	2018-06-09	2018-06-09 00:03:53.348117+00	6	fc00:10::4/64		45	\N	1	1	1	\N
 17	2018-06-08	2018-06-09 00:04:25.854341+00	6	fc00:10::1/64		3	\N	1	1	1	41
 27	2018-06-09	2018-06-09 00:15:54.709314+00	4	169.254.1.2/30		61	\N	\N	\N	1	\N
-30	2018-06-09	2018-06-09 00:16:58.373837+00	4	192.168.10.1/24		58	\N	1	1	1	41
-31	2018-06-09	2018-06-09 00:17:27.558937+00	4	192.168.10.5/24		58	\N	1	1	1	\N
-32	2018-06-09	2018-06-09 00:17:56.085922+00	6	fc00:10::1/64		58	\N	1	1	1	41
-33	2018-06-09	2018-06-09 00:18:16.881897+00	6	fc00:10::5/64		58	\N	1	1	1	\N
-20	2018-06-08	2018-06-09 00:59:53.504839+00	4	10.100.100.34		44	\N	\N	\N	1	30
-29	2018-06-09	2018-06-09 01:00:36.420244+00	4	10.100.100.34		57	\N	\N	\N	1	30
 34	2018-06-09	2018-06-09 08:37:02.310354+00	4	10.100.100.56		70	\N	\N	\N	1	30
 35	2018-06-09	2018-06-09 08:37:33.395269+00	4	10.10.10.5		72	\N	\N	\N	1	10
 36	2018-06-09	2018-06-09 08:39:11.687954+00	4	169.254.1.1/30		74	\N	\N	\N	1	\N
-58	2018-06-09	2018-06-09 20:15:05.640513+00	4	192.168.12.4/24		147	\N	2	2	1	\N
-64	2018-06-09	2018-06-09 20:15:21.54804+00	4	192.168.13.4/24		148	\N	2	2	1	\N
-70	2018-06-09	2018-06-09 20:15:38.88442+00	4	192.168.14.4/24		149	\N	3	3	1	\N
-76	2018-06-09	2018-06-09 20:16:03.932035+00	4	192.168.15.4/24		150	\N	3	3	1	\N
 41	2018-06-09	2018-06-09 08:48:52.770896+00	4	10.100.100.56		83	\N	\N	\N	1	30
 42	2018-06-09	2018-06-09 08:49:57.197178+00	4	10.10.10.6		85	\N	\N	\N	1	10
 43	2018-06-09	2018-06-09 08:51:12.140443+00	4	169.254.1.2/30		87	\N	\N	\N	1	\N
-88	2018-06-09	2018-06-09 20:16:55.384018+00	6	fc00:12::4/64		147	\N	2	2	1	\N
-94	2018-06-09	2018-06-09 20:17:09.722633+00	6	fc00:13::4/64		148	\N	2	2	1	\N
-100	2018-06-09	2018-06-09 20:17:21.401994+00	6	fc00:14::4/64		149	\N	3	3	1	\N
-53	2018-06-09	2018-06-09 20:28:55.509952+00	4	192.168.11.5/24		151	\N	1	1	1	\N
 48	2018-06-09	2018-06-09 08:54:31.276043+00	4	10.10.30.1		94	\N	\N	\N	1	10
-59	2018-06-09	2018-06-09 20:29:07.394331+00	4	192.168.12.5/24		152	\N	2	2	1	\N
-71	2018-06-09	2018-06-09 20:29:32.509382+00	4	192.168.14.5/24		154	\N	3	3	1	\N
-77	2018-06-09	2018-06-09 20:29:44.026613+00	4	192.168.15.5/24		155	\N	3	3	1	\N
-89	2018-06-09	2018-06-09 20:30:30.406747+00	6	fc00:12::5/64		152	\N	2	2	1	\N
-101	2018-06-09	2018-06-09 20:31:01.339801+00	6	fc00:14::5/64		154	\N	3	3	1	\N
 54	2018-06-09	2018-06-09 20:35:00.51934+00	4	192.168.11.6/24		156	\N	1	1	1	\N
 60	2018-06-09	2018-06-09 20:35:13.015298+00	4	192.168.12.6/24		157	\N	2	2	1	\N
 66	2018-06-09	2018-06-09 20:35:26.35718+00	4	192.168.13.6/24		158	\N	2	2	1	\N
@@ -5264,12 +5206,6 @@ COPY ipam_ipaddress (id, created, last_updated, family, address, description, in
 133	2018-06-09	2018-06-09 19:57:10.388924+00	6	fc00:14::1/64		144	\N	3	3	1	41
 81	2018-06-09	2018-06-09 19:58:19.005782+00	6	fc00:11::3/64		141	\N	1	1	1	\N
 105	2018-06-09	2018-06-09 19:59:30.920288+00	6	fc00:15::3/64		145	\N	3	3	1	\N
-135	2018-06-09	2018-06-09 20:02:25.982447+00	4	192.168.11.1/24		146	\N	1	1	1	41
-137	2018-06-09	2018-06-09 20:02:53.49988+00	4	192.168.12.1/24		147	\N	2	2	1	41
-139	2018-06-09	2018-06-09 20:03:25.762061+00	4	192.168.13.1/24		148	\N	2	2	1	41
-141	2018-06-09	2018-06-09 20:04:11.424707+00	4	192.168.14.1/24		149	\N	3	3	1	41
-142	2018-06-09	2018-06-09 20:04:25.748965+00	6	fc00:14::1/64		149	\N	3	3	1	41
-143	2018-06-09	2018-06-09 20:04:41.39939+00	4	192.168.15.1/24		150	\N	3	3	1	41
 39	2018-06-09	2018-06-09 10:13:35.532328+00	6	fc00:10::6/64		71	\N	1	1	1	\N
 47	2018-06-09	2018-06-09 10:13:35.540608+00	6	fc00:10::7/64		84	\N	1	1	1	\N
 127	2018-06-09	2018-06-09 20:48:05.676037+00	4	192.168.13.1/24		143	\N	1	2	1	41
@@ -5282,24 +5218,6 @@ COPY ipam_ipaddress (id, created, last_updated, family, address, description, in
 112	2018-06-09	2018-06-09 10:46:52.321546+00	4	192.168.13.1/24		138	\N	2	2	1	41
 113	2018-06-09	2018-06-09 10:47:12.440114+00	4	192.168.14.1/24		139	\N	3	3	1	41
 114	2018-06-09	2018-06-09 10:47:34.379552+00	4	192.168.15.1/24		140	\N	3	3	1	41
-144	2018-06-09	2018-06-09 20:04:55.05839+00	6	fc00:15::1/64		150	\N	3	3	1	41
-52	2018-06-09	2018-06-09 20:14:51.571052+00	4	192.168.11.4/24		146	\N	1	1	1	\N
-82	2018-06-09	2018-06-09 20:16:38.928644+00	6	fc00:11::4/64		146	\N	1	1	1	\N
-106	2018-06-09	2018-06-09 20:17:43.126452+00	6	fc00:15::4/64		150	\N	3	3	1	\N
-145	2018-06-09	2018-06-09 20:25:37.553048+00	4	192.168.11.1/24		151	\N	1	1	1	41
-146	2018-06-09	2018-06-09 20:25:50.798692+00	6	fc00:11::1/64		151	\N	1	1	1	41
-147	2018-06-09	2018-06-09 20:26:04.85966+00	4	192.168.12.1/24		152	\N	2	2	1	41
-148	2018-06-09	2018-06-09 20:26:31.846516+00	6	fc00:12::1/64		152	\N	2	2	1	41
-149	2018-06-09	2018-06-09 20:26:45.135906+00	4	192.168.13.1/24		153	\N	2	2	1	41
-150	2018-06-09	2018-06-09 20:26:55.675826+00	6	fc00:13::1/64		153	\N	2	2	1	41
-151	2018-06-09	2018-06-09 20:27:20.735665+00	4	192.168.14.1/24		154	\N	3	3	1	41
-152	2018-06-09	2018-06-09 20:27:40.613118+00	6	fc00:14::1/64		154	\N	3	3	1	41
-153	2018-06-09	2018-06-09 20:27:57.013731+00	4	192.168.15.1/24		155	\N	3	3	1	41
-154	2018-06-09	2018-06-09 20:28:11.796527+00	6	fc00:15::1/64		155	\N	3	3	1	41
-65	2018-06-09	2018-06-09 20:29:19.166914+00	4	192.168.13.5/24		153	\N	2	2	1	\N
-83	2018-06-09	2018-06-09 20:30:19.797479+00	6	fc00:11::5/64		151	\N	1	1	1	\N
-95	2018-06-09	2018-06-09 20:30:50.171406+00	6	fc00:13::5/64		153	\N	2	2	1	\N
-107	2018-06-09	2018-06-09 20:31:14.592996+00	6	fc00:15::5/64		155	\N	3	3	1	\N
 155	2018-06-09	2018-06-09 20:32:16.585849+00	4	192.168.11.1/24		156	\N	1	1	1	41
 156	2018-06-09	2018-06-09 20:32:29.915115+00	6	fc00:11::1/64		156	\N	1	1	1	41
 157	2018-06-09	2018-06-09 20:32:44.76192+00	4	192.168.12.1/24		157	\N	2	2	1	41
@@ -5328,7 +5246,7 @@ COPY ipam_ipaddress (id, created, last_updated, family, address, description, in
 -- Data for Name: ipam_prefix; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_prefix (id, created, last_updated, family, prefix, status, description, role_id, site_id, vlan_id, vrf_id, tenant_id, is_pool) FROM stdin;
+COPY public.ipam_prefix (id, created, last_updated, family, prefix, status, description, role_id, site_id, vlan_id, vrf_id, tenant_id, is_pool) FROM stdin;
 \.
 
 
@@ -5336,7 +5254,7 @@ COPY ipam_prefix (id, created, last_updated, family, prefix, status, description
 -- Data for Name: ipam_rir; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_rir (id, name, slug, is_private) FROM stdin;
+COPY public.ipam_rir (id, name, slug, is_private) FROM stdin;
 \.
 
 
@@ -5344,7 +5262,7 @@ COPY ipam_rir (id, name, slug, is_private) FROM stdin;
 -- Data for Name: ipam_role; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_role (id, name, slug, weight) FROM stdin;
+COPY public.ipam_role (id, name, slug, weight) FROM stdin;
 \.
 
 
@@ -5352,7 +5270,7 @@ COPY ipam_role (id, name, slug, weight) FROM stdin;
 -- Data for Name: ipam_service; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_service (id, created, last_updated, name, protocol, port, description, device_id, virtual_machine_id) FROM stdin;
+COPY public.ipam_service (id, created, last_updated, name, protocol, port, description, device_id, virtual_machine_id) FROM stdin;
 \.
 
 
@@ -5360,7 +5278,7 @@ COPY ipam_service (id, created, last_updated, name, protocol, port, description,
 -- Data for Name: ipam_service_ipaddresses; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_service_ipaddresses (id, service_id, ipaddress_id) FROM stdin;
+COPY public.ipam_service_ipaddresses (id, service_id, ipaddress_id) FROM stdin;
 \.
 
 
@@ -5368,7 +5286,7 @@ COPY ipam_service_ipaddresses (id, service_id, ipaddress_id) FROM stdin;
 -- Data for Name: ipam_vlan; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_vlan (id, created, last_updated, vid, name, status, role_id, site_id, group_id, description, tenant_id) FROM stdin;
+COPY public.ipam_vlan (id, created, last_updated, vid, name, status, role_id, site_id, group_id, description, tenant_id) FROM stdin;
 1	2018-06-03	2018-06-03 17:03:23.145948+00	1000	Vlan1000	1	\N	1	\N		\N
 2	2018-06-03	2018-06-03 17:04:33.134388+00	1001	Vlan1001	1	\N	1	\N		\N
 3	2018-06-09	2018-06-09 09:08:27.251969+00	1002	Vlan1002	1	\N	1	\N		\N
@@ -5394,7 +5312,7 @@ COPY ipam_vlan (id, created, last_updated, vid, name, status, role_id, site_id, 
 -- Data for Name: ipam_vlangroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_vlangroup (id, name, slug, site_id) FROM stdin;
+COPY public.ipam_vlangroup (id, name, slug, site_id) FROM stdin;
 \.
 
 
@@ -5402,7 +5320,7 @@ COPY ipam_vlangroup (id, name, slug, site_id) FROM stdin;
 -- Data for Name: ipam_vrf; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY ipam_vrf (id, created, last_updated, name, rd, description, enforce_unique, tenant_id) FROM stdin;
+COPY public.ipam_vrf (id, created, last_updated, name, rd, description, enforce_unique, tenant_id) FROM stdin;
 1	2018-06-03	2018-06-08 21:42:26.159854+00	4001	0		f	\N
 2	2018-06-03	2018-06-08 21:42:43.357052+00	4002	1		f	\N
 3	2018-06-09	2018-06-09 20:45:51.961098+00	4003	2		f	\N
@@ -5413,7 +5331,7 @@ COPY ipam_vrf (id, created, last_updated, name, rd, description, enforce_unique,
 -- Data for Name: secrets_secret; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_secret (id, created, last_updated, name, ciphertext, hash, device_id, role_id) FROM stdin;
+COPY public.secrets_secret (id, created, last_updated, name, ciphertext, hash, device_id, role_id) FROM stdin;
 \.
 
 
@@ -5421,7 +5339,7 @@ COPY secrets_secret (id, created, last_updated, name, ciphertext, hash, device_i
 -- Data for Name: secrets_secretrole; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_secretrole (id, name, slug) FROM stdin;
+COPY public.secrets_secretrole (id, name, slug) FROM stdin;
 \.
 
 
@@ -5429,7 +5347,7 @@ COPY secrets_secretrole (id, name, slug) FROM stdin;
 -- Data for Name: secrets_secretrole_groups; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_secretrole_groups (id, secretrole_id, group_id) FROM stdin;
+COPY public.secrets_secretrole_groups (id, secretrole_id, group_id) FROM stdin;
 \.
 
 
@@ -5437,7 +5355,7 @@ COPY secrets_secretrole_groups (id, secretrole_id, group_id) FROM stdin;
 -- Data for Name: secrets_secretrole_users; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_secretrole_users (id, secretrole_id, user_id) FROM stdin;
+COPY public.secrets_secretrole_users (id, secretrole_id, user_id) FROM stdin;
 \.
 
 
@@ -5445,7 +5363,7 @@ COPY secrets_secretrole_users (id, secretrole_id, user_id) FROM stdin;
 -- Data for Name: secrets_sessionkey; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_sessionkey (id, cipher, hash, created, userkey_id) FROM stdin;
+COPY public.secrets_sessionkey (id, cipher, hash, created, userkey_id) FROM stdin;
 \.
 
 
@@ -5453,7 +5371,7 @@ COPY secrets_sessionkey (id, cipher, hash, created, userkey_id) FROM stdin;
 -- Data for Name: secrets_userkey; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY secrets_userkey (id, created, last_updated, public_key, master_key_cipher, user_id) FROM stdin;
+COPY public.secrets_userkey (id, created, last_updated, public_key, master_key_cipher, user_id) FROM stdin;
 \.
 
 
@@ -5461,7 +5379,7 @@ COPY secrets_userkey (id, created, last_updated, public_key, master_key_cipher, 
 -- Data for Name: tenancy_tenant; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY tenancy_tenant (id, created, last_updated, name, slug, description, comments, group_id) FROM stdin;
+COPY public.tenancy_tenant (id, created, last_updated, name, slug, description, comments, group_id) FROM stdin;
 1	2018-06-03	2018-06-03 17:42:29.468252+00	Tenant1	tenant1			\N
 2	2018-06-03	2018-06-03 17:42:41.348098+00	Tenant2	tenant2			\N
 3	2018-06-09	2018-06-09 09:58:35.020239+00	Tenant3	tenant3			\N
@@ -5472,7 +5390,7 @@ COPY tenancy_tenant (id, created, last_updated, name, slug, description, comment
 -- Data for Name: tenancy_tenantgroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY tenancy_tenantgroup (id, name, slug) FROM stdin;
+COPY public.tenancy_tenantgroup (id, name, slug) FROM stdin;
 \.
 
 
@@ -5480,7 +5398,7 @@ COPY tenancy_tenantgroup (id, name, slug) FROM stdin;
 -- Data for Name: users_token; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY users_token (id, created, expires, key, write_enabled, description, user_id) FROM stdin;
+COPY public.users_token (id, created, expires, key, write_enabled, description, user_id) FROM stdin;
 1	2018-06-03 16:17:44.850794+00	\N	0123456789abcdef0123456789abcdefcumulus	t		1
 \.
 
@@ -5489,7 +5407,7 @@ COPY users_token (id, created, expires, key, write_enabled, description, user_id
 -- Data for Name: virtualization_cluster; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY virtualization_cluster (id, created, last_updated, name, comments, group_id, type_id, site_id) FROM stdin;
+COPY public.virtualization_cluster (id, created, last_updated, name, comments, group_id, type_id, site_id) FROM stdin;
 \.
 
 
@@ -5497,7 +5415,7 @@ COPY virtualization_cluster (id, created, last_updated, name, comments, group_id
 -- Data for Name: virtualization_clustergroup; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY virtualization_clustergroup (id, name, slug) FROM stdin;
+COPY public.virtualization_clustergroup (id, name, slug) FROM stdin;
 \.
 
 
@@ -5505,7 +5423,7 @@ COPY virtualization_clustergroup (id, name, slug) FROM stdin;
 -- Data for Name: virtualization_clustertype; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY virtualization_clustertype (id, name, slug) FROM stdin;
+COPY public.virtualization_clustertype (id, name, slug) FROM stdin;
 \.
 
 
@@ -5513,7 +5431,7 @@ COPY virtualization_clustertype (id, name, slug) FROM stdin;
 -- Data for Name: virtualization_virtualmachine; Type: TABLE DATA; Schema: public; Owner: netbox
 --
 
-COPY virtualization_virtualmachine (id, created, last_updated, name, vcpus, memory, disk, comments, cluster_id, platform_id, primary_ip4_id, primary_ip6_id, tenant_id, status, role_id) FROM stdin;
+COPY public.virtualization_virtualmachine (id, created, last_updated, name, vcpus, memory, disk, comments, cluster_id, platform_id, primary_ip4_id, primary_ip6_id, tenant_id, status, role_id) FROM stdin;
 \.
 
 
@@ -5521,518 +5439,518 @@ COPY virtualization_virtualmachine (id, created, last_updated, name, vcpus, memo
 -- Name: auth_group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_group_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_group_id_seq', 1, false);
 
 
 --
 -- Name: auth_group_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_group_permissions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_group_permissions_id_seq', 1, false);
 
 
 --
 -- Name: auth_permission_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_permission_id_seq', 195, true);
+SELECT pg_catalog.setval('public.auth_permission_id_seq', 195, true);
 
 
 --
 -- Name: auth_user_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_user_groups_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_groups_id_seq', 1, false);
 
 
 --
 -- Name: auth_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_user_id_seq', 1, true);
+SELECT pg_catalog.setval('public.auth_user_id_seq', 1, true);
 
 
 --
 -- Name: auth_user_user_permissions_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('auth_user_user_permissions_id_seq', 1, false);
+SELECT pg_catalog.setval('public.auth_user_user_permissions_id_seq', 1, false);
 
 
 --
 -- Name: circuits_circuit_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('circuits_circuit_id_seq', 1, true);
+SELECT pg_catalog.setval('public.circuits_circuit_id_seq', 1, true);
 
 
 --
 -- Name: circuits_circuittermination_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('circuits_circuittermination_id_seq', 1, true);
+SELECT pg_catalog.setval('public.circuits_circuittermination_id_seq', 1, true);
 
 
 --
 -- Name: circuits_circuittype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('circuits_circuittype_id_seq', 1, true);
+SELECT pg_catalog.setval('public.circuits_circuittype_id_seq', 1, true);
 
 
 --
 -- Name: circuits_provider_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('circuits_provider_id_seq', 1, true);
+SELECT pg_catalog.setval('public.circuits_provider_id_seq', 1, true);
 
 
 --
 -- Name: dcim_consoleport_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_consoleport_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_consoleport_id_seq', 1, false);
 
 
 --
 -- Name: dcim_consoleporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_consoleporttemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_consoleporttemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_consoleserverport_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_consoleserverport_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_consoleserverport_id_seq', 1, false);
 
 
 --
 -- Name: dcim_consoleserverporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_consoleserverporttemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_consoleserverporttemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_device_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_device_id_seq', 16, true);
+SELECT pg_catalog.setval('public.dcim_device_id_seq', 16, true);
 
 
 --
 -- Name: dcim_devicebay_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_devicebay_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_devicebay_id_seq', 1, false);
 
 
 --
 -- Name: dcim_devicebaytemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_devicebaytemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_devicebaytemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_devicerole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_devicerole_id_seq', 2, true);
+SELECT pg_catalog.setval('public.dcim_devicerole_id_seq', 2, true);
 
 
 --
 -- Name: dcim_devicetype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_devicetype_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_devicetype_id_seq', 1, true);
 
 
 --
 -- Name: dcim_interface_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_interface_id_seq', 169, true);
+SELECT pg_catalog.setval('public.dcim_interface_id_seq', 169, true);
 
 
 --
 -- Name: dcim_interface_tagged_vlans_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_interface_tagged_vlans_id_seq', 100, true);
+SELECT pg_catalog.setval('public.dcim_interface_tagged_vlans_id_seq', 100, true);
 
 
 --
 -- Name: dcim_interfaceconnection_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_interfaceconnection_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_interfaceconnection_id_seq', 1, false);
 
 
 --
 -- Name: dcim_interfacetemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_interfacetemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_interfacetemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_manufacturer_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_manufacturer_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_manufacturer_id_seq', 1, true);
 
 
 --
 -- Name: dcim_module_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_module_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_module_id_seq', 1, false);
 
 
 --
 -- Name: dcim_platform_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_platform_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_platform_id_seq', 1, true);
 
 
 --
 -- Name: dcim_poweroutlet_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_poweroutlet_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_poweroutlet_id_seq', 1, false);
 
 
 --
 -- Name: dcim_poweroutlettemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_poweroutlettemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_poweroutlettemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_powerport_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_powerport_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_powerport_id_seq', 1, false);
 
 
 --
 -- Name: dcim_powerporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_powerporttemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_powerporttemplate_id_seq', 1, false);
 
 
 --
 -- Name: dcim_rack_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_rack_id_seq', 7, true);
+SELECT pg_catalog.setval('public.dcim_rack_id_seq', 7, true);
 
 
 --
 -- Name: dcim_rackgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_rackgroup_id_seq', 3, true);
+SELECT pg_catalog.setval('public.dcim_rackgroup_id_seq', 3, true);
 
 
 --
 -- Name: dcim_rackreservation_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_rackreservation_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_rackreservation_id_seq', 1, false);
 
 
 --
 -- Name: dcim_rackrole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_rackrole_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_rackrole_id_seq', 1, false);
 
 
 --
 -- Name: dcim_region_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_region_id_seq', 1, false);
+SELECT pg_catalog.setval('public.dcim_region_id_seq', 1, false);
 
 
 --
 -- Name: dcim_site_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_site_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_site_id_seq', 1, true);
 
 
 --
 -- Name: dcim_virtualchassis_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('dcim_virtualchassis_id_seq', 1, true);
+SELECT pg_catalog.setval('public.dcim_virtualchassis_id_seq', 1, true);
 
 
 --
 -- Name: django_admin_log_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('django_admin_log_id_seq', 7, true);
+SELECT pg_catalog.setval('public.django_admin_log_id_seq', 7, true);
 
 
 --
 -- Name: django_content_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('django_content_type_id_seq', 65, true);
+SELECT pg_catalog.setval('public.django_content_type_id_seq', 65, true);
 
 
 --
 -- Name: django_migrations_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('django_migrations_id_seq', 121, true);
+SELECT pg_catalog.setval('public.django_migrations_id_seq', 121, true);
 
 
 --
 -- Name: extras_customfield_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_customfield_id_seq', 4, true);
+SELECT pg_catalog.setval('public.extras_customfield_id_seq', 4, true);
 
 
 --
 -- Name: extras_customfield_obj_type_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_customfield_obj_type_id_seq', 4, true);
+SELECT pg_catalog.setval('public.extras_customfield_obj_type_id_seq', 4, true);
 
 
 --
 -- Name: extras_customfieldchoice_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_customfieldchoice_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_customfieldchoice_id_seq', 1, false);
 
 
 --
 -- Name: extras_customfieldvalue_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_customfieldvalue_id_seq', 28, true);
+SELECT pg_catalog.setval('public.extras_customfieldvalue_id_seq', 28, true);
 
 
 --
 -- Name: extras_exporttemplate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_exporttemplate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_exporttemplate_id_seq', 1, false);
 
 
 --
 -- Name: extras_graph_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_graph_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_graph_id_seq', 1, false);
 
 
 --
 -- Name: extras_imageattachment_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_imageattachment_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_imageattachment_id_seq', 1, false);
 
 
 --
 -- Name: extras_reportresult_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_reportresult_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_reportresult_id_seq', 1, false);
 
 
 --
 -- Name: extras_topologymap_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_topologymap_id_seq', 1, false);
+SELECT pg_catalog.setval('public.extras_topologymap_id_seq', 1, false);
 
 
 --
 -- Name: extras_useraction_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('extras_useraction_id_seq', 559, true);
+SELECT pg_catalog.setval('public.extras_useraction_id_seq', 569, true);
 
 
 --
 -- Name: ipam_aggregate_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_aggregate_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_aggregate_id_seq', 1, false);
 
 
 --
 -- Name: ipam_ipaddress_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_ipaddress_id_seq', 169, true);
+SELECT pg_catalog.setval('public.ipam_ipaddress_id_seq', 169, true);
 
 
 --
 -- Name: ipam_prefix_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_prefix_id_seq', 2, true);
+SELECT pg_catalog.setval('public.ipam_prefix_id_seq', 2, true);
 
 
 --
 -- Name: ipam_rir_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_rir_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_rir_id_seq', 1, false);
 
 
 --
 -- Name: ipam_role_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_role_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_role_id_seq', 1, false);
 
 
 --
 -- Name: ipam_service_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_service_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_service_id_seq', 1, false);
 
 
 --
 -- Name: ipam_service_ipaddresses_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_service_ipaddresses_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_service_ipaddresses_id_seq', 1, false);
 
 
 --
 -- Name: ipam_vlan_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_vlan_id_seq', 19, true);
+SELECT pg_catalog.setval('public.ipam_vlan_id_seq', 19, true);
 
 
 --
 -- Name: ipam_vlangroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_vlangroup_id_seq', 1, false);
+SELECT pg_catalog.setval('public.ipam_vlangroup_id_seq', 1, false);
 
 
 --
 -- Name: ipam_vrf_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('ipam_vrf_id_seq', 3, true);
+SELECT pg_catalog.setval('public.ipam_vrf_id_seq', 3, true);
 
 
 --
 -- Name: secrets_secret_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_secret_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_secret_id_seq', 1, false);
 
 
 --
 -- Name: secrets_secretrole_groups_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_secretrole_groups_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_secretrole_groups_id_seq', 1, false);
 
 
 --
 -- Name: secrets_secretrole_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_secretrole_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_secretrole_id_seq', 1, false);
 
 
 --
 -- Name: secrets_secretrole_users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_secretrole_users_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_secretrole_users_id_seq', 1, false);
 
 
 --
 -- Name: secrets_sessionkey_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_sessionkey_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_sessionkey_id_seq', 1, false);
 
 
 --
 -- Name: secrets_userkey_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('secrets_userkey_id_seq', 1, false);
+SELECT pg_catalog.setval('public.secrets_userkey_id_seq', 1, false);
 
 
 --
 -- Name: tenancy_tenant_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('tenancy_tenant_id_seq', 3, true);
+SELECT pg_catalog.setval('public.tenancy_tenant_id_seq', 3, true);
 
 
 --
 -- Name: tenancy_tenantgroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('tenancy_tenantgroup_id_seq', 1, false);
+SELECT pg_catalog.setval('public.tenancy_tenantgroup_id_seq', 1, false);
 
 
 --
 -- Name: users_token_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('users_token_id_seq', 1, true);
+SELECT pg_catalog.setval('public.users_token_id_seq', 1, true);
 
 
 --
 -- Name: virtualization_cluster_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('virtualization_cluster_id_seq', 1, false);
+SELECT pg_catalog.setval('public.virtualization_cluster_id_seq', 1, false);
 
 
 --
 -- Name: virtualization_clustergroup_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('virtualization_clustergroup_id_seq', 1, false);
+SELECT pg_catalog.setval('public.virtualization_clustergroup_id_seq', 1, false);
 
 
 --
 -- Name: virtualization_clustertype_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('virtualization_clustertype_id_seq', 1, false);
+SELECT pg_catalog.setval('public.virtualization_clustertype_id_seq', 1, false);
 
 
 --
 -- Name: virtualization_virtualmachine_id_seq; Type: SEQUENCE SET; Schema: public; Owner: netbox
 --
 
-SELECT pg_catalog.setval('virtualization_virtualmachine_id_seq', 1, false);
+SELECT pg_catalog.setval('public.virtualization_virtualmachine_id_seq', 1, false);
 
 
 --
 -- Name: auth_group auth_group_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_name_key UNIQUE (name);
 
 
@@ -6040,7 +5958,7 @@ ALTER TABLE ONLY auth_group
 -- Name: auth_group_permissions auth_group_permissions_group_id_permission_id_0cd325b0_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_group_id_permission_id_0cd325b0_uniq UNIQUE (group_id, permission_id);
 
 
@@ -6048,7 +5966,7 @@ ALTER TABLE ONLY auth_group_permissions
 -- Name: auth_group_permissions auth_group_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group_permissions
+ALTER TABLE ONLY public.auth_group_permissions
     ADD CONSTRAINT auth_group_permissions_pkey PRIMARY KEY (id);
 
 
@@ -6056,7 +5974,7 @@ ALTER TABLE ONLY auth_group_permissions
 -- Name: auth_group auth_group_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group
+ALTER TABLE ONLY public.auth_group
     ADD CONSTRAINT auth_group_pkey PRIMARY KEY (id);
 
 
@@ -6064,7 +5982,7 @@ ALTER TABLE ONLY auth_group
 -- Name: auth_permission auth_permission_content_type_id_codename_01ab375a_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_content_type_id_codename_01ab375a_uniq UNIQUE (content_type_id, codename);
 
 
@@ -6072,7 +5990,7 @@ ALTER TABLE ONLY auth_permission
 -- Name: auth_permission auth_permission_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_permission
+ALTER TABLE ONLY public.auth_permission
     ADD CONSTRAINT auth_permission_pkey PRIMARY KEY (id);
 
 
@@ -6080,7 +5998,7 @@ ALTER TABLE ONLY auth_permission
 -- Name: auth_user_groups auth_user_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_pkey PRIMARY KEY (id);
 
 
@@ -6088,7 +6006,7 @@ ALTER TABLE ONLY auth_user_groups
 -- Name: auth_user_groups auth_user_groups_user_id_group_id_94350c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_groups
+ALTER TABLE ONLY public.auth_user_groups
     ADD CONSTRAINT auth_user_groups_user_id_group_id_94350c0c_uniq UNIQUE (user_id, group_id);
 
 
@@ -6096,7 +6014,7 @@ ALTER TABLE ONLY auth_user_groups
 -- Name: auth_user auth_user_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_pkey PRIMARY KEY (id);
 
 
@@ -6104,7 +6022,7 @@ ALTER TABLE ONLY auth_user
 -- Name: auth_user_user_permissions auth_user_user_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_pkey PRIMARY KEY (id);
 
 
@@ -6112,7 +6030,7 @@ ALTER TABLE ONLY auth_user_user_permissions
 -- Name: auth_user_user_permissions auth_user_user_permissions_user_id_permission_id_14a6b632_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
+ALTER TABLE ONLY public.auth_user_user_permissions
     ADD CONSTRAINT auth_user_user_permissions_user_id_permission_id_14a6b632_uniq UNIQUE (user_id, permission_id);
 
 
@@ -6120,7 +6038,7 @@ ALTER TABLE ONLY auth_user_user_permissions
 -- Name: auth_user auth_user_username_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user
+ALTER TABLE ONLY public.auth_user
     ADD CONSTRAINT auth_user_username_key UNIQUE (username);
 
 
@@ -6128,7 +6046,7 @@ ALTER TABLE ONLY auth_user
 -- Name: circuits_circuit circuits_circuit_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit
+ALTER TABLE ONLY public.circuits_circuit
     ADD CONSTRAINT circuits_circuit_pkey PRIMARY KEY (id);
 
 
@@ -6136,7 +6054,7 @@ ALTER TABLE ONLY circuits_circuit
 -- Name: circuits_circuit circuits_circuit_provider_id_cid_b6f29862_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit
+ALTER TABLE ONLY public.circuits_circuit
     ADD CONSTRAINT circuits_circuit_provider_id_cid_b6f29862_uniq UNIQUE (provider_id, cid);
 
 
@@ -6144,7 +6062,7 @@ ALTER TABLE ONLY circuits_circuit
 -- Name: circuits_circuittermination circuits_circuittermination_circuit_id_term_side_b13efd0e_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
+ALTER TABLE ONLY public.circuits_circuittermination
     ADD CONSTRAINT circuits_circuittermination_circuit_id_term_side_b13efd0e_uniq UNIQUE (circuit_id, term_side);
 
 
@@ -6152,7 +6070,7 @@ ALTER TABLE ONLY circuits_circuittermination
 -- Name: circuits_circuittermination circuits_circuittermination_interface_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
+ALTER TABLE ONLY public.circuits_circuittermination
     ADD CONSTRAINT circuits_circuittermination_interface_id_key UNIQUE (interface_id);
 
 
@@ -6160,7 +6078,7 @@ ALTER TABLE ONLY circuits_circuittermination
 -- Name: circuits_circuittermination circuits_circuittermination_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
+ALTER TABLE ONLY public.circuits_circuittermination
     ADD CONSTRAINT circuits_circuittermination_pkey PRIMARY KEY (id);
 
 
@@ -6168,7 +6086,7 @@ ALTER TABLE ONLY circuits_circuittermination
 -- Name: circuits_circuittype circuits_circuittype_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittype
+ALTER TABLE ONLY public.circuits_circuittype
     ADD CONSTRAINT circuits_circuittype_name_key UNIQUE (name);
 
 
@@ -6176,7 +6094,7 @@ ALTER TABLE ONLY circuits_circuittype
 -- Name: circuits_circuittype circuits_circuittype_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittype
+ALTER TABLE ONLY public.circuits_circuittype
     ADD CONSTRAINT circuits_circuittype_pkey PRIMARY KEY (id);
 
 
@@ -6184,7 +6102,7 @@ ALTER TABLE ONLY circuits_circuittype
 -- Name: circuits_circuittype circuits_circuittype_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittype
+ALTER TABLE ONLY public.circuits_circuittype
     ADD CONSTRAINT circuits_circuittype_slug_key UNIQUE (slug);
 
 
@@ -6192,7 +6110,7 @@ ALTER TABLE ONLY circuits_circuittype
 -- Name: circuits_provider circuits_provider_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_provider
+ALTER TABLE ONLY public.circuits_provider
     ADD CONSTRAINT circuits_provider_name_key UNIQUE (name);
 
 
@@ -6200,7 +6118,7 @@ ALTER TABLE ONLY circuits_provider
 -- Name: circuits_provider circuits_provider_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_provider
+ALTER TABLE ONLY public.circuits_provider
     ADD CONSTRAINT circuits_provider_pkey PRIMARY KEY (id);
 
 
@@ -6208,7 +6126,7 @@ ALTER TABLE ONLY circuits_provider
 -- Name: circuits_provider circuits_provider_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_provider
+ALTER TABLE ONLY public.circuits_provider
     ADD CONSTRAINT circuits_provider_slug_key UNIQUE (slug);
 
 
@@ -6216,7 +6134,7 @@ ALTER TABLE ONLY circuits_provider
 -- Name: dcim_consoleport dcim_consoleport_cs_port_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport
+ALTER TABLE ONLY public.dcim_consoleport
     ADD CONSTRAINT dcim_consoleport_cs_port_id_key UNIQUE (cs_port_id);
 
 
@@ -6224,7 +6142,7 @@ ALTER TABLE ONLY dcim_consoleport
 -- Name: dcim_consoleport dcim_consoleport_device_id_name_293786b6_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport
+ALTER TABLE ONLY public.dcim_consoleport
     ADD CONSTRAINT dcim_consoleport_device_id_name_293786b6_uniq UNIQUE (device_id, name);
 
 
@@ -6232,7 +6150,7 @@ ALTER TABLE ONLY dcim_consoleport
 -- Name: dcim_consoleport dcim_consoleport_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport
+ALTER TABLE ONLY public.dcim_consoleport
     ADD CONSTRAINT dcim_consoleport_pkey PRIMARY KEY (id);
 
 
@@ -6240,7 +6158,7 @@ ALTER TABLE ONLY dcim_consoleport
 -- Name: dcim_consoleporttemplate dcim_consoleporttemplate_device_type_id_name_8208f9ca_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleporttemplate
+ALTER TABLE ONLY public.dcim_consoleporttemplate
     ADD CONSTRAINT dcim_consoleporttemplate_device_type_id_name_8208f9ca_uniq UNIQUE (device_type_id, name);
 
 
@@ -6248,7 +6166,7 @@ ALTER TABLE ONLY dcim_consoleporttemplate
 -- Name: dcim_consoleporttemplate dcim_consoleporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleporttemplate
+ALTER TABLE ONLY public.dcim_consoleporttemplate
     ADD CONSTRAINT dcim_consoleporttemplate_pkey PRIMARY KEY (id);
 
 
@@ -6256,7 +6174,7 @@ ALTER TABLE ONLY dcim_consoleporttemplate
 -- Name: dcim_consoleserverport dcim_consoleserverport_device_id_name_fb1c5999_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverport
+ALTER TABLE ONLY public.dcim_consoleserverport
     ADD CONSTRAINT dcim_consoleserverport_device_id_name_fb1c5999_uniq UNIQUE (device_id, name);
 
 
@@ -6264,7 +6182,7 @@ ALTER TABLE ONLY dcim_consoleserverport
 -- Name: dcim_consoleserverport dcim_consoleserverport_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverport
+ALTER TABLE ONLY public.dcim_consoleserverport
     ADD CONSTRAINT dcim_consoleserverport_pkey PRIMARY KEY (id);
 
 
@@ -6272,7 +6190,7 @@ ALTER TABLE ONLY dcim_consoleserverport
 -- Name: dcim_consoleserverporttemplate dcim_consoleserverportte_device_type_id_name_a05c974d_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverporttemplate
+ALTER TABLE ONLY public.dcim_consoleserverporttemplate
     ADD CONSTRAINT dcim_consoleserverportte_device_type_id_name_a05c974d_uniq UNIQUE (device_type_id, name);
 
 
@@ -6280,7 +6198,7 @@ ALTER TABLE ONLY dcim_consoleserverporttemplate
 -- Name: dcim_consoleserverporttemplate dcim_consoleserverporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverporttemplate
+ALTER TABLE ONLY public.dcim_consoleserverporttemplate
     ADD CONSTRAINT dcim_consoleserverporttemplate_pkey PRIMARY KEY (id);
 
 
@@ -6288,7 +6206,7 @@ ALTER TABLE ONLY dcim_consoleserverporttemplate
 -- Name: dcim_device dcim_device_asset_tag_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_asset_tag_key UNIQUE (asset_tag);
 
 
@@ -6296,7 +6214,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_name_key UNIQUE (name);
 
 
@@ -6304,7 +6222,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_pkey PRIMARY KEY (id);
 
 
@@ -6312,7 +6230,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_primary_ip4_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_primary_ip4_id_key UNIQUE (primary_ip4_id);
 
 
@@ -6320,7 +6238,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_primary_ip6_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_primary_ip6_id_key UNIQUE (primary_ip6_id);
 
 
@@ -6328,7 +6246,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_rack_id_position_face_43208a79_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_rack_id_position_face_43208a79_uniq UNIQUE (rack_id, "position", face);
 
 
@@ -6336,7 +6254,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_device dcim_device_virtual_chassis_id_vc_position_efea7133_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
+ALTER TABLE ONLY public.dcim_device
     ADD CONSTRAINT dcim_device_virtual_chassis_id_vc_position_efea7133_uniq UNIQUE (virtual_chassis_id, vc_position);
 
 
@@ -6344,7 +6262,7 @@ ALTER TABLE ONLY dcim_device
 -- Name: dcim_devicebay dcim_devicebay_device_id_name_2475a67b_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay
+ALTER TABLE ONLY public.dcim_devicebay
     ADD CONSTRAINT dcim_devicebay_device_id_name_2475a67b_uniq UNIQUE (device_id, name);
 
 
@@ -6352,7 +6270,7 @@ ALTER TABLE ONLY dcim_devicebay
 -- Name: dcim_devicebay dcim_devicebay_installed_device_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay
+ALTER TABLE ONLY public.dcim_devicebay
     ADD CONSTRAINT dcim_devicebay_installed_device_id_key UNIQUE (installed_device_id);
 
 
@@ -6360,7 +6278,7 @@ ALTER TABLE ONLY dcim_devicebay
 -- Name: dcim_devicebay dcim_devicebay_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay
+ALTER TABLE ONLY public.dcim_devicebay
     ADD CONSTRAINT dcim_devicebay_pkey PRIMARY KEY (id);
 
 
@@ -6368,7 +6286,7 @@ ALTER TABLE ONLY dcim_devicebay
 -- Name: dcim_devicebaytemplate dcim_devicebaytemplate_device_type_id_name_8f4899fe_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebaytemplate
+ALTER TABLE ONLY public.dcim_devicebaytemplate
     ADD CONSTRAINT dcim_devicebaytemplate_device_type_id_name_8f4899fe_uniq UNIQUE (device_type_id, name);
 
 
@@ -6376,7 +6294,7 @@ ALTER TABLE ONLY dcim_devicebaytemplate
 -- Name: dcim_devicebaytemplate dcim_devicebaytemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebaytemplate
+ALTER TABLE ONLY public.dcim_devicebaytemplate
     ADD CONSTRAINT dcim_devicebaytemplate_pkey PRIMARY KEY (id);
 
 
@@ -6384,7 +6302,7 @@ ALTER TABLE ONLY dcim_devicebaytemplate
 -- Name: dcim_devicerole dcim_devicerole_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicerole
+ALTER TABLE ONLY public.dcim_devicerole
     ADD CONSTRAINT dcim_devicerole_name_key UNIQUE (name);
 
 
@@ -6392,7 +6310,7 @@ ALTER TABLE ONLY dcim_devicerole
 -- Name: dcim_devicerole dcim_devicerole_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicerole
+ALTER TABLE ONLY public.dcim_devicerole
     ADD CONSTRAINT dcim_devicerole_pkey PRIMARY KEY (id);
 
 
@@ -6400,7 +6318,7 @@ ALTER TABLE ONLY dcim_devicerole
 -- Name: dcim_devicerole dcim_devicerole_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicerole
+ALTER TABLE ONLY public.dcim_devicerole
     ADD CONSTRAINT dcim_devicerole_slug_key UNIQUE (slug);
 
 
@@ -6408,7 +6326,7 @@ ALTER TABLE ONLY dcim_devicerole
 -- Name: dcim_devicetype dcim_devicetype_manufacturer_id_model_17948c0c_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicetype
+ALTER TABLE ONLY public.dcim_devicetype
     ADD CONSTRAINT dcim_devicetype_manufacturer_id_model_17948c0c_uniq UNIQUE (manufacturer_id, model);
 
 
@@ -6416,7 +6334,7 @@ ALTER TABLE ONLY dcim_devicetype
 -- Name: dcim_devicetype dcim_devicetype_manufacturer_id_slug_a0b931cb_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicetype
+ALTER TABLE ONLY public.dcim_devicetype
     ADD CONSTRAINT dcim_devicetype_manufacturer_id_slug_a0b931cb_uniq UNIQUE (manufacturer_id, slug);
 
 
@@ -6424,7 +6342,7 @@ ALTER TABLE ONLY dcim_devicetype
 -- Name: dcim_devicetype dcim_devicetype_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicetype
+ALTER TABLE ONLY public.dcim_devicetype
     ADD CONSTRAINT dcim_devicetype_pkey PRIMARY KEY (id);
 
 
@@ -6432,7 +6350,7 @@ ALTER TABLE ONLY dcim_devicetype
 -- Name: dcim_interface dcim_interface_device_id_name_bffc4ec4_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
+ALTER TABLE ONLY public.dcim_interface
     ADD CONSTRAINT dcim_interface_device_id_name_bffc4ec4_uniq UNIQUE (device_id, name);
 
 
@@ -6440,7 +6358,7 @@ ALTER TABLE ONLY dcim_interface
 -- Name: dcim_interface dcim_interface_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
+ALTER TABLE ONLY public.dcim_interface
     ADD CONSTRAINT dcim_interface_pkey PRIMARY KEY (id);
 
 
@@ -6448,7 +6366,7 @@ ALTER TABLE ONLY dcim_interface
 -- Name: dcim_interface_tagged_vlans dcim_interface_tagged_vlans_interface_id_vlan_id_0d55c576_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface_tagged_vlans
+ALTER TABLE ONLY public.dcim_interface_tagged_vlans
     ADD CONSTRAINT dcim_interface_tagged_vlans_interface_id_vlan_id_0d55c576_uniq UNIQUE (interface_id, vlan_id);
 
 
@@ -6456,7 +6374,7 @@ ALTER TABLE ONLY dcim_interface_tagged_vlans
 -- Name: dcim_interface_tagged_vlans dcim_interface_tagged_vlans_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface_tagged_vlans
+ALTER TABLE ONLY public.dcim_interface_tagged_vlans
     ADD CONSTRAINT dcim_interface_tagged_vlans_pkey PRIMARY KEY (id);
 
 
@@ -6464,7 +6382,7 @@ ALTER TABLE ONLY dcim_interface_tagged_vlans
 -- Name: dcim_interfaceconnection dcim_interfaceconnection_interface_a_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection
+ALTER TABLE ONLY public.dcim_interfaceconnection
     ADD CONSTRAINT dcim_interfaceconnection_interface_a_id_key UNIQUE (interface_a_id);
 
 
@@ -6472,7 +6390,7 @@ ALTER TABLE ONLY dcim_interfaceconnection
 -- Name: dcim_interfaceconnection dcim_interfaceconnection_interface_b_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection
+ALTER TABLE ONLY public.dcim_interfaceconnection
     ADD CONSTRAINT dcim_interfaceconnection_interface_b_id_key UNIQUE (interface_b_id);
 
 
@@ -6480,7 +6398,7 @@ ALTER TABLE ONLY dcim_interfaceconnection
 -- Name: dcim_interfaceconnection dcim_interfaceconnection_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection
+ALTER TABLE ONLY public.dcim_interfaceconnection
     ADD CONSTRAINT dcim_interfaceconnection_pkey PRIMARY KEY (id);
 
 
@@ -6488,7 +6406,7 @@ ALTER TABLE ONLY dcim_interfaceconnection
 -- Name: dcim_interfacetemplate dcim_interfacetemplate_device_type_id_name_3a847237_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfacetemplate
+ALTER TABLE ONLY public.dcim_interfacetemplate
     ADD CONSTRAINT dcim_interfacetemplate_device_type_id_name_3a847237_uniq UNIQUE (device_type_id, name);
 
 
@@ -6496,7 +6414,7 @@ ALTER TABLE ONLY dcim_interfacetemplate
 -- Name: dcim_interfacetemplate dcim_interfacetemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfacetemplate
+ALTER TABLE ONLY public.dcim_interfacetemplate
     ADD CONSTRAINT dcim_interfacetemplate_pkey PRIMARY KEY (id);
 
 
@@ -6504,7 +6422,7 @@ ALTER TABLE ONLY dcim_interfacetemplate
 -- Name: dcim_inventoryitem dcim_inventoryitem_asset_tag_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
+ALTER TABLE ONLY public.dcim_inventoryitem
     ADD CONSTRAINT dcim_inventoryitem_asset_tag_key UNIQUE (asset_tag);
 
 
@@ -6512,7 +6430,7 @@ ALTER TABLE ONLY dcim_inventoryitem
 -- Name: dcim_manufacturer dcim_manufacturer_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_manufacturer
+ALTER TABLE ONLY public.dcim_manufacturer
     ADD CONSTRAINT dcim_manufacturer_name_key UNIQUE (name);
 
 
@@ -6520,7 +6438,7 @@ ALTER TABLE ONLY dcim_manufacturer
 -- Name: dcim_manufacturer dcim_manufacturer_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_manufacturer
+ALTER TABLE ONLY public.dcim_manufacturer
     ADD CONSTRAINT dcim_manufacturer_pkey PRIMARY KEY (id);
 
 
@@ -6528,7 +6446,7 @@ ALTER TABLE ONLY dcim_manufacturer
 -- Name: dcim_manufacturer dcim_manufacturer_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_manufacturer
+ALTER TABLE ONLY public.dcim_manufacturer
     ADD CONSTRAINT dcim_manufacturer_slug_key UNIQUE (slug);
 
 
@@ -6536,7 +6454,7 @@ ALTER TABLE ONLY dcim_manufacturer
 -- Name: dcim_inventoryitem dcim_module_device_id_parent_id_name_4d8292af_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
+ALTER TABLE ONLY public.dcim_inventoryitem
     ADD CONSTRAINT dcim_module_device_id_parent_id_name_4d8292af_uniq UNIQUE (device_id, parent_id, name);
 
 
@@ -6544,7 +6462,7 @@ ALTER TABLE ONLY dcim_inventoryitem
 -- Name: dcim_inventoryitem dcim_module_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
+ALTER TABLE ONLY public.dcim_inventoryitem
     ADD CONSTRAINT dcim_module_pkey PRIMARY KEY (id);
 
 
@@ -6552,7 +6470,7 @@ ALTER TABLE ONLY dcim_inventoryitem
 -- Name: dcim_platform dcim_platform_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_platform
+ALTER TABLE ONLY public.dcim_platform
     ADD CONSTRAINT dcim_platform_name_key UNIQUE (name);
 
 
@@ -6560,7 +6478,7 @@ ALTER TABLE ONLY dcim_platform
 -- Name: dcim_platform dcim_platform_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_platform
+ALTER TABLE ONLY public.dcim_platform
     ADD CONSTRAINT dcim_platform_pkey PRIMARY KEY (id);
 
 
@@ -6568,7 +6486,7 @@ ALTER TABLE ONLY dcim_platform
 -- Name: dcim_platform dcim_platform_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_platform
+ALTER TABLE ONLY public.dcim_platform
     ADD CONSTRAINT dcim_platform_slug_key UNIQUE (slug);
 
 
@@ -6576,7 +6494,7 @@ ALTER TABLE ONLY dcim_platform
 -- Name: dcim_poweroutlet dcim_poweroutlet_device_id_name_981b00c1_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlet
+ALTER TABLE ONLY public.dcim_poweroutlet
     ADD CONSTRAINT dcim_poweroutlet_device_id_name_981b00c1_uniq UNIQUE (device_id, name);
 
 
@@ -6584,7 +6502,7 @@ ALTER TABLE ONLY dcim_poweroutlet
 -- Name: dcim_poweroutlet dcim_poweroutlet_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlet
+ALTER TABLE ONLY public.dcim_poweroutlet
     ADD CONSTRAINT dcim_poweroutlet_pkey PRIMARY KEY (id);
 
 
@@ -6592,7 +6510,7 @@ ALTER TABLE ONLY dcim_poweroutlet
 -- Name: dcim_poweroutlettemplate dcim_poweroutlettemplate_device_type_id_name_eafbb07d_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlettemplate
+ALTER TABLE ONLY public.dcim_poweroutlettemplate
     ADD CONSTRAINT dcim_poweroutlettemplate_device_type_id_name_eafbb07d_uniq UNIQUE (device_type_id, name);
 
 
@@ -6600,7 +6518,7 @@ ALTER TABLE ONLY dcim_poweroutlettemplate
 -- Name: dcim_poweroutlettemplate dcim_poweroutlettemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlettemplate
+ALTER TABLE ONLY public.dcim_poweroutlettemplate
     ADD CONSTRAINT dcim_poweroutlettemplate_pkey PRIMARY KEY (id);
 
 
@@ -6608,7 +6526,7 @@ ALTER TABLE ONLY dcim_poweroutlettemplate
 -- Name: dcim_powerport dcim_powerport_device_id_name_948af82c_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport
+ALTER TABLE ONLY public.dcim_powerport
     ADD CONSTRAINT dcim_powerport_device_id_name_948af82c_uniq UNIQUE (device_id, name);
 
 
@@ -6616,7 +6534,7 @@ ALTER TABLE ONLY dcim_powerport
 -- Name: dcim_powerport dcim_powerport_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport
+ALTER TABLE ONLY public.dcim_powerport
     ADD CONSTRAINT dcim_powerport_pkey PRIMARY KEY (id);
 
 
@@ -6624,7 +6542,7 @@ ALTER TABLE ONLY dcim_powerport
 -- Name: dcim_powerport dcim_powerport_power_outlet_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport
+ALTER TABLE ONLY public.dcim_powerport
     ADD CONSTRAINT dcim_powerport_power_outlet_id_key UNIQUE (power_outlet_id);
 
 
@@ -6632,7 +6550,7 @@ ALTER TABLE ONLY dcim_powerport
 -- Name: dcim_powerporttemplate dcim_powerporttemplate_device_type_id_name_b4e9689f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerporttemplate
+ALTER TABLE ONLY public.dcim_powerporttemplate
     ADD CONSTRAINT dcim_powerporttemplate_device_type_id_name_b4e9689f_uniq UNIQUE (device_type_id, name);
 
 
@@ -6640,7 +6558,7 @@ ALTER TABLE ONLY dcim_powerporttemplate
 -- Name: dcim_powerporttemplate dcim_powerporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerporttemplate
+ALTER TABLE ONLY public.dcim_powerporttemplate
     ADD CONSTRAINT dcim_powerporttemplate_pkey PRIMARY KEY (id);
 
 
@@ -6648,7 +6566,7 @@ ALTER TABLE ONLY dcim_powerporttemplate
 -- Name: dcim_rack dcim_rack_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
+ALTER TABLE ONLY public.dcim_rack
     ADD CONSTRAINT dcim_rack_pkey PRIMARY KEY (id);
 
 
@@ -6656,7 +6574,7 @@ ALTER TABLE ONLY dcim_rack
 -- Name: dcim_rack dcim_rack_site_id_facility_id_2a1d0860_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
+ALTER TABLE ONLY public.dcim_rack
     ADD CONSTRAINT dcim_rack_site_id_facility_id_2a1d0860_uniq UNIQUE (site_id, facility_id);
 
 
@@ -6664,7 +6582,7 @@ ALTER TABLE ONLY dcim_rack
 -- Name: dcim_rack dcim_rack_site_id_name_5fde0119_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
+ALTER TABLE ONLY public.dcim_rack
     ADD CONSTRAINT dcim_rack_site_id_name_5fde0119_uniq UNIQUE (site_id, name);
 
 
@@ -6672,7 +6590,7 @@ ALTER TABLE ONLY dcim_rack
 -- Name: dcim_rackgroup dcim_rackgroup_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackgroup
+ALTER TABLE ONLY public.dcim_rackgroup
     ADD CONSTRAINT dcim_rackgroup_pkey PRIMARY KEY (id);
 
 
@@ -6680,7 +6598,7 @@ ALTER TABLE ONLY dcim_rackgroup
 -- Name: dcim_rackgroup dcim_rackgroup_site_id_name_c9bd921f_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackgroup
+ALTER TABLE ONLY public.dcim_rackgroup
     ADD CONSTRAINT dcim_rackgroup_site_id_name_c9bd921f_uniq UNIQUE (site_id, name);
 
 
@@ -6688,7 +6606,7 @@ ALTER TABLE ONLY dcim_rackgroup
 -- Name: dcim_rackgroup dcim_rackgroup_site_id_slug_7fbfd118_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackgroup
+ALTER TABLE ONLY public.dcim_rackgroup
     ADD CONSTRAINT dcim_rackgroup_site_id_slug_7fbfd118_uniq UNIQUE (site_id, slug);
 
 
@@ -6696,7 +6614,7 @@ ALTER TABLE ONLY dcim_rackgroup
 -- Name: dcim_rackreservation dcim_rackreservation_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackreservation
+ALTER TABLE ONLY public.dcim_rackreservation
     ADD CONSTRAINT dcim_rackreservation_pkey PRIMARY KEY (id);
 
 
@@ -6704,7 +6622,7 @@ ALTER TABLE ONLY dcim_rackreservation
 -- Name: dcim_rackrole dcim_rackrole_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackrole
+ALTER TABLE ONLY public.dcim_rackrole
     ADD CONSTRAINT dcim_rackrole_name_key UNIQUE (name);
 
 
@@ -6712,7 +6630,7 @@ ALTER TABLE ONLY dcim_rackrole
 -- Name: dcim_rackrole dcim_rackrole_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackrole
+ALTER TABLE ONLY public.dcim_rackrole
     ADD CONSTRAINT dcim_rackrole_pkey PRIMARY KEY (id);
 
 
@@ -6720,7 +6638,7 @@ ALTER TABLE ONLY dcim_rackrole
 -- Name: dcim_rackrole dcim_rackrole_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackrole
+ALTER TABLE ONLY public.dcim_rackrole
     ADD CONSTRAINT dcim_rackrole_slug_key UNIQUE (slug);
 
 
@@ -6728,7 +6646,7 @@ ALTER TABLE ONLY dcim_rackrole
 -- Name: dcim_region dcim_region_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_region
+ALTER TABLE ONLY public.dcim_region
     ADD CONSTRAINT dcim_region_name_key UNIQUE (name);
 
 
@@ -6736,7 +6654,7 @@ ALTER TABLE ONLY dcim_region
 -- Name: dcim_region dcim_region_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_region
+ALTER TABLE ONLY public.dcim_region
     ADD CONSTRAINT dcim_region_pkey PRIMARY KEY (id);
 
 
@@ -6744,7 +6662,7 @@ ALTER TABLE ONLY dcim_region
 -- Name: dcim_region dcim_region_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_region
+ALTER TABLE ONLY public.dcim_region
     ADD CONSTRAINT dcim_region_slug_key UNIQUE (slug);
 
 
@@ -6752,7 +6670,7 @@ ALTER TABLE ONLY dcim_region
 -- Name: dcim_site dcim_site_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site
+ALTER TABLE ONLY public.dcim_site
     ADD CONSTRAINT dcim_site_name_key UNIQUE (name);
 
 
@@ -6760,7 +6678,7 @@ ALTER TABLE ONLY dcim_site
 -- Name: dcim_site dcim_site_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site
+ALTER TABLE ONLY public.dcim_site
     ADD CONSTRAINT dcim_site_pkey PRIMARY KEY (id);
 
 
@@ -6768,7 +6686,7 @@ ALTER TABLE ONLY dcim_site
 -- Name: dcim_site dcim_site_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site
+ALTER TABLE ONLY public.dcim_site
     ADD CONSTRAINT dcim_site_slug_key UNIQUE (slug);
 
 
@@ -6776,7 +6694,7 @@ ALTER TABLE ONLY dcim_site
 -- Name: dcim_virtualchassis dcim_virtualchassis_master_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_virtualchassis
+ALTER TABLE ONLY public.dcim_virtualchassis
     ADD CONSTRAINT dcim_virtualchassis_master_id_key UNIQUE (master_id);
 
 
@@ -6784,7 +6702,7 @@ ALTER TABLE ONLY dcim_virtualchassis
 -- Name: dcim_virtualchassis dcim_virtualchassis_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_virtualchassis
+ALTER TABLE ONLY public.dcim_virtualchassis
     ADD CONSTRAINT dcim_virtualchassis_pkey PRIMARY KEY (id);
 
 
@@ -6792,7 +6710,7 @@ ALTER TABLE ONLY dcim_virtualchassis
 -- Name: django_admin_log django_admin_log_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_admin_log
+ALTER TABLE ONLY public.django_admin_log
     ADD CONSTRAINT django_admin_log_pkey PRIMARY KEY (id);
 
 
@@ -6800,7 +6718,7 @@ ALTER TABLE ONLY django_admin_log
 -- Name: django_content_type django_content_type_app_label_model_76bd3d3b_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_app_label_model_76bd3d3b_uniq UNIQUE (app_label, model);
 
 
@@ -6808,7 +6726,7 @@ ALTER TABLE ONLY django_content_type
 -- Name: django_content_type django_content_type_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_content_type
+ALTER TABLE ONLY public.django_content_type
     ADD CONSTRAINT django_content_type_pkey PRIMARY KEY (id);
 
 
@@ -6816,7 +6734,7 @@ ALTER TABLE ONLY django_content_type
 -- Name: django_migrations django_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_migrations
+ALTER TABLE ONLY public.django_migrations
     ADD CONSTRAINT django_migrations_pkey PRIMARY KEY (id);
 
 
@@ -6824,7 +6742,7 @@ ALTER TABLE ONLY django_migrations
 -- Name: django_session django_session_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_session
+ALTER TABLE ONLY public.django_session
     ADD CONSTRAINT django_session_pkey PRIMARY KEY (session_key);
 
 
@@ -6832,7 +6750,7 @@ ALTER TABLE ONLY django_session
 -- Name: extras_customfield extras_customfield_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield
+ALTER TABLE ONLY public.extras_customfield
     ADD CONSTRAINT extras_customfield_name_key UNIQUE (name);
 
 
@@ -6840,7 +6758,7 @@ ALTER TABLE ONLY extras_customfield
 -- Name: extras_customfield_obj_type extras_customfield_obj_t_customfield_id_contentty_77878958_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield_obj_type
+ALTER TABLE ONLY public.extras_customfield_obj_type
     ADD CONSTRAINT extras_customfield_obj_t_customfield_id_contentty_77878958_uniq UNIQUE (customfield_id, contenttype_id);
 
 
@@ -6848,7 +6766,7 @@ ALTER TABLE ONLY extras_customfield_obj_type
 -- Name: extras_customfield_obj_type extras_customfield_obj_type_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield_obj_type
+ALTER TABLE ONLY public.extras_customfield_obj_type
     ADD CONSTRAINT extras_customfield_obj_type_pkey PRIMARY KEY (id);
 
 
@@ -6856,7 +6774,7 @@ ALTER TABLE ONLY extras_customfield_obj_type
 -- Name: extras_customfield extras_customfield_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield
+ALTER TABLE ONLY public.extras_customfield
     ADD CONSTRAINT extras_customfield_pkey PRIMARY KEY (id);
 
 
@@ -6864,7 +6782,7 @@ ALTER TABLE ONLY extras_customfield
 -- Name: extras_customfieldchoice extras_customfieldchoice_field_id_value_f959a108_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldchoice
+ALTER TABLE ONLY public.extras_customfieldchoice
     ADD CONSTRAINT extras_customfieldchoice_field_id_value_f959a108_uniq UNIQUE (field_id, value);
 
 
@@ -6872,7 +6790,7 @@ ALTER TABLE ONLY extras_customfieldchoice
 -- Name: extras_customfieldchoice extras_customfieldchoice_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldchoice
+ALTER TABLE ONLY public.extras_customfieldchoice
     ADD CONSTRAINT extras_customfieldchoice_pkey PRIMARY KEY (id);
 
 
@@ -6880,7 +6798,7 @@ ALTER TABLE ONLY extras_customfieldchoice
 -- Name: extras_customfieldvalue extras_customfieldvalue_field_id_obj_type_id_obj_876f6d9c_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldvalue
+ALTER TABLE ONLY public.extras_customfieldvalue
     ADD CONSTRAINT extras_customfieldvalue_field_id_obj_type_id_obj_876f6d9c_uniq UNIQUE (field_id, obj_type_id, obj_id);
 
 
@@ -6888,7 +6806,7 @@ ALTER TABLE ONLY extras_customfieldvalue
 -- Name: extras_customfieldvalue extras_customfieldvalue_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldvalue
+ALTER TABLE ONLY public.extras_customfieldvalue
     ADD CONSTRAINT extras_customfieldvalue_pkey PRIMARY KEY (id);
 
 
@@ -6896,7 +6814,7 @@ ALTER TABLE ONLY extras_customfieldvalue
 -- Name: extras_exporttemplate extras_exporttemplate_content_type_id_name_edca9b9b_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_exporttemplate
+ALTER TABLE ONLY public.extras_exporttemplate
     ADD CONSTRAINT extras_exporttemplate_content_type_id_name_edca9b9b_uniq UNIQUE (content_type_id, name);
 
 
@@ -6904,7 +6822,7 @@ ALTER TABLE ONLY extras_exporttemplate
 -- Name: extras_exporttemplate extras_exporttemplate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_exporttemplate
+ALTER TABLE ONLY public.extras_exporttemplate
     ADD CONSTRAINT extras_exporttemplate_pkey PRIMARY KEY (id);
 
 
@@ -6912,7 +6830,7 @@ ALTER TABLE ONLY extras_exporttemplate
 -- Name: extras_graph extras_graph_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_graph
+ALTER TABLE ONLY public.extras_graph
     ADD CONSTRAINT extras_graph_pkey PRIMARY KEY (id);
 
 
@@ -6920,7 +6838,7 @@ ALTER TABLE ONLY extras_graph
 -- Name: extras_imageattachment extras_imageattachment_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_imageattachment
+ALTER TABLE ONLY public.extras_imageattachment
     ADD CONSTRAINT extras_imageattachment_pkey PRIMARY KEY (id);
 
 
@@ -6928,7 +6846,7 @@ ALTER TABLE ONLY extras_imageattachment
 -- Name: extras_reportresult extras_reportresult_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_reportresult
+ALTER TABLE ONLY public.extras_reportresult
     ADD CONSTRAINT extras_reportresult_pkey PRIMARY KEY (id);
 
 
@@ -6936,7 +6854,7 @@ ALTER TABLE ONLY extras_reportresult
 -- Name: extras_reportresult extras_reportresult_report_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_reportresult
+ALTER TABLE ONLY public.extras_reportresult
     ADD CONSTRAINT extras_reportresult_report_key UNIQUE (report);
 
 
@@ -6944,7 +6862,7 @@ ALTER TABLE ONLY extras_reportresult
 -- Name: extras_topologymap extras_topologymap_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_topologymap
+ALTER TABLE ONLY public.extras_topologymap
     ADD CONSTRAINT extras_topologymap_name_key UNIQUE (name);
 
 
@@ -6952,7 +6870,7 @@ ALTER TABLE ONLY extras_topologymap
 -- Name: extras_topologymap extras_topologymap_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_topologymap
+ALTER TABLE ONLY public.extras_topologymap
     ADD CONSTRAINT extras_topologymap_pkey PRIMARY KEY (id);
 
 
@@ -6960,7 +6878,7 @@ ALTER TABLE ONLY extras_topologymap
 -- Name: extras_topologymap extras_topologymap_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_topologymap
+ALTER TABLE ONLY public.extras_topologymap
     ADD CONSTRAINT extras_topologymap_slug_key UNIQUE (slug);
 
 
@@ -6968,7 +6886,7 @@ ALTER TABLE ONLY extras_topologymap
 -- Name: extras_useraction extras_useraction_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_useraction
+ALTER TABLE ONLY public.extras_useraction
     ADD CONSTRAINT extras_useraction_pkey PRIMARY KEY (id);
 
 
@@ -6976,7 +6894,7 @@ ALTER TABLE ONLY extras_useraction
 -- Name: ipam_aggregate ipam_aggregate_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_aggregate
+ALTER TABLE ONLY public.ipam_aggregate
     ADD CONSTRAINT ipam_aggregate_pkey PRIMARY KEY (id);
 
 
@@ -6984,7 +6902,7 @@ ALTER TABLE ONLY ipam_aggregate
 -- Name: ipam_ipaddress ipam_ipaddress_nat_inside_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
+ALTER TABLE ONLY public.ipam_ipaddress
     ADD CONSTRAINT ipam_ipaddress_nat_inside_id_key UNIQUE (nat_inside_id);
 
 
@@ -6992,7 +6910,7 @@ ALTER TABLE ONLY ipam_ipaddress
 -- Name: ipam_ipaddress ipam_ipaddress_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
+ALTER TABLE ONLY public.ipam_ipaddress
     ADD CONSTRAINT ipam_ipaddress_pkey PRIMARY KEY (id);
 
 
@@ -7000,7 +6918,7 @@ ALTER TABLE ONLY ipam_ipaddress
 -- Name: ipam_prefix ipam_prefix_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
+ALTER TABLE ONLY public.ipam_prefix
     ADD CONSTRAINT ipam_prefix_pkey PRIMARY KEY (id);
 
 
@@ -7008,7 +6926,7 @@ ALTER TABLE ONLY ipam_prefix
 -- Name: ipam_rir ipam_rir_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_rir
+ALTER TABLE ONLY public.ipam_rir
     ADD CONSTRAINT ipam_rir_name_key UNIQUE (name);
 
 
@@ -7016,7 +6934,7 @@ ALTER TABLE ONLY ipam_rir
 -- Name: ipam_rir ipam_rir_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_rir
+ALTER TABLE ONLY public.ipam_rir
     ADD CONSTRAINT ipam_rir_pkey PRIMARY KEY (id);
 
 
@@ -7024,7 +6942,7 @@ ALTER TABLE ONLY ipam_rir
 -- Name: ipam_rir ipam_rir_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_rir
+ALTER TABLE ONLY public.ipam_rir
     ADD CONSTRAINT ipam_rir_slug_key UNIQUE (slug);
 
 
@@ -7032,7 +6950,7 @@ ALTER TABLE ONLY ipam_rir
 -- Name: ipam_role ipam_role_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_role
+ALTER TABLE ONLY public.ipam_role
     ADD CONSTRAINT ipam_role_name_key UNIQUE (name);
 
 
@@ -7040,7 +6958,7 @@ ALTER TABLE ONLY ipam_role
 -- Name: ipam_role ipam_role_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_role
+ALTER TABLE ONLY public.ipam_role
     ADD CONSTRAINT ipam_role_pkey PRIMARY KEY (id);
 
 
@@ -7048,7 +6966,7 @@ ALTER TABLE ONLY ipam_role
 -- Name: ipam_role ipam_role_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_role
+ALTER TABLE ONLY public.ipam_role
     ADD CONSTRAINT ipam_role_slug_key UNIQUE (slug);
 
 
@@ -7056,7 +6974,7 @@ ALTER TABLE ONLY ipam_role
 -- Name: ipam_service_ipaddresses ipam_service_ipaddresses_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service_ipaddresses
+ALTER TABLE ONLY public.ipam_service_ipaddresses
     ADD CONSTRAINT ipam_service_ipaddresses_pkey PRIMARY KEY (id);
 
 
@@ -7064,7 +6982,7 @@ ALTER TABLE ONLY ipam_service_ipaddresses
 -- Name: ipam_service_ipaddresses ipam_service_ipaddresses_service_id_ipaddress_id_d019a805_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service_ipaddresses
+ALTER TABLE ONLY public.ipam_service_ipaddresses
     ADD CONSTRAINT ipam_service_ipaddresses_service_id_ipaddress_id_d019a805_uniq UNIQUE (service_id, ipaddress_id);
 
 
@@ -7072,7 +6990,7 @@ ALTER TABLE ONLY ipam_service_ipaddresses
 -- Name: ipam_service ipam_service_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service
+ALTER TABLE ONLY public.ipam_service
     ADD CONSTRAINT ipam_service_pkey PRIMARY KEY (id);
 
 
@@ -7080,7 +6998,7 @@ ALTER TABLE ONLY ipam_service
 -- Name: ipam_vlan ipam_vlan_group_id_name_e53919df_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
+ALTER TABLE ONLY public.ipam_vlan
     ADD CONSTRAINT ipam_vlan_group_id_name_e53919df_uniq UNIQUE (group_id, name);
 
 
@@ -7088,7 +7006,7 @@ ALTER TABLE ONLY ipam_vlan
 -- Name: ipam_vlan ipam_vlan_group_id_vid_5ca4cc47_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
+ALTER TABLE ONLY public.ipam_vlan
     ADD CONSTRAINT ipam_vlan_group_id_vid_5ca4cc47_uniq UNIQUE (group_id, vid);
 
 
@@ -7096,7 +7014,7 @@ ALTER TABLE ONLY ipam_vlan
 -- Name: ipam_vlan ipam_vlan_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
+ALTER TABLE ONLY public.ipam_vlan
     ADD CONSTRAINT ipam_vlan_pkey PRIMARY KEY (id);
 
 
@@ -7104,7 +7022,7 @@ ALTER TABLE ONLY ipam_vlan
 -- Name: ipam_vlangroup ipam_vlangroup_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlangroup
+ALTER TABLE ONLY public.ipam_vlangroup
     ADD CONSTRAINT ipam_vlangroup_pkey PRIMARY KEY (id);
 
 
@@ -7112,7 +7030,7 @@ ALTER TABLE ONLY ipam_vlangroup
 -- Name: ipam_vlangroup ipam_vlangroup_site_id_name_a38e981b_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlangroup
+ALTER TABLE ONLY public.ipam_vlangroup
     ADD CONSTRAINT ipam_vlangroup_site_id_name_a38e981b_uniq UNIQUE (site_id, name);
 
 
@@ -7120,7 +7038,7 @@ ALTER TABLE ONLY ipam_vlangroup
 -- Name: ipam_vlangroup ipam_vlangroup_site_id_slug_6372a304_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlangroup
+ALTER TABLE ONLY public.ipam_vlangroup
     ADD CONSTRAINT ipam_vlangroup_site_id_slug_6372a304_uniq UNIQUE (site_id, slug);
 
 
@@ -7128,7 +7046,7 @@ ALTER TABLE ONLY ipam_vlangroup
 -- Name: ipam_vrf ipam_vrf_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vrf
+ALTER TABLE ONLY public.ipam_vrf
     ADD CONSTRAINT ipam_vrf_pkey PRIMARY KEY (id);
 
 
@@ -7136,7 +7054,7 @@ ALTER TABLE ONLY ipam_vrf
 -- Name: ipam_vrf ipam_vrf_rd_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vrf
+ALTER TABLE ONLY public.ipam_vrf
     ADD CONSTRAINT ipam_vrf_rd_key UNIQUE (rd);
 
 
@@ -7144,7 +7062,7 @@ ALTER TABLE ONLY ipam_vrf
 -- Name: secrets_secret secrets_secret_device_id_role_id_name_f8acc218_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secret
+ALTER TABLE ONLY public.secrets_secret
     ADD CONSTRAINT secrets_secret_device_id_role_id_name_f8acc218_uniq UNIQUE (device_id, role_id, name);
 
 
@@ -7152,7 +7070,7 @@ ALTER TABLE ONLY secrets_secret
 -- Name: secrets_secret secrets_secret_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secret
+ALTER TABLE ONLY public.secrets_secret
     ADD CONSTRAINT secrets_secret_pkey PRIMARY KEY (id);
 
 
@@ -7160,7 +7078,7 @@ ALTER TABLE ONLY secrets_secret
 -- Name: secrets_secretrole_groups secrets_secretrole_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_groups
+ALTER TABLE ONLY public.secrets_secretrole_groups
     ADD CONSTRAINT secrets_secretrole_groups_pkey PRIMARY KEY (id);
 
 
@@ -7168,7 +7086,7 @@ ALTER TABLE ONLY secrets_secretrole_groups
 -- Name: secrets_secretrole_groups secrets_secretrole_groups_secretrole_id_group_id_1c7f7ee5_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_groups
+ALTER TABLE ONLY public.secrets_secretrole_groups
     ADD CONSTRAINT secrets_secretrole_groups_secretrole_id_group_id_1c7f7ee5_uniq UNIQUE (secretrole_id, group_id);
 
 
@@ -7176,7 +7094,7 @@ ALTER TABLE ONLY secrets_secretrole_groups
 -- Name: secrets_secretrole secrets_secretrole_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole
+ALTER TABLE ONLY public.secrets_secretrole
     ADD CONSTRAINT secrets_secretrole_name_key UNIQUE (name);
 
 
@@ -7184,7 +7102,7 @@ ALTER TABLE ONLY secrets_secretrole
 -- Name: secrets_secretrole secrets_secretrole_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole
+ALTER TABLE ONLY public.secrets_secretrole
     ADD CONSTRAINT secrets_secretrole_pkey PRIMARY KEY (id);
 
 
@@ -7192,7 +7110,7 @@ ALTER TABLE ONLY secrets_secretrole
 -- Name: secrets_secretrole secrets_secretrole_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole
+ALTER TABLE ONLY public.secrets_secretrole
     ADD CONSTRAINT secrets_secretrole_slug_key UNIQUE (slug);
 
 
@@ -7200,7 +7118,7 @@ ALTER TABLE ONLY secrets_secretrole
 -- Name: secrets_secretrole_users secrets_secretrole_users_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_users
+ALTER TABLE ONLY public.secrets_secretrole_users
     ADD CONSTRAINT secrets_secretrole_users_pkey PRIMARY KEY (id);
 
 
@@ -7208,7 +7126,7 @@ ALTER TABLE ONLY secrets_secretrole_users
 -- Name: secrets_secretrole_users secrets_secretrole_users_secretrole_id_user_id_41832d38_uniq; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_users
+ALTER TABLE ONLY public.secrets_secretrole_users
     ADD CONSTRAINT secrets_secretrole_users_secretrole_id_user_id_41832d38_uniq UNIQUE (secretrole_id, user_id);
 
 
@@ -7216,7 +7134,7 @@ ALTER TABLE ONLY secrets_secretrole_users
 -- Name: secrets_sessionkey secrets_sessionkey_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_sessionkey
+ALTER TABLE ONLY public.secrets_sessionkey
     ADD CONSTRAINT secrets_sessionkey_pkey PRIMARY KEY (id);
 
 
@@ -7224,7 +7142,7 @@ ALTER TABLE ONLY secrets_sessionkey
 -- Name: secrets_sessionkey secrets_sessionkey_userkey_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_sessionkey
+ALTER TABLE ONLY public.secrets_sessionkey
     ADD CONSTRAINT secrets_sessionkey_userkey_id_key UNIQUE (userkey_id);
 
 
@@ -7232,7 +7150,7 @@ ALTER TABLE ONLY secrets_sessionkey
 -- Name: secrets_userkey secrets_userkey_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_userkey
+ALTER TABLE ONLY public.secrets_userkey
     ADD CONSTRAINT secrets_userkey_pkey PRIMARY KEY (id);
 
 
@@ -7240,7 +7158,7 @@ ALTER TABLE ONLY secrets_userkey
 -- Name: secrets_userkey secrets_userkey_user_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_userkey
+ALTER TABLE ONLY public.secrets_userkey
     ADD CONSTRAINT secrets_userkey_user_id_key UNIQUE (user_id);
 
 
@@ -7248,7 +7166,7 @@ ALTER TABLE ONLY secrets_userkey
 -- Name: tenancy_tenant tenancy_tenant_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenant
+ALTER TABLE ONLY public.tenancy_tenant
     ADD CONSTRAINT tenancy_tenant_name_key UNIQUE (name);
 
 
@@ -7256,7 +7174,7 @@ ALTER TABLE ONLY tenancy_tenant
 -- Name: tenancy_tenant tenancy_tenant_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenant
+ALTER TABLE ONLY public.tenancy_tenant
     ADD CONSTRAINT tenancy_tenant_pkey PRIMARY KEY (id);
 
 
@@ -7264,7 +7182,7 @@ ALTER TABLE ONLY tenancy_tenant
 -- Name: tenancy_tenant tenancy_tenant_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenant
+ALTER TABLE ONLY public.tenancy_tenant
     ADD CONSTRAINT tenancy_tenant_slug_key UNIQUE (slug);
 
 
@@ -7272,7 +7190,7 @@ ALTER TABLE ONLY tenancy_tenant
 -- Name: tenancy_tenantgroup tenancy_tenantgroup_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenantgroup
+ALTER TABLE ONLY public.tenancy_tenantgroup
     ADD CONSTRAINT tenancy_tenantgroup_name_key UNIQUE (name);
 
 
@@ -7280,7 +7198,7 @@ ALTER TABLE ONLY tenancy_tenantgroup
 -- Name: tenancy_tenantgroup tenancy_tenantgroup_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenantgroup
+ALTER TABLE ONLY public.tenancy_tenantgroup
     ADD CONSTRAINT tenancy_tenantgroup_pkey PRIMARY KEY (id);
 
 
@@ -7288,7 +7206,7 @@ ALTER TABLE ONLY tenancy_tenantgroup
 -- Name: tenancy_tenantgroup tenancy_tenantgroup_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenantgroup
+ALTER TABLE ONLY public.tenancy_tenantgroup
     ADD CONSTRAINT tenancy_tenantgroup_slug_key UNIQUE (slug);
 
 
@@ -7296,7 +7214,7 @@ ALTER TABLE ONLY tenancy_tenantgroup
 -- Name: users_token users_token_key_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY users_token
+ALTER TABLE ONLY public.users_token
     ADD CONSTRAINT users_token_key_key UNIQUE (key);
 
 
@@ -7304,7 +7222,7 @@ ALTER TABLE ONLY users_token
 -- Name: users_token users_token_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY users_token
+ALTER TABLE ONLY public.users_token
     ADD CONSTRAINT users_token_pkey PRIMARY KEY (id);
 
 
@@ -7312,7 +7230,7 @@ ALTER TABLE ONLY users_token
 -- Name: virtualization_cluster virtualization_cluster_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster
+ALTER TABLE ONLY public.virtualization_cluster
     ADD CONSTRAINT virtualization_cluster_name_key UNIQUE (name);
 
 
@@ -7320,7 +7238,7 @@ ALTER TABLE ONLY virtualization_cluster
 -- Name: virtualization_cluster virtualization_cluster_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster
+ALTER TABLE ONLY public.virtualization_cluster
     ADD CONSTRAINT virtualization_cluster_pkey PRIMARY KEY (id);
 
 
@@ -7328,7 +7246,7 @@ ALTER TABLE ONLY virtualization_cluster
 -- Name: virtualization_clustergroup virtualization_clustergroup_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustergroup
+ALTER TABLE ONLY public.virtualization_clustergroup
     ADD CONSTRAINT virtualization_clustergroup_name_key UNIQUE (name);
 
 
@@ -7336,7 +7254,7 @@ ALTER TABLE ONLY virtualization_clustergroup
 -- Name: virtualization_clustergroup virtualization_clustergroup_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustergroup
+ALTER TABLE ONLY public.virtualization_clustergroup
     ADD CONSTRAINT virtualization_clustergroup_pkey PRIMARY KEY (id);
 
 
@@ -7344,7 +7262,7 @@ ALTER TABLE ONLY virtualization_clustergroup
 -- Name: virtualization_clustergroup virtualization_clustergroup_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustergroup
+ALTER TABLE ONLY public.virtualization_clustergroup
     ADD CONSTRAINT virtualization_clustergroup_slug_key UNIQUE (slug);
 
 
@@ -7352,7 +7270,7 @@ ALTER TABLE ONLY virtualization_clustergroup
 -- Name: virtualization_clustertype virtualization_clustertype_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustertype
+ALTER TABLE ONLY public.virtualization_clustertype
     ADD CONSTRAINT virtualization_clustertype_name_key UNIQUE (name);
 
 
@@ -7360,7 +7278,7 @@ ALTER TABLE ONLY virtualization_clustertype
 -- Name: virtualization_clustertype virtualization_clustertype_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustertype
+ALTER TABLE ONLY public.virtualization_clustertype
     ADD CONSTRAINT virtualization_clustertype_pkey PRIMARY KEY (id);
 
 
@@ -7368,7 +7286,7 @@ ALTER TABLE ONLY virtualization_clustertype
 -- Name: virtualization_clustertype virtualization_clustertype_slug_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_clustertype
+ALTER TABLE ONLY public.virtualization_clustertype
     ADD CONSTRAINT virtualization_clustertype_slug_key UNIQUE (slug);
 
 
@@ -7376,7 +7294,7 @@ ALTER TABLE ONLY virtualization_clustertype
 -- Name: virtualization_virtualmachine virtualization_virtualmachine_name_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
+ALTER TABLE ONLY public.virtualization_virtualmachine
     ADD CONSTRAINT virtualization_virtualmachine_name_key UNIQUE (name);
 
 
@@ -7384,7 +7302,7 @@ ALTER TABLE ONLY virtualization_virtualmachine
 -- Name: virtualization_virtualmachine virtualization_virtualmachine_pkey; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
+ALTER TABLE ONLY public.virtualization_virtualmachine
     ADD CONSTRAINT virtualization_virtualmachine_pkey PRIMARY KEY (id);
 
 
@@ -7392,7 +7310,7 @@ ALTER TABLE ONLY virtualization_virtualmachine
 -- Name: virtualization_virtualmachine virtualization_virtualmachine_primary_ip4_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
+ALTER TABLE ONLY public.virtualization_virtualmachine
     ADD CONSTRAINT virtualization_virtualmachine_primary_ip4_id_key UNIQUE (primary_ip4_id);
 
 
@@ -7400,7 +7318,7 @@ ALTER TABLE ONLY virtualization_virtualmachine
 -- Name: virtualization_virtualmachine virtualization_virtualmachine_primary_ip6_id_key; Type: CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
+ALTER TABLE ONLY public.virtualization_virtualmachine
     ADD CONSTRAINT virtualization_virtualmachine_primary_ip6_id_key UNIQUE (primary_ip6_id);
 
 
@@ -7408,1997 +7326,1997 @@ ALTER TABLE ONLY virtualization_virtualmachine
 -- Name: auth_group_name_a6ea08ec_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_group_name_a6ea08ec_like ON auth_group USING btree (name varchar_pattern_ops);
+CREATE INDEX auth_group_name_a6ea08ec_like ON public.auth_group USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: auth_group_permissions_group_id_b120cbf9; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON auth_group_permissions USING btree (group_id);
+CREATE INDEX auth_group_permissions_group_id_b120cbf9 ON public.auth_group_permissions USING btree (group_id);
 
 
 --
 -- Name: auth_group_permissions_permission_id_84c5c92e; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON auth_group_permissions USING btree (permission_id);
+CREATE INDEX auth_group_permissions_permission_id_84c5c92e ON public.auth_group_permissions USING btree (permission_id);
 
 
 --
 -- Name: auth_permission_content_type_id_2f476e4b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_permission_content_type_id_2f476e4b ON auth_permission USING btree (content_type_id);
+CREATE INDEX auth_permission_content_type_id_2f476e4b ON public.auth_permission USING btree (content_type_id);
 
 
 --
 -- Name: auth_user_groups_group_id_97559544; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_user_groups_group_id_97559544 ON auth_user_groups USING btree (group_id);
+CREATE INDEX auth_user_groups_group_id_97559544 ON public.auth_user_groups USING btree (group_id);
 
 
 --
 -- Name: auth_user_groups_user_id_6a12ed8b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_user_groups_user_id_6a12ed8b ON auth_user_groups USING btree (user_id);
+CREATE INDEX auth_user_groups_user_id_6a12ed8b ON public.auth_user_groups USING btree (user_id);
 
 
 --
 -- Name: auth_user_user_permissions_permission_id_1fbb5f2c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON auth_user_user_permissions USING btree (permission_id);
+CREATE INDEX auth_user_user_permissions_permission_id_1fbb5f2c ON public.auth_user_user_permissions USING btree (permission_id);
 
 
 --
 -- Name: auth_user_user_permissions_user_id_a95ead1b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON auth_user_user_permissions USING btree (user_id);
+CREATE INDEX auth_user_user_permissions_user_id_a95ead1b ON public.auth_user_user_permissions USING btree (user_id);
 
 
 --
 -- Name: auth_user_username_6821ab7c_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX auth_user_username_6821ab7c_like ON auth_user USING btree (username varchar_pattern_ops);
+CREATE INDEX auth_user_username_6821ab7c_like ON public.auth_user USING btree (username varchar_pattern_ops);
 
 
 --
 -- Name: circuits_circuit_provider_id_d9195418; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuit_provider_id_d9195418 ON circuits_circuit USING btree (provider_id);
+CREATE INDEX circuits_circuit_provider_id_d9195418 ON public.circuits_circuit USING btree (provider_id);
 
 
 --
 -- Name: circuits_circuit_tenant_id_812508a5; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuit_tenant_id_812508a5 ON circuits_circuit USING btree (tenant_id);
+CREATE INDEX circuits_circuit_tenant_id_812508a5 ON public.circuits_circuit USING btree (tenant_id);
 
 
 --
 -- Name: circuits_circuit_type_id_1b9f485a; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuit_type_id_1b9f485a ON circuits_circuit USING btree (type_id);
+CREATE INDEX circuits_circuit_type_id_1b9f485a ON public.circuits_circuit USING btree (type_id);
 
 
 --
 -- Name: circuits_circuittermination_circuit_id_257e87e7; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuittermination_circuit_id_257e87e7 ON circuits_circuittermination USING btree (circuit_id);
+CREATE INDEX circuits_circuittermination_circuit_id_257e87e7 ON public.circuits_circuittermination USING btree (circuit_id);
 
 
 --
 -- Name: circuits_circuittermination_site_id_e6fe5652; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuittermination_site_id_e6fe5652 ON circuits_circuittermination USING btree (site_id);
+CREATE INDEX circuits_circuittermination_site_id_e6fe5652 ON public.circuits_circuittermination USING btree (site_id);
 
 
 --
 -- Name: circuits_circuittype_name_8256ea9a_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuittype_name_8256ea9a_like ON circuits_circuittype USING btree (name varchar_pattern_ops);
+CREATE INDEX circuits_circuittype_name_8256ea9a_like ON public.circuits_circuittype USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: circuits_circuittype_slug_9b4b3cf9_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_circuittype_slug_9b4b3cf9_like ON circuits_circuittype USING btree (slug varchar_pattern_ops);
+CREATE INDEX circuits_circuittype_slug_9b4b3cf9_like ON public.circuits_circuittype USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: circuits_provider_name_8f2514f5_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_provider_name_8f2514f5_like ON circuits_provider USING btree (name varchar_pattern_ops);
+CREATE INDEX circuits_provider_name_8f2514f5_like ON public.circuits_provider USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: circuits_provider_slug_c3c0aa10_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX circuits_provider_slug_c3c0aa10_like ON circuits_provider USING btree (slug varchar_pattern_ops);
+CREATE INDEX circuits_provider_slug_c3c0aa10_like ON public.circuits_provider USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_consoleport_device_id_f2d90d3c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_consoleport_device_id_f2d90d3c ON dcim_consoleport USING btree (device_id);
+CREATE INDEX dcim_consoleport_device_id_f2d90d3c ON public.dcim_consoleport USING btree (device_id);
 
 
 --
 -- Name: dcim_consoleporttemplate_device_type_id_075d4015; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_consoleporttemplate_device_type_id_075d4015 ON dcim_consoleporttemplate USING btree (device_type_id);
+CREATE INDEX dcim_consoleporttemplate_device_type_id_075d4015 ON public.dcim_consoleporttemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_consoleserverport_device_id_d9866581; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_consoleserverport_device_id_d9866581 ON dcim_consoleserverport USING btree (device_id);
+CREATE INDEX dcim_consoleserverport_device_id_d9866581 ON public.dcim_consoleserverport USING btree (device_id);
 
 
 --
 -- Name: dcim_consoleserverporttemplate_device_type_id_579bdc86; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_consoleserverporttemplate_device_type_id_579bdc86 ON dcim_consoleserverporttemplate USING btree (device_type_id);
+CREATE INDEX dcim_consoleserverporttemplate_device_type_id_579bdc86 ON public.dcim_consoleserverporttemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_device_asset_tag_8dac1079_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_asset_tag_8dac1079_like ON dcim_device USING btree (asset_tag varchar_pattern_ops);
+CREATE INDEX dcim_device_asset_tag_8dac1079_like ON public.dcim_device USING btree (asset_tag varchar_pattern_ops);
 
 
 --
 -- Name: dcim_device_cluster_id_cf852f78; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_cluster_id_cf852f78 ON dcim_device USING btree (cluster_id);
+CREATE INDEX dcim_device_cluster_id_cf852f78 ON public.dcim_device USING btree (cluster_id);
 
 
 --
 -- Name: dcim_device_device_role_id_682e8188; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_device_role_id_682e8188 ON dcim_device USING btree (device_role_id);
+CREATE INDEX dcim_device_device_role_id_682e8188 ON public.dcim_device USING btree (device_role_id);
 
 
 --
 -- Name: dcim_device_device_type_id_d61b4086; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_device_type_id_d61b4086 ON dcim_device USING btree (device_type_id);
+CREATE INDEX dcim_device_device_type_id_d61b4086 ON public.dcim_device USING btree (device_type_id);
 
 
 --
 -- Name: dcim_device_name_cfa61dd8_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_name_cfa61dd8_like ON dcim_device USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_device_name_cfa61dd8_like ON public.dcim_device USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_device_platform_id_468138f1; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_platform_id_468138f1 ON dcim_device USING btree (platform_id);
+CREATE INDEX dcim_device_platform_id_468138f1 ON public.dcim_device USING btree (platform_id);
 
 
 --
 -- Name: dcim_device_rack_id_23bde71f; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_rack_id_23bde71f ON dcim_device USING btree (rack_id);
+CREATE INDEX dcim_device_rack_id_23bde71f ON public.dcim_device USING btree (rack_id);
 
 
 --
 -- Name: dcim_device_site_id_ff897cf6; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_site_id_ff897cf6 ON dcim_device USING btree (site_id);
+CREATE INDEX dcim_device_site_id_ff897cf6 ON public.dcim_device USING btree (site_id);
 
 
 --
 -- Name: dcim_device_tenant_id_dcea7969; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_tenant_id_dcea7969 ON dcim_device USING btree (tenant_id);
+CREATE INDEX dcim_device_tenant_id_dcea7969 ON public.dcim_device USING btree (tenant_id);
 
 
 --
 -- Name: dcim_device_virtual_chassis_id_aed51693; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_device_virtual_chassis_id_aed51693 ON dcim_device USING btree (virtual_chassis_id);
+CREATE INDEX dcim_device_virtual_chassis_id_aed51693 ON public.dcim_device USING btree (virtual_chassis_id);
 
 
 --
 -- Name: dcim_devicebay_device_id_0c8a1218; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicebay_device_id_0c8a1218 ON dcim_devicebay USING btree (device_id);
+CREATE INDEX dcim_devicebay_device_id_0c8a1218 ON public.dcim_devicebay USING btree (device_id);
 
 
 --
 -- Name: dcim_devicebaytemplate_device_type_id_f4b24a29; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicebaytemplate_device_type_id_f4b24a29 ON dcim_devicebaytemplate USING btree (device_type_id);
+CREATE INDEX dcim_devicebaytemplate_device_type_id_f4b24a29 ON public.dcim_devicebaytemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_devicerole_name_1c813306_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicerole_name_1c813306_like ON dcim_devicerole USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_devicerole_name_1c813306_like ON public.dcim_devicerole USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_devicerole_slug_7952643b_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicerole_slug_7952643b_like ON dcim_devicerole USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_devicerole_slug_7952643b_like ON public.dcim_devicerole USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_devicetype_manufacturer_id_a3e8029e; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicetype_manufacturer_id_a3e8029e ON dcim_devicetype USING btree (manufacturer_id);
+CREATE INDEX dcim_devicetype_manufacturer_id_a3e8029e ON public.dcim_devicetype USING btree (manufacturer_id);
 
 
 --
 -- Name: dcim_devicetype_slug_448745bd; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicetype_slug_448745bd ON dcim_devicetype USING btree (slug);
+CREATE INDEX dcim_devicetype_slug_448745bd ON public.dcim_devicetype USING btree (slug);
 
 
 --
 -- Name: dcim_devicetype_slug_448745bd_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_devicetype_slug_448745bd_like ON dcim_devicetype USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_devicetype_slug_448745bd_like ON public.dcim_devicetype USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_interface_device_id_359c6115; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_device_id_359c6115 ON dcim_interface USING btree (device_id);
+CREATE INDEX dcim_interface_device_id_359c6115 ON public.dcim_interface USING btree (device_id);
 
 
 --
 -- Name: dcim_interface_lag_id_ea1a1d12; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_lag_id_ea1a1d12 ON dcim_interface USING btree (lag_id);
+CREATE INDEX dcim_interface_lag_id_ea1a1d12 ON public.dcim_interface USING btree (lag_id);
 
 
 --
 -- Name: dcim_interface_tagged_vlans_interface_id_5870c9e9; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_tagged_vlans_interface_id_5870c9e9 ON dcim_interface_tagged_vlans USING btree (interface_id);
+CREATE INDEX dcim_interface_tagged_vlans_interface_id_5870c9e9 ON public.dcim_interface_tagged_vlans USING btree (interface_id);
 
 
 --
 -- Name: dcim_interface_tagged_vlans_vlan_id_e027005c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_tagged_vlans_vlan_id_e027005c ON dcim_interface_tagged_vlans USING btree (vlan_id);
+CREATE INDEX dcim_interface_tagged_vlans_vlan_id_e027005c ON public.dcim_interface_tagged_vlans USING btree (vlan_id);
 
 
 --
 -- Name: dcim_interface_untagged_vlan_id_838dc7be; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_untagged_vlan_id_838dc7be ON dcim_interface USING btree (untagged_vlan_id);
+CREATE INDEX dcim_interface_untagged_vlan_id_838dc7be ON public.dcim_interface USING btree (untagged_vlan_id);
 
 
 --
 -- Name: dcim_interface_virtual_machine_id_2afd2d50; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interface_virtual_machine_id_2afd2d50 ON dcim_interface USING btree (virtual_machine_id);
+CREATE INDEX dcim_interface_virtual_machine_id_2afd2d50 ON public.dcim_interface USING btree (virtual_machine_id);
 
 
 --
 -- Name: dcim_interfacetemplate_device_type_id_4bfcbfab; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_interfacetemplate_device_type_id_4bfcbfab ON dcim_interfacetemplate USING btree (device_type_id);
+CREATE INDEX dcim_interfacetemplate_device_type_id_4bfcbfab ON public.dcim_interfacetemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_inventoryitem_asset_tag_d3289273_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_inventoryitem_asset_tag_d3289273_like ON dcim_inventoryitem USING btree (asset_tag varchar_pattern_ops);
+CREATE INDEX dcim_inventoryitem_asset_tag_d3289273_like ON public.dcim_inventoryitem USING btree (asset_tag varchar_pattern_ops);
 
 
 --
 -- Name: dcim_manufacturer_name_841fcd92_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_manufacturer_name_841fcd92_like ON dcim_manufacturer USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_manufacturer_name_841fcd92_like ON public.dcim_manufacturer USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_manufacturer_slug_00430749_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_manufacturer_slug_00430749_like ON dcim_manufacturer USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_manufacturer_slug_00430749_like ON public.dcim_manufacturer USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_module_device_id_53cfd5be; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_module_device_id_53cfd5be ON dcim_inventoryitem USING btree (device_id);
+CREATE INDEX dcim_module_device_id_53cfd5be ON public.dcim_inventoryitem USING btree (device_id);
 
 
 --
 -- Name: dcim_module_manufacturer_id_95322cbb; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_module_manufacturer_id_95322cbb ON dcim_inventoryitem USING btree (manufacturer_id);
+CREATE INDEX dcim_module_manufacturer_id_95322cbb ON public.dcim_inventoryitem USING btree (manufacturer_id);
 
 
 --
 -- Name: dcim_module_parent_id_bb5d0341; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_module_parent_id_bb5d0341 ON dcim_inventoryitem USING btree (parent_id);
+CREATE INDEX dcim_module_parent_id_bb5d0341 ON public.dcim_inventoryitem USING btree (parent_id);
 
 
 --
 -- Name: dcim_platform_manufacturer_id_83f72d3d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_platform_manufacturer_id_83f72d3d ON dcim_platform USING btree (manufacturer_id);
+CREATE INDEX dcim_platform_manufacturer_id_83f72d3d ON public.dcim_platform USING btree (manufacturer_id);
 
 
 --
 -- Name: dcim_platform_name_c2f04255_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_platform_name_c2f04255_like ON dcim_platform USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_platform_name_c2f04255_like ON public.dcim_platform USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_platform_slug_b0908ae4_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_platform_slug_b0908ae4_like ON dcim_platform USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_platform_slug_b0908ae4_like ON public.dcim_platform USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_poweroutlet_device_id_286351d7; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_poweroutlet_device_id_286351d7 ON dcim_poweroutlet USING btree (device_id);
+CREATE INDEX dcim_poweroutlet_device_id_286351d7 ON public.dcim_poweroutlet USING btree (device_id);
 
 
 --
 -- Name: dcim_poweroutlettemplate_device_type_id_26b2316c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_poweroutlettemplate_device_type_id_26b2316c ON dcim_poweroutlettemplate USING btree (device_type_id);
+CREATE INDEX dcim_poweroutlettemplate_device_type_id_26b2316c ON public.dcim_poweroutlettemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_powerport_device_id_ef7185ae; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_powerport_device_id_ef7185ae ON dcim_powerport USING btree (device_id);
+CREATE INDEX dcim_powerport_device_id_ef7185ae ON public.dcim_powerport USING btree (device_id);
 
 
 --
 -- Name: dcim_powerporttemplate_device_type_id_1ddfbfcc; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_powerporttemplate_device_type_id_1ddfbfcc ON dcim_powerporttemplate USING btree (device_type_id);
+CREATE INDEX dcim_powerporttemplate_device_type_id_1ddfbfcc ON public.dcim_powerporttemplate USING btree (device_type_id);
 
 
 --
 -- Name: dcim_rack_group_id_44e90ea9; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rack_group_id_44e90ea9 ON dcim_rack USING btree (group_id);
+CREATE INDEX dcim_rack_group_id_44e90ea9 ON public.dcim_rack USING btree (group_id);
 
 
 --
 -- Name: dcim_rack_role_id_62d6919e; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rack_role_id_62d6919e ON dcim_rack USING btree (role_id);
+CREATE INDEX dcim_rack_role_id_62d6919e ON public.dcim_rack USING btree (role_id);
 
 
 --
 -- Name: dcim_rack_site_id_403c7b3a; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rack_site_id_403c7b3a ON dcim_rack USING btree (site_id);
+CREATE INDEX dcim_rack_site_id_403c7b3a ON public.dcim_rack USING btree (site_id);
 
 
 --
 -- Name: dcim_rack_tenant_id_7cdf3725; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rack_tenant_id_7cdf3725 ON dcim_rack USING btree (tenant_id);
+CREATE INDEX dcim_rack_tenant_id_7cdf3725 ON public.dcim_rack USING btree (tenant_id);
 
 
 --
 -- Name: dcim_rackgroup_site_id_13520e89; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackgroup_site_id_13520e89 ON dcim_rackgroup USING btree (site_id);
+CREATE INDEX dcim_rackgroup_site_id_13520e89 ON public.dcim_rackgroup USING btree (site_id);
 
 
 --
 -- Name: dcim_rackgroup_slug_3f4582a7; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackgroup_slug_3f4582a7 ON dcim_rackgroup USING btree (slug);
+CREATE INDEX dcim_rackgroup_slug_3f4582a7 ON public.dcim_rackgroup USING btree (slug);
 
 
 --
 -- Name: dcim_rackgroup_slug_3f4582a7_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackgroup_slug_3f4582a7_like ON dcim_rackgroup USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_rackgroup_slug_3f4582a7_like ON public.dcim_rackgroup USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_rackreservation_rack_id_1ebbaa9b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackreservation_rack_id_1ebbaa9b ON dcim_rackreservation USING btree (rack_id);
+CREATE INDEX dcim_rackreservation_rack_id_1ebbaa9b ON public.dcim_rackreservation USING btree (rack_id);
 
 
 --
 -- Name: dcim_rackreservation_tenant_id_eb5e045f; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackreservation_tenant_id_eb5e045f ON dcim_rackreservation USING btree (tenant_id);
+CREATE INDEX dcim_rackreservation_tenant_id_eb5e045f ON public.dcim_rackreservation USING btree (tenant_id);
 
 
 --
 -- Name: dcim_rackreservation_user_id_0785a527; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackreservation_user_id_0785a527 ON dcim_rackreservation USING btree (user_id);
+CREATE INDEX dcim_rackreservation_user_id_0785a527 ON public.dcim_rackreservation USING btree (user_id);
 
 
 --
 -- Name: dcim_rackrole_name_9077cfcc_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackrole_name_9077cfcc_like ON dcim_rackrole USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_rackrole_name_9077cfcc_like ON public.dcim_rackrole USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_rackrole_slug_40bbcd3a_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_rackrole_slug_40bbcd3a_like ON dcim_rackrole USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_rackrole_slug_40bbcd3a_like ON public.dcim_rackrole USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_region_level_2cee781b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_level_2cee781b ON dcim_region USING btree (level);
+CREATE INDEX dcim_region_level_2cee781b ON public.dcim_region USING btree (level);
 
 
 --
 -- Name: dcim_region_lft_923d059c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_lft_923d059c ON dcim_region USING btree (lft);
+CREATE INDEX dcim_region_lft_923d059c ON public.dcim_region USING btree (lft);
 
 
 --
 -- Name: dcim_region_name_ba5a7082_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_name_ba5a7082_like ON dcim_region USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_region_name_ba5a7082_like ON public.dcim_region USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_region_parent_id_2486f5d4; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_parent_id_2486f5d4 ON dcim_region USING btree (parent_id);
+CREATE INDEX dcim_region_parent_id_2486f5d4 ON public.dcim_region USING btree (parent_id);
 
 
 --
 -- Name: dcim_region_rght_20f888e3; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_rght_20f888e3 ON dcim_region USING btree (rght);
+CREATE INDEX dcim_region_rght_20f888e3 ON public.dcim_region USING btree (rght);
 
 
 --
 -- Name: dcim_region_slug_ff078a66_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_slug_ff078a66_like ON dcim_region USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_region_slug_ff078a66_like ON public.dcim_region USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_region_tree_id_a09ea9a7; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_region_tree_id_a09ea9a7 ON dcim_region USING btree (tree_id);
+CREATE INDEX dcim_region_tree_id_a09ea9a7 ON public.dcim_region USING btree (tree_id);
 
 
 --
 -- Name: dcim_site_name_8fe66c76_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_site_name_8fe66c76_like ON dcim_site USING btree (name varchar_pattern_ops);
+CREATE INDEX dcim_site_name_8fe66c76_like ON public.dcim_site USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: dcim_site_region_id_45210932; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_site_region_id_45210932 ON dcim_site USING btree (region_id);
+CREATE INDEX dcim_site_region_id_45210932 ON public.dcim_site USING btree (region_id);
 
 
 --
 -- Name: dcim_site_slug_4412c762_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_site_slug_4412c762_like ON dcim_site USING btree (slug varchar_pattern_ops);
+CREATE INDEX dcim_site_slug_4412c762_like ON public.dcim_site USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: dcim_site_tenant_id_15e7df63; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX dcim_site_tenant_id_15e7df63 ON dcim_site USING btree (tenant_id);
+CREATE INDEX dcim_site_tenant_id_15e7df63 ON public.dcim_site USING btree (tenant_id);
 
 
 --
 -- Name: django_admin_log_content_type_id_c4bce8eb; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON django_admin_log USING btree (content_type_id);
+CREATE INDEX django_admin_log_content_type_id_c4bce8eb ON public.django_admin_log USING btree (content_type_id);
 
 
 --
 -- Name: django_admin_log_user_id_c564eba6; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX django_admin_log_user_id_c564eba6 ON django_admin_log USING btree (user_id);
+CREATE INDEX django_admin_log_user_id_c564eba6 ON public.django_admin_log USING btree (user_id);
 
 
 --
 -- Name: django_session_expire_date_a5c62663; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX django_session_expire_date_a5c62663 ON django_session USING btree (expire_date);
+CREATE INDEX django_session_expire_date_a5c62663 ON public.django_session USING btree (expire_date);
 
 
 --
 -- Name: django_session_session_key_c0390e0f_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX django_session_session_key_c0390e0f_like ON django_session USING btree (session_key varchar_pattern_ops);
+CREATE INDEX django_session_session_key_c0390e0f_like ON public.django_session USING btree (session_key varchar_pattern_ops);
 
 
 --
 -- Name: extras_customfield_name_2fe72707_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfield_name_2fe72707_like ON extras_customfield USING btree (name varchar_pattern_ops);
+CREATE INDEX extras_customfield_name_2fe72707_like ON public.extras_customfield USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: extras_customfield_obj_type_contenttype_id_6890b714; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfield_obj_type_contenttype_id_6890b714 ON extras_customfield_obj_type USING btree (contenttype_id);
+CREATE INDEX extras_customfield_obj_type_contenttype_id_6890b714 ON public.extras_customfield_obj_type USING btree (contenttype_id);
 
 
 --
 -- Name: extras_customfield_obj_type_customfield_id_82480f86; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfield_obj_type_customfield_id_82480f86 ON extras_customfield_obj_type USING btree (customfield_id);
+CREATE INDEX extras_customfield_obj_type_customfield_id_82480f86 ON public.extras_customfield_obj_type USING btree (customfield_id);
 
 
 --
 -- Name: extras_customfieldchoice_field_id_35006739; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfieldchoice_field_id_35006739 ON extras_customfieldchoice USING btree (field_id);
+CREATE INDEX extras_customfieldchoice_field_id_35006739 ON public.extras_customfieldchoice USING btree (field_id);
 
 
 --
 -- Name: extras_customfieldvalue_field_id_1a461f0d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfieldvalue_field_id_1a461f0d ON extras_customfieldvalue USING btree (field_id);
+CREATE INDEX extras_customfieldvalue_field_id_1a461f0d ON public.extras_customfieldvalue USING btree (field_id);
 
 
 --
 -- Name: extras_customfieldvalue_obj_type_id_b750b07b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_customfieldvalue_obj_type_id_b750b07b ON extras_customfieldvalue USING btree (obj_type_id);
+CREATE INDEX extras_customfieldvalue_obj_type_id_b750b07b ON public.extras_customfieldvalue USING btree (obj_type_id);
 
 
 --
 -- Name: extras_exporttemplate_content_type_id_59737e21; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_exporttemplate_content_type_id_59737e21 ON extras_exporttemplate USING btree (content_type_id);
+CREATE INDEX extras_exporttemplate_content_type_id_59737e21 ON public.extras_exporttemplate USING btree (content_type_id);
 
 
 --
 -- Name: extras_imageattachment_content_type_id_90e0643d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_imageattachment_content_type_id_90e0643d ON extras_imageattachment USING btree (content_type_id);
+CREATE INDEX extras_imageattachment_content_type_id_90e0643d ON public.extras_imageattachment USING btree (content_type_id);
 
 
 --
 -- Name: extras_reportresult_report_3575dd21_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_reportresult_report_3575dd21_like ON extras_reportresult USING btree (report varchar_pattern_ops);
+CREATE INDEX extras_reportresult_report_3575dd21_like ON public.extras_reportresult USING btree (report varchar_pattern_ops);
 
 
 --
 -- Name: extras_reportresult_user_id_0df55b95; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_reportresult_user_id_0df55b95 ON extras_reportresult USING btree (user_id);
+CREATE INDEX extras_reportresult_user_id_0df55b95 ON public.extras_reportresult USING btree (user_id);
 
 
 --
 -- Name: extras_topologymap_name_f377ebf1_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_topologymap_name_f377ebf1_like ON extras_topologymap USING btree (name varchar_pattern_ops);
+CREATE INDEX extras_topologymap_name_f377ebf1_like ON public.extras_topologymap USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: extras_topologymap_site_id_b56b3ceb; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_topologymap_site_id_b56b3ceb ON extras_topologymap USING btree (site_id);
+CREATE INDEX extras_topologymap_site_id_b56b3ceb ON public.extras_topologymap USING btree (site_id);
 
 
 --
 -- Name: extras_topologymap_slug_9ba3d31e_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_topologymap_slug_9ba3d31e_like ON extras_topologymap USING btree (slug varchar_pattern_ops);
+CREATE INDEX extras_topologymap_slug_9ba3d31e_like ON public.extras_topologymap USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: extras_useraction_content_type_id_99f782d7; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_useraction_content_type_id_99f782d7 ON extras_useraction USING btree (content_type_id);
+CREATE INDEX extras_useraction_content_type_id_99f782d7 ON public.extras_useraction USING btree (content_type_id);
 
 
 --
 -- Name: extras_useraction_user_id_8aacec56; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX extras_useraction_user_id_8aacec56 ON extras_useraction USING btree (user_id);
+CREATE INDEX extras_useraction_user_id_8aacec56 ON public.extras_useraction USING btree (user_id);
 
 
 --
 -- Name: ipam_aggregate_rir_id_ef7a27bd; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_aggregate_rir_id_ef7a27bd ON ipam_aggregate USING btree (rir_id);
+CREATE INDEX ipam_aggregate_rir_id_ef7a27bd ON public.ipam_aggregate USING btree (rir_id);
 
 
 --
 -- Name: ipam_ipaddress_interface_id_91e71d9d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_ipaddress_interface_id_91e71d9d ON ipam_ipaddress USING btree (interface_id);
+CREATE INDEX ipam_ipaddress_interface_id_91e71d9d ON public.ipam_ipaddress USING btree (interface_id);
 
 
 --
 -- Name: ipam_ipaddress_tenant_id_ac55acfd; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_ipaddress_tenant_id_ac55acfd ON ipam_ipaddress USING btree (tenant_id);
+CREATE INDEX ipam_ipaddress_tenant_id_ac55acfd ON public.ipam_ipaddress USING btree (tenant_id);
 
 
 --
 -- Name: ipam_ipaddress_vrf_id_51fcc59b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_ipaddress_vrf_id_51fcc59b ON ipam_ipaddress USING btree (vrf_id);
+CREATE INDEX ipam_ipaddress_vrf_id_51fcc59b ON public.ipam_ipaddress USING btree (vrf_id);
 
 
 --
 -- Name: ipam_prefix_role_id_0a98d415; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_prefix_role_id_0a98d415 ON ipam_prefix USING btree (role_id);
+CREATE INDEX ipam_prefix_role_id_0a98d415 ON public.ipam_prefix USING btree (role_id);
 
 
 --
 -- Name: ipam_prefix_site_id_0b20df05; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_prefix_site_id_0b20df05 ON ipam_prefix USING btree (site_id);
+CREATE INDEX ipam_prefix_site_id_0b20df05 ON public.ipam_prefix USING btree (site_id);
 
 
 --
 -- Name: ipam_prefix_tenant_id_7ba1fcc4; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_prefix_tenant_id_7ba1fcc4 ON ipam_prefix USING btree (tenant_id);
+CREATE INDEX ipam_prefix_tenant_id_7ba1fcc4 ON public.ipam_prefix USING btree (tenant_id);
 
 
 --
 -- Name: ipam_prefix_vlan_id_1db91bff; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_prefix_vlan_id_1db91bff ON ipam_prefix USING btree (vlan_id);
+CREATE INDEX ipam_prefix_vlan_id_1db91bff ON public.ipam_prefix USING btree (vlan_id);
 
 
 --
 -- Name: ipam_prefix_vrf_id_34f78ed0; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_prefix_vrf_id_34f78ed0 ON ipam_prefix USING btree (vrf_id);
+CREATE INDEX ipam_prefix_vrf_id_34f78ed0 ON public.ipam_prefix USING btree (vrf_id);
 
 
 --
 -- Name: ipam_rir_name_64a71982_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_rir_name_64a71982_like ON ipam_rir USING btree (name varchar_pattern_ops);
+CREATE INDEX ipam_rir_name_64a71982_like ON public.ipam_rir USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: ipam_rir_slug_ff1a369a_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_rir_slug_ff1a369a_like ON ipam_rir USING btree (slug varchar_pattern_ops);
+CREATE INDEX ipam_rir_slug_ff1a369a_like ON public.ipam_rir USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: ipam_role_name_13784849_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_role_name_13784849_like ON ipam_role USING btree (name varchar_pattern_ops);
+CREATE INDEX ipam_role_name_13784849_like ON public.ipam_role USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: ipam_role_slug_309ca14c_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_role_slug_309ca14c_like ON ipam_role USING btree (slug varchar_pattern_ops);
+CREATE INDEX ipam_role_slug_309ca14c_like ON public.ipam_role USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: ipam_service_device_id_b4d2bb9c; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_service_device_id_b4d2bb9c ON ipam_service USING btree (device_id);
+CREATE INDEX ipam_service_device_id_b4d2bb9c ON public.ipam_service USING btree (device_id);
 
 
 --
 -- Name: ipam_service_ipaddresses_ipaddress_id_b4138c6d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_service_ipaddresses_ipaddress_id_b4138c6d ON ipam_service_ipaddresses USING btree (ipaddress_id);
+CREATE INDEX ipam_service_ipaddresses_ipaddress_id_b4138c6d ON public.ipam_service_ipaddresses USING btree (ipaddress_id);
 
 
 --
 -- Name: ipam_service_ipaddresses_service_id_ae26b9ab; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_service_ipaddresses_service_id_ae26b9ab ON ipam_service_ipaddresses USING btree (service_id);
+CREATE INDEX ipam_service_ipaddresses_service_id_ae26b9ab ON public.ipam_service_ipaddresses USING btree (service_id);
 
 
 --
 -- Name: ipam_service_virtual_machine_id_e8b53562; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_service_virtual_machine_id_e8b53562 ON ipam_service USING btree (virtual_machine_id);
+CREATE INDEX ipam_service_virtual_machine_id_e8b53562 ON public.ipam_service USING btree (virtual_machine_id);
 
 
 --
 -- Name: ipam_vlan_group_id_88cbfa62; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlan_group_id_88cbfa62 ON ipam_vlan USING btree (group_id);
+CREATE INDEX ipam_vlan_group_id_88cbfa62 ON public.ipam_vlan USING btree (group_id);
 
 
 --
 -- Name: ipam_vlan_role_id_f5015962; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlan_role_id_f5015962 ON ipam_vlan USING btree (role_id);
+CREATE INDEX ipam_vlan_role_id_f5015962 ON public.ipam_vlan USING btree (role_id);
 
 
 --
 -- Name: ipam_vlan_site_id_a59334e3; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlan_site_id_a59334e3 ON ipam_vlan USING btree (site_id);
+CREATE INDEX ipam_vlan_site_id_a59334e3 ON public.ipam_vlan USING btree (site_id);
 
 
 --
 -- Name: ipam_vlan_tenant_id_71a8290d; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlan_tenant_id_71a8290d ON ipam_vlan USING btree (tenant_id);
+CREATE INDEX ipam_vlan_tenant_id_71a8290d ON public.ipam_vlan USING btree (tenant_id);
 
 
 --
 -- Name: ipam_vlangroup_site_id_264f36f6; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlangroup_site_id_264f36f6 ON ipam_vlangroup USING btree (site_id);
+CREATE INDEX ipam_vlangroup_site_id_264f36f6 ON public.ipam_vlangroup USING btree (site_id);
 
 
 --
 -- Name: ipam_vlangroup_slug_40abcf6b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlangroup_slug_40abcf6b ON ipam_vlangroup USING btree (slug);
+CREATE INDEX ipam_vlangroup_slug_40abcf6b ON public.ipam_vlangroup USING btree (slug);
 
 
 --
 -- Name: ipam_vlangroup_slug_40abcf6b_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vlangroup_slug_40abcf6b_like ON ipam_vlangroup USING btree (slug varchar_pattern_ops);
+CREATE INDEX ipam_vlangroup_slug_40abcf6b_like ON public.ipam_vlangroup USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: ipam_vrf_rd_0ac1bde1_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vrf_rd_0ac1bde1_like ON ipam_vrf USING btree (rd varchar_pattern_ops);
+CREATE INDEX ipam_vrf_rd_0ac1bde1_like ON public.ipam_vrf USING btree (rd varchar_pattern_ops);
 
 
 --
 -- Name: ipam_vrf_tenant_id_498b0051; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX ipam_vrf_tenant_id_498b0051 ON ipam_vrf USING btree (tenant_id);
+CREATE INDEX ipam_vrf_tenant_id_498b0051 ON public.ipam_vrf USING btree (tenant_id);
 
 
 --
 -- Name: secrets_secret_device_id_c7c13124; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secret_device_id_c7c13124 ON secrets_secret USING btree (device_id);
+CREATE INDEX secrets_secret_device_id_c7c13124 ON public.secrets_secret USING btree (device_id);
 
 
 --
 -- Name: secrets_secret_role_id_39d9347f; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secret_role_id_39d9347f ON secrets_secret USING btree (role_id);
+CREATE INDEX secrets_secret_role_id_39d9347f ON public.secrets_secret USING btree (role_id);
 
 
 --
 -- Name: secrets_secretrole_groups_group_id_a687dd10; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_groups_group_id_a687dd10 ON secrets_secretrole_groups USING btree (group_id);
+CREATE INDEX secrets_secretrole_groups_group_id_a687dd10 ON public.secrets_secretrole_groups USING btree (group_id);
 
 
 --
 -- Name: secrets_secretrole_groups_secretrole_id_3cf0338b; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_groups_secretrole_id_3cf0338b ON secrets_secretrole_groups USING btree (secretrole_id);
+CREATE INDEX secrets_secretrole_groups_secretrole_id_3cf0338b ON public.secrets_secretrole_groups USING btree (secretrole_id);
 
 
 --
 -- Name: secrets_secretrole_name_7b6ee7a4_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_name_7b6ee7a4_like ON secrets_secretrole USING btree (name varchar_pattern_ops);
+CREATE INDEX secrets_secretrole_name_7b6ee7a4_like ON public.secrets_secretrole USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: secrets_secretrole_slug_a06c885e_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_slug_a06c885e_like ON secrets_secretrole USING btree (slug varchar_pattern_ops);
+CREATE INDEX secrets_secretrole_slug_a06c885e_like ON public.secrets_secretrole USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: secrets_secretrole_users_secretrole_id_d2eac298; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_users_secretrole_id_d2eac298 ON secrets_secretrole_users USING btree (secretrole_id);
+CREATE INDEX secrets_secretrole_users_secretrole_id_d2eac298 ON public.secrets_secretrole_users USING btree (secretrole_id);
 
 
 --
 -- Name: secrets_secretrole_users_user_id_25be95ad; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX secrets_secretrole_users_user_id_25be95ad ON secrets_secretrole_users USING btree (user_id);
+CREATE INDEX secrets_secretrole_users_user_id_25be95ad ON public.secrets_secretrole_users USING btree (user_id);
 
 
 --
 -- Name: tenancy_tenant_group_id_7daef6f4; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX tenancy_tenant_group_id_7daef6f4 ON tenancy_tenant USING btree (group_id);
+CREATE INDEX tenancy_tenant_group_id_7daef6f4 ON public.tenancy_tenant USING btree (group_id);
 
 
 --
 -- Name: tenancy_tenant_name_f6e5b2f5_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX tenancy_tenant_name_f6e5b2f5_like ON tenancy_tenant USING btree (name varchar_pattern_ops);
+CREATE INDEX tenancy_tenant_name_f6e5b2f5_like ON public.tenancy_tenant USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: tenancy_tenant_slug_0716575e_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX tenancy_tenant_slug_0716575e_like ON tenancy_tenant USING btree (slug varchar_pattern_ops);
+CREATE INDEX tenancy_tenant_slug_0716575e_like ON public.tenancy_tenant USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: tenancy_tenantgroup_name_53363199_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX tenancy_tenantgroup_name_53363199_like ON tenancy_tenantgroup USING btree (name varchar_pattern_ops);
+CREATE INDEX tenancy_tenantgroup_name_53363199_like ON public.tenancy_tenantgroup USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: tenancy_tenantgroup_slug_e2af1cb6_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX tenancy_tenantgroup_slug_e2af1cb6_like ON tenancy_tenantgroup USING btree (slug varchar_pattern_ops);
+CREATE INDEX tenancy_tenantgroup_slug_e2af1cb6_like ON public.tenancy_tenantgroup USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: users_token_key_820deccd_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX users_token_key_820deccd_like ON users_token USING btree (key varchar_pattern_ops);
+CREATE INDEX users_token_key_820deccd_like ON public.users_token USING btree (key varchar_pattern_ops);
 
 
 --
 -- Name: users_token_user_id_af964690; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX users_token_user_id_af964690 ON users_token USING btree (user_id);
+CREATE INDEX users_token_user_id_af964690 ON public.users_token USING btree (user_id);
 
 
 --
 -- Name: virtualization_cluster_group_id_de379828; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_cluster_group_id_de379828 ON virtualization_cluster USING btree (group_id);
+CREATE INDEX virtualization_cluster_group_id_de379828 ON public.virtualization_cluster USING btree (group_id);
 
 
 --
 -- Name: virtualization_cluster_name_1b59a61b_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_cluster_name_1b59a61b_like ON virtualization_cluster USING btree (name varchar_pattern_ops);
+CREATE INDEX virtualization_cluster_name_1b59a61b_like ON public.virtualization_cluster USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_cluster_site_id_4d5af282; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_cluster_site_id_4d5af282 ON virtualization_cluster USING btree (site_id);
+CREATE INDEX virtualization_cluster_site_id_4d5af282 ON public.virtualization_cluster USING btree (site_id);
 
 
 --
 -- Name: virtualization_cluster_type_id_4efafb0a; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_cluster_type_id_4efafb0a ON virtualization_cluster USING btree (type_id);
+CREATE INDEX virtualization_cluster_type_id_4efafb0a ON public.virtualization_cluster USING btree (type_id);
 
 
 --
 -- Name: virtualization_clustergroup_name_4fcd26b4_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_clustergroup_name_4fcd26b4_like ON virtualization_clustergroup USING btree (name varchar_pattern_ops);
+CREATE INDEX virtualization_clustergroup_name_4fcd26b4_like ON public.virtualization_clustergroup USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_clustergroup_slug_57ca1d23_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_clustergroup_slug_57ca1d23_like ON virtualization_clustergroup USING btree (slug varchar_pattern_ops);
+CREATE INDEX virtualization_clustergroup_slug_57ca1d23_like ON public.virtualization_clustergroup USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_clustertype_name_ea854d3d_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_clustertype_name_ea854d3d_like ON virtualization_clustertype USING btree (name varchar_pattern_ops);
+CREATE INDEX virtualization_clustertype_name_ea854d3d_like ON public.virtualization_clustertype USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_clustertype_slug_8ee4d0e0_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_clustertype_slug_8ee4d0e0_like ON virtualization_clustertype USING btree (slug varchar_pattern_ops);
+CREATE INDEX virtualization_clustertype_slug_8ee4d0e0_like ON public.virtualization_clustertype USING btree (slug varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_virtualmachine_cluster_id_6c9f9047; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_virtualmachine_cluster_id_6c9f9047 ON virtualization_virtualmachine USING btree (cluster_id);
+CREATE INDEX virtualization_virtualmachine_cluster_id_6c9f9047 ON public.virtualization_virtualmachine USING btree (cluster_id);
 
 
 --
 -- Name: virtualization_virtualmachine_name_266f6cdc_like; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_virtualmachine_name_266f6cdc_like ON virtualization_virtualmachine USING btree (name varchar_pattern_ops);
+CREATE INDEX virtualization_virtualmachine_name_266f6cdc_like ON public.virtualization_virtualmachine USING btree (name varchar_pattern_ops);
 
 
 --
 -- Name: virtualization_virtualmachine_platform_id_a6c5ccb2; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_virtualmachine_platform_id_a6c5ccb2 ON virtualization_virtualmachine USING btree (platform_id);
+CREATE INDEX virtualization_virtualmachine_platform_id_a6c5ccb2 ON public.virtualization_virtualmachine USING btree (platform_id);
 
 
 --
 -- Name: virtualization_virtualmachine_role_id_0cc898f9; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_virtualmachine_role_id_0cc898f9 ON virtualization_virtualmachine USING btree (role_id);
+CREATE INDEX virtualization_virtualmachine_role_id_0cc898f9 ON public.virtualization_virtualmachine USING btree (role_id);
 
 
 --
 -- Name: virtualization_virtualmachine_tenant_id_d00d1d77; Type: INDEX; Schema: public; Owner: netbox
 --
 
-CREATE INDEX virtualization_virtualmachine_tenant_id_d00d1d77 ON virtualization_virtualmachine USING btree (tenant_id);
+CREATE INDEX virtualization_virtualmachine_tenant_id_d00d1d77 ON public.virtualization_virtualmachine USING btree (tenant_id);
 
 
 --
 -- Name: auth_group_permissions auth_group_permissio_permission_id_84c5c92e_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissio_permission_id_84c5c92e_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_group_permissions auth_group_permissions_group_id_b120cbf9_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_group_permissions
-    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_group_permissions
+    ADD CONSTRAINT auth_group_permissions_group_id_b120cbf9_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_permission auth_permission_content_type_id_2f476e4b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_permission
-    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_permission
+    ADD CONSTRAINT auth_permission_content_type_id_2f476e4b_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_user_groups auth_user_groups_group_id_97559544_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_group_id_97559544_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_user_groups auth_user_groups_user_id_6a12ed8b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_groups
-    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_user_groups
+    ADD CONSTRAINT auth_user_groups_user_id_6a12ed8b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_user_user_permissions auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permi_permission_id_1fbb5f2c_fk_auth_perm FOREIGN KEY (permission_id) REFERENCES public.auth_permission(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: auth_user_user_permissions auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY auth_user_user_permissions
-    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.auth_user_user_permissions
+    ADD CONSTRAINT auth_user_user_permissions_user_id_a95ead1b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuit circuits_circuit_provider_id_d9195418_fk_circuits_provider_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit
-    ADD CONSTRAINT circuits_circuit_provider_id_d9195418_fk_circuits_provider_id FOREIGN KEY (provider_id) REFERENCES circuits_provider(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuit
+    ADD CONSTRAINT circuits_circuit_provider_id_d9195418_fk_circuits_provider_id FOREIGN KEY (provider_id) REFERENCES public.circuits_provider(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuit circuits_circuit_tenant_id_812508a5_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit
-    ADD CONSTRAINT circuits_circuit_tenant_id_812508a5_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuit
+    ADD CONSTRAINT circuits_circuit_tenant_id_812508a5_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuit circuits_circuit_type_id_1b9f485a_fk_circuits_circuittype_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuit
-    ADD CONSTRAINT circuits_circuit_type_id_1b9f485a_fk_circuits_circuittype_id FOREIGN KEY (type_id) REFERENCES circuits_circuittype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuit
+    ADD CONSTRAINT circuits_circuit_type_id_1b9f485a_fk_circuits_circuittype_id FOREIGN KEY (type_id) REFERENCES public.circuits_circuittype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuittermination circuits_circuitterm_circuit_id_257e87e7_fk_circuits_; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
-    ADD CONSTRAINT circuits_circuitterm_circuit_id_257e87e7_fk_circuits_ FOREIGN KEY (circuit_id) REFERENCES circuits_circuit(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuittermination
+    ADD CONSTRAINT circuits_circuitterm_circuit_id_257e87e7_fk_circuits_ FOREIGN KEY (circuit_id) REFERENCES public.circuits_circuit(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuittermination circuits_circuitterm_interface_id_a147755f_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
-    ADD CONSTRAINT circuits_circuitterm_interface_id_a147755f_fk_dcim_inte FOREIGN KEY (interface_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuittermination
+    ADD CONSTRAINT circuits_circuitterm_interface_id_a147755f_fk_dcim_inte FOREIGN KEY (interface_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: circuits_circuittermination circuits_circuittermination_site_id_e6fe5652_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY circuits_circuittermination
-    ADD CONSTRAINT circuits_circuittermination_site_id_e6fe5652_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.circuits_circuittermination
+    ADD CONSTRAINT circuits_circuittermination_site_id_e6fe5652_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_consoleport dcim_consoleport_cs_port_id_41f056d5_fk_dcim_cons; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport
-    ADD CONSTRAINT dcim_consoleport_cs_port_id_41f056d5_fk_dcim_cons FOREIGN KEY (cs_port_id) REFERENCES dcim_consoleserverport(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_consoleport
+    ADD CONSTRAINT dcim_consoleport_cs_port_id_41f056d5_fk_dcim_cons FOREIGN KEY (cs_port_id) REFERENCES public.dcim_consoleserverport(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_consoleport dcim_consoleport_device_id_f2d90d3c_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleport
-    ADD CONSTRAINT dcim_consoleport_device_id_f2d90d3c_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_consoleport
+    ADD CONSTRAINT dcim_consoleport_device_id_f2d90d3c_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_consoleporttemplate dcim_consoleporttemp_device_type_id_075d4015_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleporttemplate
-    ADD CONSTRAINT dcim_consoleporttemp_device_type_id_075d4015_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_consoleporttemplate
+    ADD CONSTRAINT dcim_consoleporttemp_device_type_id_075d4015_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_consoleserverporttemplate dcim_consoleserverpo_device_type_id_579bdc86_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverporttemplate
-    ADD CONSTRAINT dcim_consoleserverpo_device_type_id_579bdc86_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_consoleserverporttemplate
+    ADD CONSTRAINT dcim_consoleserverpo_device_type_id_579bdc86_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_consoleserverport dcim_consoleserverport_device_id_d9866581_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_consoleserverport
-    ADD CONSTRAINT dcim_consoleserverport_device_id_d9866581_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_consoleserverport
+    ADD CONSTRAINT dcim_consoleserverport_device_id_d9866581_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_cluster_id_cf852f78_fk_virtualization_cluster_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_cluster_id_cf852f78_fk_virtualization_cluster_id FOREIGN KEY (cluster_id) REFERENCES virtualization_cluster(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_cluster_id_cf852f78_fk_virtualization_cluster_id FOREIGN KEY (cluster_id) REFERENCES public.virtualization_cluster(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_device_role_id_682e8188_fk_dcim_devicerole_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_device_role_id_682e8188_fk_dcim_devicerole_id FOREIGN KEY (device_role_id) REFERENCES dcim_devicerole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_device_role_id_682e8188_fk_dcim_devicerole_id FOREIGN KEY (device_role_id) REFERENCES public.dcim_devicerole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_device_type_id_d61b4086_fk_dcim_devicetype_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_device_type_id_d61b4086_fk_dcim_devicetype_id FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_device_type_id_d61b4086_fk_dcim_devicetype_id FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_platform_id_468138f1_fk_dcim_platform_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_platform_id_468138f1_fk_dcim_platform_id FOREIGN KEY (platform_id) REFERENCES dcim_platform(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_platform_id_468138f1_fk_dcim_platform_id FOREIGN KEY (platform_id) REFERENCES public.dcim_platform(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_primary_ip4_id_2ccd943a_fk_ipam_ipaddress_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_primary_ip4_id_2ccd943a_fk_ipam_ipaddress_id FOREIGN KEY (primary_ip4_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_primary_ip4_id_2ccd943a_fk_ipam_ipaddress_id FOREIGN KEY (primary_ip4_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_primary_ip6_id_d180fe91_fk_ipam_ipaddress_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_primary_ip6_id_d180fe91_fk_ipam_ipaddress_id FOREIGN KEY (primary_ip6_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_primary_ip6_id_d180fe91_fk_ipam_ipaddress_id FOREIGN KEY (primary_ip6_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_rack_id_23bde71f_fk_dcim_rack_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_rack_id_23bde71f_fk_dcim_rack_id FOREIGN KEY (rack_id) REFERENCES dcim_rack(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_rack_id_23bde71f_fk_dcim_rack_id FOREIGN KEY (rack_id) REFERENCES public.dcim_rack(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_site_id_ff897cf6_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_site_id_ff897cf6_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_site_id_ff897cf6_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_tenant_id_dcea7969_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_tenant_id_dcea7969_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_tenant_id_dcea7969_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_device dcim_device_virtual_chassis_id_aed51693_fk_dcim_virt; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_device
-    ADD CONSTRAINT dcim_device_virtual_chassis_id_aed51693_fk_dcim_virt FOREIGN KEY (virtual_chassis_id) REFERENCES dcim_virtualchassis(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_device
+    ADD CONSTRAINT dcim_device_virtual_chassis_id_aed51693_fk_dcim_virt FOREIGN KEY (virtual_chassis_id) REFERENCES public.dcim_virtualchassis(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_devicebay dcim_devicebay_device_id_0c8a1218_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay
-    ADD CONSTRAINT dcim_devicebay_device_id_0c8a1218_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_devicebay
+    ADD CONSTRAINT dcim_devicebay_device_id_0c8a1218_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_devicebay dcim_devicebay_installed_device_id_04618112_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebay
-    ADD CONSTRAINT dcim_devicebay_installed_device_id_04618112_fk_dcim_device_id FOREIGN KEY (installed_device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_devicebay
+    ADD CONSTRAINT dcim_devicebay_installed_device_id_04618112_fk_dcim_device_id FOREIGN KEY (installed_device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_devicebaytemplate dcim_devicebaytempla_device_type_id_f4b24a29_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicebaytemplate
-    ADD CONSTRAINT dcim_devicebaytempla_device_type_id_f4b24a29_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_devicebaytemplate
+    ADD CONSTRAINT dcim_devicebaytempla_device_type_id_f4b24a29_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_devicetype dcim_devicetype_manufacturer_id_a3e8029e_fk_dcim_manu; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_devicetype
-    ADD CONSTRAINT dcim_devicetype_manufacturer_id_a3e8029e_fk_dcim_manu FOREIGN KEY (manufacturer_id) REFERENCES dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_devicetype
+    ADD CONSTRAINT dcim_devicetype_manufacturer_id_a3e8029e_fk_dcim_manu FOREIGN KEY (manufacturer_id) REFERENCES public.dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface dcim_interface_device_id_359c6115_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
-    ADD CONSTRAINT dcim_interface_device_id_359c6115_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface_device_id_359c6115_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface dcim_interface_lag_id_ea1a1d12_fk_dcim_interface_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
-    ADD CONSTRAINT dcim_interface_lag_id_ea1a1d12_fk_dcim_interface_id FOREIGN KEY (lag_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface_lag_id_ea1a1d12_fk_dcim_interface_id FOREIGN KEY (lag_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface_tagged_vlans dcim_interface_tagge_interface_id_5870c9e9_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface_tagged_vlans
-    ADD CONSTRAINT dcim_interface_tagge_interface_id_5870c9e9_fk_dcim_inte FOREIGN KEY (interface_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface_tagged_vlans
+    ADD CONSTRAINT dcim_interface_tagge_interface_id_5870c9e9_fk_dcim_inte FOREIGN KEY (interface_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface_tagged_vlans dcim_interface_tagged_vlans_vlan_id_e027005c_fk_ipam_vlan_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface_tagged_vlans
-    ADD CONSTRAINT dcim_interface_tagged_vlans_vlan_id_e027005c_fk_ipam_vlan_id FOREIGN KEY (vlan_id) REFERENCES ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface_tagged_vlans
+    ADD CONSTRAINT dcim_interface_tagged_vlans_vlan_id_e027005c_fk_ipam_vlan_id FOREIGN KEY (vlan_id) REFERENCES public.ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface dcim_interface_untagged_vlan_id_838dc7be_fk_ipam_vlan_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
-    ADD CONSTRAINT dcim_interface_untagged_vlan_id_838dc7be_fk_ipam_vlan_id FOREIGN KEY (untagged_vlan_id) REFERENCES ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface_untagged_vlan_id_838dc7be_fk_ipam_vlan_id FOREIGN KEY (untagged_vlan_id) REFERENCES public.ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interface dcim_interface_virtual_machine_id_2afd2d50_fk_virtualiz; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interface
-    ADD CONSTRAINT dcim_interface_virtual_machine_id_2afd2d50_fk_virtualiz FOREIGN KEY (virtual_machine_id) REFERENCES virtualization_virtualmachine(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interface
+    ADD CONSTRAINT dcim_interface_virtual_machine_id_2afd2d50_fk_virtualiz FOREIGN KEY (virtual_machine_id) REFERENCES public.virtualization_virtualmachine(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interfaceconnection dcim_interfaceconnec_interface_a_id_503f46c2_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnec_interface_a_id_503f46c2_fk_dcim_inte FOREIGN KEY (interface_a_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interfaceconnection
+    ADD CONSTRAINT dcim_interfaceconnec_interface_a_id_503f46c2_fk_dcim_inte FOREIGN KEY (interface_a_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interfaceconnection dcim_interfaceconnec_interface_b_id_85faa104_fk_dcim_inte; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfaceconnection
-    ADD CONSTRAINT dcim_interfaceconnec_interface_b_id_85faa104_fk_dcim_inte FOREIGN KEY (interface_b_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interfaceconnection
+    ADD CONSTRAINT dcim_interfaceconnec_interface_b_id_85faa104_fk_dcim_inte FOREIGN KEY (interface_b_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_interfacetemplate dcim_interfacetempla_device_type_id_4bfcbfab_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_interfacetemplate
-    ADD CONSTRAINT dcim_interfacetempla_device_type_id_4bfcbfab_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_interfacetemplate
+    ADD CONSTRAINT dcim_interfacetempla_device_type_id_4bfcbfab_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_inventoryitem dcim_inventoryitem_device_id_033d83f8_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
-    ADD CONSTRAINT dcim_inventoryitem_device_id_033d83f8_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_inventoryitem
+    ADD CONSTRAINT dcim_inventoryitem_device_id_033d83f8_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_inventoryitem dcim_inventoryitem_manufacturer_id_dcd1b78a_fk_dcim_manu; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
-    ADD CONSTRAINT dcim_inventoryitem_manufacturer_id_dcd1b78a_fk_dcim_manu FOREIGN KEY (manufacturer_id) REFERENCES dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_inventoryitem
+    ADD CONSTRAINT dcim_inventoryitem_manufacturer_id_dcd1b78a_fk_dcim_manu FOREIGN KEY (manufacturer_id) REFERENCES public.dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_inventoryitem dcim_inventoryitem_parent_id_7ebcd457_fk_dcim_inventoryitem_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_inventoryitem
-    ADD CONSTRAINT dcim_inventoryitem_parent_id_7ebcd457_fk_dcim_inventoryitem_id FOREIGN KEY (parent_id) REFERENCES dcim_inventoryitem(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_inventoryitem
+    ADD CONSTRAINT dcim_inventoryitem_parent_id_7ebcd457_fk_dcim_inventoryitem_id FOREIGN KEY (parent_id) REFERENCES public.dcim_inventoryitem(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_platform dcim_platform_manufacturer_id_83f72d3d_fk_dcim_manufacturer_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_platform
-    ADD CONSTRAINT dcim_platform_manufacturer_id_83f72d3d_fk_dcim_manufacturer_id FOREIGN KEY (manufacturer_id) REFERENCES dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_platform
+    ADD CONSTRAINT dcim_platform_manufacturer_id_83f72d3d_fk_dcim_manufacturer_id FOREIGN KEY (manufacturer_id) REFERENCES public.dcim_manufacturer(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_poweroutlet dcim_poweroutlet_device_id_286351d7_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlet
-    ADD CONSTRAINT dcim_poweroutlet_device_id_286351d7_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_poweroutlet
+    ADD CONSTRAINT dcim_poweroutlet_device_id_286351d7_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_poweroutlettemplate dcim_poweroutlettemp_device_type_id_26b2316c_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_poweroutlettemplate
-    ADD CONSTRAINT dcim_poweroutlettemp_device_type_id_26b2316c_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_poweroutlettemplate
+    ADD CONSTRAINT dcim_poweroutlettemp_device_type_id_26b2316c_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_powerport dcim_powerport_device_id_ef7185ae_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport
-    ADD CONSTRAINT dcim_powerport_device_id_ef7185ae_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport_device_id_ef7185ae_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_powerport dcim_powerport_power_outlet_id_741276ef_fk_dcim_poweroutlet_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerport
-    ADD CONSTRAINT dcim_powerport_power_outlet_id_741276ef_fk_dcim_poweroutlet_id FOREIGN KEY (power_outlet_id) REFERENCES dcim_poweroutlet(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_powerport
+    ADD CONSTRAINT dcim_powerport_power_outlet_id_741276ef_fk_dcim_poweroutlet_id FOREIGN KEY (power_outlet_id) REFERENCES public.dcim_poweroutlet(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_powerporttemplate dcim_powerporttempla_device_type_id_1ddfbfcc_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_powerporttemplate
-    ADD CONSTRAINT dcim_powerporttempla_device_type_id_1ddfbfcc_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_powerporttemplate
+    ADD CONSTRAINT dcim_powerporttempla_device_type_id_1ddfbfcc_fk_dcim_devi FOREIGN KEY (device_type_id) REFERENCES public.dcim_devicetype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rack dcim_rack_group_id_44e90ea9_fk_dcim_rackgroup_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
-    ADD CONSTRAINT dcim_rack_group_id_44e90ea9_fk_dcim_rackgroup_id FOREIGN KEY (group_id) REFERENCES dcim_rackgroup(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_group_id_44e90ea9_fk_dcim_rackgroup_id FOREIGN KEY (group_id) REFERENCES public.dcim_rackgroup(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rack dcim_rack_role_id_62d6919e_fk_dcim_rackrole_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
-    ADD CONSTRAINT dcim_rack_role_id_62d6919e_fk_dcim_rackrole_id FOREIGN KEY (role_id) REFERENCES dcim_rackrole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_role_id_62d6919e_fk_dcim_rackrole_id FOREIGN KEY (role_id) REFERENCES public.dcim_rackrole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rack dcim_rack_site_id_403c7b3a_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
-    ADD CONSTRAINT dcim_rack_site_id_403c7b3a_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_site_id_403c7b3a_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rack dcim_rack_tenant_id_7cdf3725_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rack
-    ADD CONSTRAINT dcim_rack_tenant_id_7cdf3725_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rack
+    ADD CONSTRAINT dcim_rack_tenant_id_7cdf3725_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rackgroup dcim_rackgroup_site_id_13520e89_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackgroup
-    ADD CONSTRAINT dcim_rackgroup_site_id_13520e89_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rackgroup
+    ADD CONSTRAINT dcim_rackgroup_site_id_13520e89_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rackreservation dcim_rackreservation_rack_id_1ebbaa9b_fk_dcim_rack_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackreservation
-    ADD CONSTRAINT dcim_rackreservation_rack_id_1ebbaa9b_fk_dcim_rack_id FOREIGN KEY (rack_id) REFERENCES dcim_rack(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rackreservation
+    ADD CONSTRAINT dcim_rackreservation_rack_id_1ebbaa9b_fk_dcim_rack_id FOREIGN KEY (rack_id) REFERENCES public.dcim_rack(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rackreservation dcim_rackreservation_tenant_id_eb5e045f_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackreservation
-    ADD CONSTRAINT dcim_rackreservation_tenant_id_eb5e045f_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rackreservation
+    ADD CONSTRAINT dcim_rackreservation_tenant_id_eb5e045f_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_rackreservation dcim_rackreservation_user_id_0785a527_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_rackreservation
-    ADD CONSTRAINT dcim_rackreservation_user_id_0785a527_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_rackreservation
+    ADD CONSTRAINT dcim_rackreservation_user_id_0785a527_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_region dcim_region_parent_id_2486f5d4_fk_dcim_region_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_region
-    ADD CONSTRAINT dcim_region_parent_id_2486f5d4_fk_dcim_region_id FOREIGN KEY (parent_id) REFERENCES dcim_region(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_region
+    ADD CONSTRAINT dcim_region_parent_id_2486f5d4_fk_dcim_region_id FOREIGN KEY (parent_id) REFERENCES public.dcim_region(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_site dcim_site_region_id_45210932_fk_dcim_region_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site
-    ADD CONSTRAINT dcim_site_region_id_45210932_fk_dcim_region_id FOREIGN KEY (region_id) REFERENCES dcim_region(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_site
+    ADD CONSTRAINT dcim_site_region_id_45210932_fk_dcim_region_id FOREIGN KEY (region_id) REFERENCES public.dcim_region(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_site dcim_site_tenant_id_15e7df63_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_site
-    ADD CONSTRAINT dcim_site_tenant_id_15e7df63_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_site
+    ADD CONSTRAINT dcim_site_tenant_id_15e7df63_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: dcim_virtualchassis dcim_virtualchassis_master_id_ab54cfc6_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY dcim_virtualchassis
-    ADD CONSTRAINT dcim_virtualchassis_master_id_ab54cfc6_fk_dcim_device_id FOREIGN KEY (master_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.dcim_virtualchassis
+    ADD CONSTRAINT dcim_virtualchassis_master_id_ab54cfc6_fk_dcim_device_id FOREIGN KEY (master_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: django_admin_log django_admin_log_content_type_id_c4bce8eb_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_content_type_id_c4bce8eb_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: django_admin_log django_admin_log_user_id_c564eba6_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY django_admin_log
-    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.django_admin_log
+    ADD CONSTRAINT django_admin_log_user_id_c564eba6_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_customfield_obj_type extras_customfield_o_contenttype_id_6890b714_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield_obj_type
-    ADD CONSTRAINT extras_customfield_o_contenttype_id_6890b714_fk_django_co FOREIGN KEY (contenttype_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_customfield_obj_type
+    ADD CONSTRAINT extras_customfield_o_contenttype_id_6890b714_fk_django_co FOREIGN KEY (contenttype_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_customfield_obj_type extras_customfield_o_customfield_id_82480f86_fk_extras_cu; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfield_obj_type
-    ADD CONSTRAINT extras_customfield_o_customfield_id_82480f86_fk_extras_cu FOREIGN KEY (customfield_id) REFERENCES extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_customfield_obj_type
+    ADD CONSTRAINT extras_customfield_o_customfield_id_82480f86_fk_extras_cu FOREIGN KEY (customfield_id) REFERENCES public.extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_customfieldchoice extras_customfieldch_field_id_35006739_fk_extras_cu; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldchoice
-    ADD CONSTRAINT extras_customfieldch_field_id_35006739_fk_extras_cu FOREIGN KEY (field_id) REFERENCES extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_customfieldchoice
+    ADD CONSTRAINT extras_customfieldch_field_id_35006739_fk_extras_cu FOREIGN KEY (field_id) REFERENCES public.extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_customfieldvalue extras_customfieldva_field_id_1a461f0d_fk_extras_cu; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldvalue
-    ADD CONSTRAINT extras_customfieldva_field_id_1a461f0d_fk_extras_cu FOREIGN KEY (field_id) REFERENCES extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_customfieldvalue
+    ADD CONSTRAINT extras_customfieldva_field_id_1a461f0d_fk_extras_cu FOREIGN KEY (field_id) REFERENCES public.extras_customfield(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_customfieldvalue extras_customfieldva_obj_type_id_b750b07b_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_customfieldvalue
-    ADD CONSTRAINT extras_customfieldva_obj_type_id_b750b07b_fk_django_co FOREIGN KEY (obj_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_customfieldvalue
+    ADD CONSTRAINT extras_customfieldva_obj_type_id_b750b07b_fk_django_co FOREIGN KEY (obj_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_exporttemplate extras_exporttemplat_content_type_id_59737e21_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_exporttemplate
-    ADD CONSTRAINT extras_exporttemplat_content_type_id_59737e21_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_exporttemplate
+    ADD CONSTRAINT extras_exporttemplat_content_type_id_59737e21_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_imageattachment extras_imageattachme_content_type_id_90e0643d_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_imageattachment
-    ADD CONSTRAINT extras_imageattachme_content_type_id_90e0643d_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_imageattachment
+    ADD CONSTRAINT extras_imageattachme_content_type_id_90e0643d_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_reportresult extras_reportresult_user_id_0df55b95_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_reportresult
-    ADD CONSTRAINT extras_reportresult_user_id_0df55b95_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_reportresult
+    ADD CONSTRAINT extras_reportresult_user_id_0df55b95_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_topologymap extras_topologymap_site_id_b56b3ceb_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_topologymap
-    ADD CONSTRAINT extras_topologymap_site_id_b56b3ceb_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_topologymap
+    ADD CONSTRAINT extras_topologymap_site_id_b56b3ceb_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_useraction extras_useraction_content_type_id_99f782d7_fk_django_co; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_useraction
-    ADD CONSTRAINT extras_useraction_content_type_id_99f782d7_fk_django_co FOREIGN KEY (content_type_id) REFERENCES django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_useraction
+    ADD CONSTRAINT extras_useraction_content_type_id_99f782d7_fk_django_co FOREIGN KEY (content_type_id) REFERENCES public.django_content_type(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: extras_useraction extras_useraction_user_id_8aacec56_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY extras_useraction
-    ADD CONSTRAINT extras_useraction_user_id_8aacec56_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.extras_useraction
+    ADD CONSTRAINT extras_useraction_user_id_8aacec56_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_aggregate ipam_aggregate_rir_id_ef7a27bd_fk_ipam_rir_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_aggregate
-    ADD CONSTRAINT ipam_aggregate_rir_id_ef7a27bd_fk_ipam_rir_id FOREIGN KEY (rir_id) REFERENCES ipam_rir(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_aggregate
+    ADD CONSTRAINT ipam_aggregate_rir_id_ef7a27bd_fk_ipam_rir_id FOREIGN KEY (rir_id) REFERENCES public.ipam_rir(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_ipaddress ipam_ipaddress_interface_id_91e71d9d_fk_dcim_interface_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
-    ADD CONSTRAINT ipam_ipaddress_interface_id_91e71d9d_fk_dcim_interface_id FOREIGN KEY (interface_id) REFERENCES dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_ipaddress
+    ADD CONSTRAINT ipam_ipaddress_interface_id_91e71d9d_fk_dcim_interface_id FOREIGN KEY (interface_id) REFERENCES public.dcim_interface(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_ipaddress ipam_ipaddress_nat_inside_id_a45fb7c5_fk_ipam_ipaddress_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
-    ADD CONSTRAINT ipam_ipaddress_nat_inside_id_a45fb7c5_fk_ipam_ipaddress_id FOREIGN KEY (nat_inside_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_ipaddress
+    ADD CONSTRAINT ipam_ipaddress_nat_inside_id_a45fb7c5_fk_ipam_ipaddress_id FOREIGN KEY (nat_inside_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_ipaddress ipam_ipaddress_tenant_id_ac55acfd_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
-    ADD CONSTRAINT ipam_ipaddress_tenant_id_ac55acfd_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_ipaddress
+    ADD CONSTRAINT ipam_ipaddress_tenant_id_ac55acfd_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_ipaddress ipam_ipaddress_vrf_id_51fcc59b_fk_ipam_vrf_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_ipaddress
-    ADD CONSTRAINT ipam_ipaddress_vrf_id_51fcc59b_fk_ipam_vrf_id FOREIGN KEY (vrf_id) REFERENCES ipam_vrf(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_ipaddress
+    ADD CONSTRAINT ipam_ipaddress_vrf_id_51fcc59b_fk_ipam_vrf_id FOREIGN KEY (vrf_id) REFERENCES public.ipam_vrf(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_prefix ipam_prefix_role_id_0a98d415_fk_ipam_role_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
-    ADD CONSTRAINT ipam_prefix_role_id_0a98d415_fk_ipam_role_id FOREIGN KEY (role_id) REFERENCES ipam_role(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_prefix
+    ADD CONSTRAINT ipam_prefix_role_id_0a98d415_fk_ipam_role_id FOREIGN KEY (role_id) REFERENCES public.ipam_role(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_prefix ipam_prefix_site_id_0b20df05_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
-    ADD CONSTRAINT ipam_prefix_site_id_0b20df05_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_prefix
+    ADD CONSTRAINT ipam_prefix_site_id_0b20df05_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_prefix ipam_prefix_tenant_id_7ba1fcc4_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
-    ADD CONSTRAINT ipam_prefix_tenant_id_7ba1fcc4_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_prefix
+    ADD CONSTRAINT ipam_prefix_tenant_id_7ba1fcc4_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_prefix ipam_prefix_vlan_id_1db91bff_fk_ipam_vlan_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
-    ADD CONSTRAINT ipam_prefix_vlan_id_1db91bff_fk_ipam_vlan_id FOREIGN KEY (vlan_id) REFERENCES ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_prefix
+    ADD CONSTRAINT ipam_prefix_vlan_id_1db91bff_fk_ipam_vlan_id FOREIGN KEY (vlan_id) REFERENCES public.ipam_vlan(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_prefix ipam_prefix_vrf_id_34f78ed0_fk_ipam_vrf_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_prefix
-    ADD CONSTRAINT ipam_prefix_vrf_id_34f78ed0_fk_ipam_vrf_id FOREIGN KEY (vrf_id) REFERENCES ipam_vrf(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_prefix
+    ADD CONSTRAINT ipam_prefix_vrf_id_34f78ed0_fk_ipam_vrf_id FOREIGN KEY (vrf_id) REFERENCES public.ipam_vrf(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_service ipam_service_device_id_b4d2bb9c_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service
-    ADD CONSTRAINT ipam_service_device_id_b4d2bb9c_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_service
+    ADD CONSTRAINT ipam_service_device_id_b4d2bb9c_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_service_ipaddresses ipam_service_ipaddre_ipaddress_id_b4138c6d_fk_ipam_ipad; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service_ipaddresses
-    ADD CONSTRAINT ipam_service_ipaddre_ipaddress_id_b4138c6d_fk_ipam_ipad FOREIGN KEY (ipaddress_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_service_ipaddresses
+    ADD CONSTRAINT ipam_service_ipaddre_ipaddress_id_b4138c6d_fk_ipam_ipad FOREIGN KEY (ipaddress_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_service_ipaddresses ipam_service_ipaddresses_service_id_ae26b9ab_fk_ipam_service_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service_ipaddresses
-    ADD CONSTRAINT ipam_service_ipaddresses_service_id_ae26b9ab_fk_ipam_service_id FOREIGN KEY (service_id) REFERENCES ipam_service(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_service_ipaddresses
+    ADD CONSTRAINT ipam_service_ipaddresses_service_id_ae26b9ab_fk_ipam_service_id FOREIGN KEY (service_id) REFERENCES public.ipam_service(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_service ipam_service_virtual_machine_id_e8b53562_fk_virtualiz; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_service
-    ADD CONSTRAINT ipam_service_virtual_machine_id_e8b53562_fk_virtualiz FOREIGN KEY (virtual_machine_id) REFERENCES virtualization_virtualmachine(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_service
+    ADD CONSTRAINT ipam_service_virtual_machine_id_e8b53562_fk_virtualiz FOREIGN KEY (virtual_machine_id) REFERENCES public.virtualization_virtualmachine(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vlan ipam_vlan_group_id_88cbfa62_fk_ipam_vlangroup_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
-    ADD CONSTRAINT ipam_vlan_group_id_88cbfa62_fk_ipam_vlangroup_id FOREIGN KEY (group_id) REFERENCES ipam_vlangroup(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vlan
+    ADD CONSTRAINT ipam_vlan_group_id_88cbfa62_fk_ipam_vlangroup_id FOREIGN KEY (group_id) REFERENCES public.ipam_vlangroup(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vlan ipam_vlan_role_id_f5015962_fk_ipam_role_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
-    ADD CONSTRAINT ipam_vlan_role_id_f5015962_fk_ipam_role_id FOREIGN KEY (role_id) REFERENCES ipam_role(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vlan
+    ADD CONSTRAINT ipam_vlan_role_id_f5015962_fk_ipam_role_id FOREIGN KEY (role_id) REFERENCES public.ipam_role(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vlan ipam_vlan_site_id_a59334e3_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
-    ADD CONSTRAINT ipam_vlan_site_id_a59334e3_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vlan
+    ADD CONSTRAINT ipam_vlan_site_id_a59334e3_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vlan ipam_vlan_tenant_id_71a8290d_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlan
-    ADD CONSTRAINT ipam_vlan_tenant_id_71a8290d_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vlan
+    ADD CONSTRAINT ipam_vlan_tenant_id_71a8290d_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vlangroup ipam_vlangroup_site_id_264f36f6_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vlangroup
-    ADD CONSTRAINT ipam_vlangroup_site_id_264f36f6_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vlangroup
+    ADD CONSTRAINT ipam_vlangroup_site_id_264f36f6_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: ipam_vrf ipam_vrf_tenant_id_498b0051_fk_tenancy_tenant_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY ipam_vrf
-    ADD CONSTRAINT ipam_vrf_tenant_id_498b0051_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.ipam_vrf
+    ADD CONSTRAINT ipam_vrf_tenant_id_498b0051_fk_tenancy_tenant_id FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secret secrets_secret_device_id_c7c13124_fk_dcim_device_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secret
-    ADD CONSTRAINT secrets_secret_device_id_c7c13124_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secret
+    ADD CONSTRAINT secrets_secret_device_id_c7c13124_fk_dcim_device_id FOREIGN KEY (device_id) REFERENCES public.dcim_device(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secret secrets_secret_role_id_39d9347f_fk_secrets_secretrole_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secret
-    ADD CONSTRAINT secrets_secret_role_id_39d9347f_fk_secrets_secretrole_id FOREIGN KEY (role_id) REFERENCES secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secret
+    ADD CONSTRAINT secrets_secret_role_id_39d9347f_fk_secrets_secretrole_id FOREIGN KEY (role_id) REFERENCES public.secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secretrole_groups secrets_secretrole_g_secretrole_id_3cf0338b_fk_secrets_s; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_groups
-    ADD CONSTRAINT secrets_secretrole_g_secretrole_id_3cf0338b_fk_secrets_s FOREIGN KEY (secretrole_id) REFERENCES secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secretrole_groups
+    ADD CONSTRAINT secrets_secretrole_g_secretrole_id_3cf0338b_fk_secrets_s FOREIGN KEY (secretrole_id) REFERENCES public.secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secretrole_groups secrets_secretrole_groups_group_id_a687dd10_fk_auth_group_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_groups
-    ADD CONSTRAINT secrets_secretrole_groups_group_id_a687dd10_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES auth_group(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secretrole_groups
+    ADD CONSTRAINT secrets_secretrole_groups_group_id_a687dd10_fk_auth_group_id FOREIGN KEY (group_id) REFERENCES public.auth_group(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secretrole_users secrets_secretrole_u_secretrole_id_d2eac298_fk_secrets_s; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_users
-    ADD CONSTRAINT secrets_secretrole_u_secretrole_id_d2eac298_fk_secrets_s FOREIGN KEY (secretrole_id) REFERENCES secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secretrole_users
+    ADD CONSTRAINT secrets_secretrole_u_secretrole_id_d2eac298_fk_secrets_s FOREIGN KEY (secretrole_id) REFERENCES public.secrets_secretrole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_secretrole_users secrets_secretrole_users_user_id_25be95ad_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_secretrole_users
-    ADD CONSTRAINT secrets_secretrole_users_user_id_25be95ad_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_secretrole_users
+    ADD CONSTRAINT secrets_secretrole_users_user_id_25be95ad_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_sessionkey secrets_sessionkey_userkey_id_3ca6176b_fk_secrets_userkey_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_sessionkey
-    ADD CONSTRAINT secrets_sessionkey_userkey_id_3ca6176b_fk_secrets_userkey_id FOREIGN KEY (userkey_id) REFERENCES secrets_userkey(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_sessionkey
+    ADD CONSTRAINT secrets_sessionkey_userkey_id_3ca6176b_fk_secrets_userkey_id FOREIGN KEY (userkey_id) REFERENCES public.secrets_userkey(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: secrets_userkey secrets_userkey_user_id_13ada46b_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY secrets_userkey
-    ADD CONSTRAINT secrets_userkey_user_id_13ada46b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.secrets_userkey
+    ADD CONSTRAINT secrets_userkey_user_id_13ada46b_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: tenancy_tenant tenancy_tenant_group_id_7daef6f4_fk_tenancy_tenantgroup_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY tenancy_tenant
-    ADD CONSTRAINT tenancy_tenant_group_id_7daef6f4_fk_tenancy_tenantgroup_id FOREIGN KEY (group_id) REFERENCES tenancy_tenantgroup(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.tenancy_tenant
+    ADD CONSTRAINT tenancy_tenant_group_id_7daef6f4_fk_tenancy_tenantgroup_id FOREIGN KEY (group_id) REFERENCES public.tenancy_tenantgroup(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: users_token users_token_user_id_af964690_fk_auth_user_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY users_token
-    ADD CONSTRAINT users_token_user_id_af964690_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES auth_user(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.users_token
+    ADD CONSTRAINT users_token_user_id_af964690_fk_auth_user_id FOREIGN KEY (user_id) REFERENCES public.auth_user(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_cluster virtualization_clust_group_id_de379828_fk_virtualiz; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster
-    ADD CONSTRAINT virtualization_clust_group_id_de379828_fk_virtualiz FOREIGN KEY (group_id) REFERENCES virtualization_clustergroup(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_cluster
+    ADD CONSTRAINT virtualization_clust_group_id_de379828_fk_virtualiz FOREIGN KEY (group_id) REFERENCES public.virtualization_clustergroup(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_cluster virtualization_clust_type_id_4efafb0a_fk_virtualiz; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster
-    ADD CONSTRAINT virtualization_clust_type_id_4efafb0a_fk_virtualiz FOREIGN KEY (type_id) REFERENCES virtualization_clustertype(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_cluster
+    ADD CONSTRAINT virtualization_clust_type_id_4efafb0a_fk_virtualiz FOREIGN KEY (type_id) REFERENCES public.virtualization_clustertype(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_cluster virtualization_cluster_site_id_4d5af282_fk_dcim_site_id; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_cluster
-    ADD CONSTRAINT virtualization_cluster_site_id_4d5af282_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_cluster
+    ADD CONSTRAINT virtualization_cluster_site_id_4d5af282_fk_dcim_site_id FOREIGN KEY (site_id) REFERENCES public.dcim_site(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_cluster_id_6c9f9047_fk_virtualiz; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_cluster_id_6c9f9047_fk_virtualiz FOREIGN KEY (cluster_id) REFERENCES virtualization_cluster(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_cluster_id_6c9f9047_fk_virtualiz FOREIGN KEY (cluster_id) REFERENCES public.virtualization_cluster(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_platform_id_a6c5ccb2_fk_dcim_plat; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_platform_id_a6c5ccb2_fk_dcim_plat FOREIGN KEY (platform_id) REFERENCES dcim_platform(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_platform_id_a6c5ccb2_fk_dcim_plat FOREIGN KEY (platform_id) REFERENCES public.dcim_platform(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_primary_ip4_id_942e42ae_fk_ipam_ipad; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_primary_ip4_id_942e42ae_fk_ipam_ipad FOREIGN KEY (primary_ip4_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_primary_ip4_id_942e42ae_fk_ipam_ipad FOREIGN KEY (primary_ip4_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_primary_ip6_id_b7904e73_fk_ipam_ipad; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_primary_ip6_id_b7904e73_fk_ipam_ipad FOREIGN KEY (primary_ip6_id) REFERENCES ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_primary_ip6_id_b7904e73_fk_ipam_ipad FOREIGN KEY (primary_ip6_id) REFERENCES public.ipam_ipaddress(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_role_id_0cc898f9_fk_dcim_devi; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_role_id_0cc898f9_fk_dcim_devi FOREIGN KEY (role_id) REFERENCES dcim_devicerole(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_role_id_0cc898f9_fk_dcim_devi FOREIGN KEY (role_id) REFERENCES public.dcim_devicerole(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
 -- Name: virtualization_virtualmachine virtualization_virtu_tenant_id_d00d1d77_fk_tenancy_t; Type: FK CONSTRAINT; Schema: public; Owner: netbox
 --
 
-ALTER TABLE ONLY virtualization_virtualmachine
-    ADD CONSTRAINT virtualization_virtu_tenant_id_d00d1d77_fk_tenancy_t FOREIGN KEY (tenant_id) REFERENCES tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
+ALTER TABLE ONLY public.virtualization_virtualmachine
+    ADD CONSTRAINT virtualization_virtu_tenant_id_d00d1d77_fk_tenancy_t FOREIGN KEY (tenant_id) REFERENCES public.tenancy_tenant(id) DEFERRABLE INITIALLY DEFERRED;
 
 
 --
@@ -9413,14 +9331,15 @@ SET default_transaction_read_only = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.2
--- Dumped by pg_dump version 10.2
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -9458,14 +9377,15 @@ SET default_transaction_read_only = off;
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.2
--- Dumped by pg_dump version 10.2
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
