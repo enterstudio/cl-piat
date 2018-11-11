@@ -1,0 +1,109 @@
+---
+
+# Install and prep neutron
+#
+- name: install neutron
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - neutron-server
+  - neutron-plugin-ml2
+  - neutron-linuxbridge-agent
+  - neutron-dhcp-agent
+  - neutron-metadata-agent
+  - neutron-l3-agent
+
+- name: create a table for neutron
+  mysql_db:
+    name: neutron
+    state: present
+
+- name: enable db access 1
+  command: mysql -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY '{{ openstack.admin_password }}';"
+
+- name: enable db access 2
+  command: mysql  -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY '{{openstack.admin_password}}';"
+
+- name: neutron config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/neutron/{{item}}"
+  with_items:
+  - metadata_agent.ini
+  - neutron.conf
+  - dhcp_agent.ini
+  - l3_agent.ini
+
+- name: ml2 config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/neutron/plugins/ml2/{{ item }}"
+  with_items:
+  - ml2_conf.ini
+  - linuxbridge_agent.ini
+
+- name: restart neutron
+  service:
+    name: "{{ item }}"
+    state: restarted
+    enabled: true
+  with_items:
+  - neutron-server
+  - neutron-linuxbridge-agent
+  - neutron-dhcp-agent
+  - neutron-metadata-agent
+  - neutron-l3-agent
+- pause:
+    seconds: 10
+
+# Create neutron user, service, and endpoint
+#
+- name: collect services
+  command: openstack {{ openstack.args }} service list
+  register: _services
+
+- name: collect users
+  command: openstack {{ openstack.args }} user list
+  register: _users
+
+- name: collect roles
+  command: openstack {{ openstack.args }} role list
+  register: _roles
+
+- name: collect projects
+  command: openstack {{ openstack.args }} project list
+  register: _projects
+
+- name: collect domains
+  command: openstack {{ openstack.args }} domain list
+  register: _domains
+
+- name: add neutron user
+  command: openstack {{ openstack.args }} user create --domain default --password {{ openstack.admin_password }} neutron
+  when: "'neutron' not in _users.stdout"
+
+- name: add admin role to neutron user
+  command: openstack {{ openstack.args }} role add --project service --user neutron admin
+  when: "'neutron' not in _users.stdout"
+
+- name: add neutron service
+  command: openstack {{ openstack.args }} service create --name neutron --description "Openstack Network" network
+  when: "'neutron' not in _services.stdout"
+
+- name: add neutron endpoints
+  command: openstack {{ openstack.args }} endpoint create --region RegionOne network {{ item.a }} http://controller:{{ item.b }}
+  with_items:
+  - {a: "public", b: 9696}
+  - {a: "internal", b: 9696}
+  - {a: "admin", b: 9696}
+  when: "'neutron' not in _services.stdout"
+
+- name: wait for neutron to wake up
+  pause:
+    seconds: 10
+
+- name: neutron api dbsync
+  shell: su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
+
+...

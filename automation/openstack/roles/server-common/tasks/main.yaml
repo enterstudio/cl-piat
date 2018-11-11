@@ -1,0 +1,61 @@
+#
+# prep the servers for doing fun stuff :-)
+#
+
+- set_fact:
+    myvars: "{{ servervars[inventory_hostname] }}"
+
+- name: distribute the cluster hosts file
+  blockinfile:
+    dest: /etc/hosts
+    marker: "# {mark} ANSIBLE MANAGED BLOCK cluster hosts"
+    block: "{{ lookup('file', '{{ inventory_dir }}/files/hosts') }}"
+
+- name: add repositories for NetQ/HostPack, Mesosphere, Docker and then update the apt cache
+  apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: A88BBC95
+- apt:
+    name: ubuntu-cloud-keyring
+    state: present
+- apt_repository:
+    repo: 'deb http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/pike  main'
+    filename: pike
+    state: present
+- apt:
+    update_cache: yes
+
+
+- name: install useful operational packages
+  apt:
+    name: "{{ item }}"
+  with_items:
+  - zile
+  - lldpd
+  - traceroute
+  - ifupdown
+  - tcpdump
+  - ethtool
+- service:
+    name: lldpd
+    enabled: yes
+    state: started
+
+# These packages redundantly  appear in later playbooks
+#
+- name: install common OpenStack packages to speed up the deployment
+  apt:
+    name: "{{ item }}"
+  with_items:
+  - python-openstackclient
+  - neutron-linuxbridge-agent
+  - neutron-l3-agent
+  - nova-common
+
+- copy:
+    src: 99cumulus_defaults
+    dest: /etc/sysctl.d/99cumulus_defaults.conf
+    owner: root
+    group: root
+    mode: "u=rw,g=r,o=r"
+- command: 'sysctl --system'

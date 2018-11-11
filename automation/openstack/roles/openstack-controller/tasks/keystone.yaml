@@ -1,0 +1,136 @@
+---
+
+# Install and prep Keystone
+#
+- name: Install keystone
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - keystone
+  - apache2
+  - libapache2-mod-wsgi
+
+- name: create a table for keystone
+  mysql_db:
+    name: keystone
+    state: present
+
+- name: enable db access 1
+  command: mysql -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '{{ openstack.admin_password }}';"
+
+- name: enable db access 2
+  command: mysql -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'%' IDENTIFIED BY '{{openstack.admin_password}}';"
+
+- name: /etc/keystone/keystone.conf
+  template:
+    src: keystone.conf.j2
+    dest: /etc/keystone/keystone.conf
+
+- name: keystone dbsync
+  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
+
+- name: configure fernet
+  command: keystone-manage {{ item }} --keystone-user keystone --keystone-group keystone
+  with_items:
+  - fernet_setup
+  - credential_setup
+
+- name: update apache2 server
+  lineinfile:
+    path: /etc/apache2/apache2.conf
+    regexp: "ServerName"
+    line:   "ServerName controller"
+    insertafter: "ServerRoot"
+    
+- name: restart apache2 (which kicks keystone)
+  service:
+    name: apache2
+    state: restarted
+    enabled: true
+- pause:
+    seconds: 10
+
+
+# Collect keystone data to avoid duplication errors
+#
+- name: collect services
+  command: openstack {{ openstack.args }} service list
+  register: _services
+
+- name: collect users
+  command: openstack {{ openstack.args }} user list
+  register: _users
+
+- name: collect roles
+  command: openstack {{ openstack.args }} role list
+  register: _roles
+
+- name: collect projects
+  command: openstack {{ openstack.args }} project list
+  register: _projects
+
+- name: collect domains
+  command: openstack {{ openstack.args }} domain list
+  register: _domains
+
+
+# Add keystone services and endpoints
+#
+- name: add keystone service
+  command: openstack {{openstack.args}} service create --name keystone --description "Openstack Identity" identity
+  when: "'keystone' not in _services.stdout"
+
+- name: add keystone endpoints
+  command: openstack {{openstack.args}} endpoint create --region RegionOne identity {{item.a}} http://controller:{{ item.b }}/v3
+  with_items:
+  - {a: "public", b: 5000}
+  - {a: "internal", b: 5000}
+  - {a: "admin", b: 35357}
+  when: "'keystone' not in _services.stdout"
+
+
+# Add a bunch of users
+#
+- name: add default domain
+  command: openstack {{openstack.args}} domain create --description "Default Domain" default
+  when: "'default' not in _domains.stdout"
+
+- name: add admin project
+  command: openstack {{openstack.args}} project create --domain default --description "Admin project" admin
+  when: "'admin' not in _projects.stdout"
+
+- name: add admin user
+  block:
+  - command: openstack {{openstack.args}} user create --domain default --password {{openstack.admin_password}} admin
+  when: "'admin' not in _users.stdout"
+
+- name: add admin role
+  command: openstack {{openstack.args}} role create admin
+  when: "'admin' not in _roles.stdout"
+
+- name: add admin role to admin project and user
+  command: openstack {{openstack.args}} role add --project admin --user admin admin
+  when: "'admin' not in _users.stdout"
+
+- name: add service project
+  command: openstack {{openstack.args}} project create --domain default --description "Service Project" service
+  when: "'service' not in _projects.stdout"
+
+- name: add demo project
+  command: openstack {{openstack.args}} project create --domain default --description "Demo Project" demo
+  when: "'demo' not in _projects.stdout"
+
+- name: add demo user
+  command: openstack {{openstack.args}} user create --domain default --password {{openstack.demo_password}} demo
+  when: "'demo' not in _users.stdout"
+
+- name: add user role
+  command: openstack {{openstack.args}} role create user
+  when: "'user' not in _roles.stdout"
+
+- name: add user role to demo project and user
+  command: openstack {{openstack.args}} role add --project demo --user demo user
+  when: "'demo' not in _users.stdout"
+
+...

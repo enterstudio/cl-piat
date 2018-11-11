@@ -1,0 +1,83 @@
+[DEFAULT]
+#dhcpbridge_flagfile=/etc/nova/nova.conf
+#dhcpbridge=/usr/bin/nova-dhcpbridge
+state_path=/var/lib/nova
+#lock_path=/var/lock/nova
+#force_dhcp_release=True
+libvirt_use_virtio_for_bridges=True
+verbose=True
+ec2_private_dns_show_ip=True
+#api_paste_config=/etc/nova/api-paste.ini
+enabled_apis = osapi_compute,metadata
+#rpc_backend = rabbit
+#auth_strategy = keystone
+my_ip = {{ myvars.V4 }}
+#use_neutron = True
+#firewall_driver = nova.virt.firewall.NoopFirewallDriver
+transport_url = rabbit://openstack:{{ openstack.admin_password }}@controller
+
+[api]
+auth_strategy = keystone
+
+[api_database]
+connection = mysql+pymysql://nova:{{ openstack.admin_password }}@controller/nova_api
+
+[database]
+connection = mysql+pymysql://nova:{{ openstack.admin_password }}@controller/nova
+
+[glance]
+api_servers = http://controller:9292
+
+[keystone_authtoken]
+auth_uri = http://controller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = service
+username = nova
+password = {{ openstack.admin_password }}
+
+[neutron]
+url = http://controller:9696
+auth_url = http://controller:35357
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+region_name = RegionOne
+project_name = service
+username = neutron
+password = {{ openstack.admin_password }}
+service_metadata_proxy = True
+metadata_proxy_shared_secret = {{ openstack.admin_password }}
+
+[oslo_concurrency]
+lock_path = /var/lib/nova/tmp
+
+[oslo_messaging_rabbit]
+#rabbit_host = controller
+#rabbit_userid = openstack
+#rabbit_password = {{ openstack.admin_password }}
+
+[placement]
+os_region_name = RegionOne
+project_domain_name = default
+project_name = service
+auth_type = password
+user_domain_name = default
+auth_url = http://controller:35357/v3
+username = placement
+password = {{ openstack.admin_password }}
+
+[scheduler]
+discover_hosts_in_cells_interval = 300
+
+[vnc]
+vncserver_listen = $my_ip
+vncserver_proxyclient_address = $my_ip
+
+[wsgi]
+api_paste_config=/etc/nova/api-paste.ini
+
+

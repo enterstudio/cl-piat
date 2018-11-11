@@ -1,0 +1,23 @@
+---
+
+- name: Install mysql
+  apt:
+    name: "{{ item }}"
+    state: present
+  with_items:
+  - mysql-server-5.7
+  - mysql-client-5.7
+  - python-mysqldb
+
+- name: configure mysql to run on all ports.
+  copy:
+    src: mysqld.cnf
+    dest: /etc/mysql/mysql.conf.d/mysqld.cnf
+
+- name: restart mysql
+  service:
+    name: mysql
+    state: restarted
+    enabled: true
+
+...

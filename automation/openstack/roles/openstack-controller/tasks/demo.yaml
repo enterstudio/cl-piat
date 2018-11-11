@@ -1,0 +1,43 @@
+---
+# Deploy a small system for evaluation with CITC
+#
+- name: collect networks
+  command: openstack {{ openstack.admin_credentials }} network list
+  register: _networks
+
+- name: Create demo net
+  command: openstack {{ openstack.admin_credentials }} network create demonet
+  when: "'demonet' not in _networks.stdout"
+
+- name: Define demonet subnet
+  command: openstack {{ openstack.admin_credentials }} subnet create --network demonet --subnet-range 200.0.0.0/24 --dns-nameserver 8.8.8.8 --gateway 200.0.0.1 demonet
+  when: "'demonet' not in _networks.stdout"
+
+- name: Create router to get in/out
+  command: openstack {{ openstack.admin_credentials }} router create demorouter
+  when: "'demonet' not in _networks.stdout"
+
+- name: Connect the router to demonet
+  command: openstack {{ openstack.admin_credentials }} router add subnet demorouter demonet
+  when: "'demonet' not in _networks.stdout"
+
+- name: Connect the router to the provider network
+  command: openstack {{ openstack.admin_credentials }} router set --external-gateway provider demorouter
+  when: "'demonet' not in _networks.stdout"
+
+- name: Connect the router to the provider network
+  command: openstack {{ openstack.admin_credentials }} server create --flavor m1.nano --image cirros --nic net-id=demonet {{ item }}
+  with_items:
+  - cirros1
+  - cirros2
+  when: "'demonet' not in _networks.stdout"
+
+- name: get a floating IP address
+  command: openstack {{ openstack.admin_credentials }} floating ip create provider
+  register: _floating_ip
+  when: "'demonet' not in _networks.stdout"
+
+- name: Assign it to the cirros1
+  command: openstack {{ openstack.admin_credentials }} server add floating ip cirros1 192.168.0.102
+  when: "'demonet' not in _networks.stdout"
+...
