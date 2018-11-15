@@ -2,10 +2,8 @@
 
 - name: Install rabbitmq
   apt:
-    name: "{{ item }}"
+    name: rabbitmq-server
     state: present
-  with_items:
-  - rabbitmq-server
 
 - name: make sure mysql is running
   service:

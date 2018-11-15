@@ -4,10 +4,8 @@
 #
 - name: Install horizon
   apt:
-    name: "{{ item }}"
+    name: openstack-dashboard
     state: present
-  with_items:
-  - openstack-dashboard
 
 - name: horizon config files
   template:

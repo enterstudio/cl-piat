@@ -6,6 +6,7 @@
   mysql_db:
     name: "{{ item }}"
     state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
   with_items:
   - nova_api
   - nova
@@ -97,16 +98,8 @@
 #
 - name: Install nova
   apt:
-    name: "{{ item }}"
+    name: ['nova-api', 'nova-conductor', 'nova-consoleauth', 'nova-novncproxy', 'nova-scheduler', 'nova-common', 'nova-placement-api']
     state: present
-  with_items:
-  - nova-api
-  - nova-conductor
-  - nova-consoleauth
-  - nova-novncproxy
-  - nova-scheduler
-  - nova-common
-  - nova-placement-api
 
 - name: make sure the nova services are stopped during config/db initialization for cleaner logs
   service:

@@ -15,6 +15,10 @@
   apt_key:
     keyserver: keyserver.ubuntu.com
     id: A88BBC95
+- apt_repository:
+    repo: deb [arch=amd64] https://apps3.cumulusnetworks.com/repos/deb xenial netq-1.3
+    filename: netq
+    state: present
 - apt:
     name: ubuntu-cloud-keyring
     state: present
@@ -28,30 +32,63 @@
 
 - name: install useful operational packages
   apt:
-    name: "{{ item }}"
-  with_items:
-  - zile
-  - lldpd
-  - traceroute
-  - ifupdown
-  - tcpdump
-  - ethtool
+    name: ['zile', 'lldpd', 'traceroute', 'ifupdown', 'tcpdump', 'ethtool']
 - service:
     name: lldpd
     enabled: yes
     state: started
 
+- name: Add HostPack (NetQ and FRR)
+  apt:
+    name: cumulus-netq
+- copy:
+    src: files/frr_3.1+cl3u1_amd64.deb
+    dest: "/tmp"
+- apt:
+    deb: /tmp/frr_3.1+cl3u1_amd64.deb
+
 # These packages redundantly  appear in later playbooks
 #
 - name: install common OpenStack packages to speed up the deployment
   apt:
-    name: "{{ item }}"
-  with_items:
-  - python-openstackclient
-  - neutron-linuxbridge-agent
-  - neutron-l3-agent
-  - nova-common
+    name: ['python-openstackclient', 'neutron-linuxbridge-agent', 'neutron-l3-agent', 'nova-common']
 
+- name: high speed networking
+  command: ifdown --force --allow=ansible
+  ignore_errors: yes
+- blockinfile:
+    dest: /etc/network/interfaces
+    marker: "# {mark} ANSIBLE MANAGED BLOCK fabric"
+    block: |
+      auto lo
+      allow-ansible lo
+      iface lo inet static
+        address {{ myvars.V4 }}/32
+
+      auto lo
+      allow-ansible lo
+      iface lo inet6 static
+        address {{ myvars.V6 }}/128
+
+      auto eth1
+      allow-ansible eth1
+      iface eth1 inet manual
+
+      auto eth2
+      allow-ansible eth2
+      iface eth2 inet manual
+- template:
+    src: frr.conf.j2
+    dest: /etc/frr/frr.conf
+    owner: frr
+    group: frr
+    mode: "u=rw,g=r,o=r"
+- copy:
+    src: "daemons"
+    dest: "/etc/frr/daemons"
+    owner: frr
+    group: frr
+    mode: "u=rw,g=r,o=r"
 - copy:
     src: 99cumulus_defaults
     dest: /etc/sysctl.d/99cumulus_defaults.conf
@@ -59,3 +96,26 @@
     group: root
     mode: "u=rw,g=r,o=r"
 - command: 'sysctl --system'
+- service:
+    name: frr
+    enabled: yes
+    state: restarted
+- shell: ifdown --force --all --allow=ansible && ifup --force --all --allow=ansible
+
+- name: Start NetQ and Connect to the NetQ Telemetry Server
+  service:
+    name: rsyslog
+    state: restarted
+- service:
+    name: netqd
+    enabled: yes
+    state: restarted
+- copy:
+    src: files/netq.yml
+    dest: "/etc/netq/netq.yml"
+    owner: root
+    group: root
+    mode: "u=rw,o=r,g=r"
+- pause:
+    seconds: 5
+- shell: netq config restart agent

@@ -2,12 +2,8 @@
 
 - name: Install mysql
   apt:
-    name: "{{ item }}"
+    name: ['mysql-server-5.7', 'mysql-client-5.7', 'python-mysqldb']
     state: present
-  with_items:
-  - mysql-server-5.7
-  - mysql-client-5.7
-  - python-mysqldb
 
 - name: configure mysql to run on all ports.
   copy:

@@ -5,13 +5,8 @@
 
 - name: Install neutron and nova
   apt:
-    name: "{{ item }}"
+    name: ['python-openstackclient', 'neutron-linuxbridge-agent', 'neutron-l3-agent', 'nova-compute']
     state: present
-  with_items:
-  - python-openstackclient
-  - neutron-linuxbridge-agent
-  - neutron-l3-agent
-  - nova-compute
 
 - name: neutron config files
   template:

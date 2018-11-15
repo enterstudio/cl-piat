@@ -4,17 +4,14 @@
 #
 - name: Install keystone
   apt:
-    name: "{{ item }}"
+    name: ['keystone', 'apache2', 'libapache2-mod-wsgi']
     state: present
-  with_items:
-  - keystone
-  - apache2
-  - libapache2-mod-wsgi
 
 - name: create a table for keystone
   mysql_db:
     name: keystone
     state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: enable db access 1
   command: mysql -e "GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY '{{ openstack.admin_password }}';"

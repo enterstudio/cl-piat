@@ -4,20 +4,14 @@
 #
 - name: install neutron
   apt:
-    name: "{{ item }}"
+    name: ['neutron-server', 'neutron-plugin-ml2', 'neutron-linuxbridge-agent', 'neutron-dhcp-agent', 'neutron-metadata-agent', 'neutron-l3-agent']
     state: present
-  with_items:
-  - neutron-server
-  - neutron-plugin-ml2
-  - neutron-linuxbridge-agent
-  - neutron-dhcp-agent
-  - neutron-metadata-agent
-  - neutron-l3-agent
 
 - name: create a table for neutron
   mysql_db:
     name: neutron
     state: present
+    login_unix_socket: /var/run/mysqld/mysqld.sock
 
 - name: enable db access 1
   command: mysql -e "GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY '{{ openstack.admin_password }}';"

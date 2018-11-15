@@ -1,0 +1,24 @@
+# IPv4
+# 
+
+10.1.0.1	rack-spine01
+10.1.0.2	rack-spine02
+10.1.1.1	rack-leaf01
+10.1.1.2	rack-leaf02
+10.1.2.1	rack-leaf03
+10.1.2.2	rack-leaf04
+10.1.1.11	rack-server01, controller
+10.1.1.12	rack-server02, compute01
+10.1.2.11	rack-server03, compute02
+10.1.2.12	rack-server04, compute03
+10.1.3.11	rack-oob-mgmt-server
+
+
+# IPv6
+# 
+
+fd00:1:0:1::11	rack6-server01
+fd00:1:0:1::12	rack6-server02
+fd00:1:0:2::11	rack6-server03
+fd00:1:0:2::12	rack6-server04
+fd00:1:0:3::11	rack6-oob-mgmt-server
