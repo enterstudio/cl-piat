@@ -25,11 +25,6 @@
 - apt:
     update_cache: yes
 
-
-- name: install useful operational packages
-  apt:
-    name: ['zile', 'lldpd', 'traceroute', 'ifupdown', 'tcpdump', 'ethtool']
-
 # These packages redundantly  appear in later playbooks
 #
 - name: install common OpenStack packages to speed up the deployment
