@@ -1,23 +1,4 @@
 ---
-######
-# Seems gitlab runner it a bit too fast, checking if all hosts are up
-#####
-- hosts: network 
-  become: yes
-  gather_facts: false
-  tasks:
-    - name: Wait for hosts to be up 
-      wait_for:
-        host: "{{ inventory_hostname }}"
-        port: 22
-        state: started
-        delay: 15 
-        timeout: 120
-      ignore_errors: true
-
-#####
-# Host config from NetQ demo, needs to move to separate role
-#####
 - hosts: oob 
   become: true
   roles:
@@ -55,9 +36,6 @@
   - setup-server
   - app-netq
   - server-evpn
-
-- hosts: servers-rack2 
-  become: true 
   tasks:
     reboot:
       reboot_timeout: 1200
