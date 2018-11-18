@@ -25,6 +25,7 @@
     dest: /etc/keystone/keystone.conf
 
 - name: keystone dbsync
+  ignore_errors: yes
   shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
 
 - name: configure fernet
