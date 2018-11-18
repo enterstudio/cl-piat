@@ -1,0 +1,82 @@
+ansible_ssh_pass: "CumulusLinux!"
+ansible_become_pass: "CumulusLinux!"
+
+#
+# Openstack external access configuration
+#
+
+HORIZON_HOST:  server01
+HORIZON_UI:    80
+FLOATING_IP:   192.168.0.102
+FLOATING_SSH:  2222
+
+#
+# Global connectivity options
+#
+
+ACCESS_IFS:     'swp1,swp2'
+UPLINK_IFS:     'swp51,swp52'
+AGG_IFS:        'swp1,swp2,swp3,swp4'
+LEAF_INET_IF:   'swp44'
+
+HOST_IF:        'eth1,eth2'
+JUMP_INET_IFS:  'eth2,eth3'
+OUTSIDE_NET:    '10.0.2.0/24'
+
+#
+# Inventory specific networking variables
+#
+
+servervars:
+
+  oob-mgmt-server:
+    ASN: 65301
+    V4: 10.1.3.11
+    V6: fd00:1:0:3::11
+
+  localhost:
+    ASN: 65200
+    V4: 10.1.1.10
+    V6: fd00:1:0:1::10
+
+  server01:
+    ASN: 65201
+    V4: 10.1.1.11
+    V6: fd00:1:0:1::11
+
+  server02:
+    ASN: 65202
+    V4: 10.1.1.12
+    V6: fd00:1:0:1::2
+
+  server03:
+    ASN: 65203
+    V4: 10.1.2.11
+    V6: fd00:1:0:2::1
+
+  server04:
+    ASN: 65204
+    V4: 10.1.2.12
+    V6: fd00:1:0:2::12
+
+#
+# OpenStack variables
+#
+openstack:
+  provider_network:
+    iface:
+      server01: "eth0"
+      server02: "eth0"
+      server03: "eth0"
+      server04: "eth0"
+    cidr: "192.168.0.0/24"
+    start: "192.168.0.100"
+    end: "192.168.0.150"
+    gateway: "192.168.0.254"
+  admin_token: "ac014aaa2beb079192be"
+  admin_password: "CumulusLinux"
+  demo_password: "demo"
+  vagrant_novnc_hack: true
+  args: "--os-token ac014aaa2beb079192be --os-url http://controller:35357/v3 --os-identity-api-version 3"
+  admin_credentials: "--os-project-domain-name default --os-user-domain-name default --os-project-name admin --os-username admin --os-password CumulusLinux --os-auth-url http://controller:35357/v3 --os-identity-api-version 3 --os-image-api-version 2"
+  demo_credentials:  "--os-project-domain-name default --os-user-domain-name default --os-project-name demo --os-username demo --os-password demo --os-auth-url http://controller:35357/v3 --os-identity-api-version 3 --os-image-api-version 2"

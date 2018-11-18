@@ -1,0 +1,57 @@
+---
+
+- set_fact:
+    myvars: "{{ servervars[inventory_hostname] }}"
+
+- name: Install neutron and nova
+  apt:
+    name: ['python-openstackclient', 'neutron-linuxbridge-agent', 'neutron-l3-agent', 'nova-compute']
+    state: present
+
+- name: neutron config files
+  template:
+    src: neutron.conf.j2
+    dest: /etc/neutron/neutron.conf
+  register: neutron_config_restart
+
+- name: neutron ml2 config files
+  template:
+    src: linuxbridge_agent.ini.j2
+    dest: /etc/neutron/plugins/ml2/linuxbridge_agent.ini
+  register: neutron_ml2_restart
+
+- name: nova config files
+  template:
+    src: nova.conf.j2
+    dest: /etc/nova/nova.conf
+  register: nova_config_restart
+
+- name: nova compute config files
+  template:
+    src: nova-compute.conf.j2
+    dest: /etc/nova/nova-compute.conf
+  register: nova_compute_restart
+
+- name: start neutron compute and nova compute
+  service:
+    name: neutron-l3-agent
+    state: restarted
+    enabled: true
+  when: neutron_config_restart is changed
+- service:
+    name: neutron-linuxbridge-agent
+    state: restarted
+    enabled: true
+  when: neutron_ml2_restart is changed
+- service:
+    name: nova-compute
+    state: restarted
+    enabled: true
+  when: ( nova_config_restart is changed ) or ( nova_compute_restart is changed )
+
+
+- name: wait for neutron and nova to wake up
+  pause:
+    seconds: 10
+
+...

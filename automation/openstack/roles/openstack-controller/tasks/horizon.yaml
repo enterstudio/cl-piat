@@ -1,0 +1,25 @@
+---
+
+# Install and prep horizon
+#
+- name: Install horizon
+  apt:
+    name: openstack-dashboard
+    state: present
+
+- name: horizon config files
+  template:
+    src: "{{ item }}.j2"
+    dest: "/etc/openstack-dashboard/{{ item }}"
+  with_items:
+  - local_settings.py
+  register: apache2_restart
+
+- name: restart apache2
+  service:
+    name: apache2
+    state: restarted
+    enabled: true
+  when: apache2_restart is changed
+
+...

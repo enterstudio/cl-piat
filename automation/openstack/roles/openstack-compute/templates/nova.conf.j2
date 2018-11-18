@@ -1,0 +1,76 @@
+[DEFAULT]
+log_dir = /var/log/nova
+state_path = /var/lib/nova
+my_ip = {{ myvars.V4 }}
+transport_url = rabbit://openstack:{{openstack.admin_password}}@controller
+enabled_apis=osapi_compute,metadata
+verbose=True
+libvirt_use_virtio_for_bridges=True
+
+[api]
+auth_strategy = keystone
+
+[api_database]
+connection = mysql+pymysql://nova:{{openstack.admin_password}}@controller/nova_api
+
+[cells]
+#enable = False
+
+[database]
+connection = mysql+pymysql://nova:{{openstack.admin_password}}@controller/nova
+
+[glance]
+api_servers = http://controller:9292
+
+[keystone_authtoken]
+auth_uri = http://contorller:5000
+auth_url = http://controller:35357
+memcached_servers = controller:11211
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+project_name = service
+username = nova
+password = {{openstack.admin_password}}
+
+[libvirt]
+virt_type = qemu
+
+[neutron]
+url = http://controller:9696
+auth_url = http://controller:35357
+auth_type = password
+project_domain_name = default
+user_domain_name = default
+region_name = RegionOne
+project_name = service
+username = neutron
+password = {{ openstack.admin_password }}
+
+[oslo_concurrency]
+lock_path = /var/lock/nova
+
+[oslo_messaging_rabbit]
+#rabbit_host = controller
+#rabbit_userid = openstack
+#rabbit_password = CumulusLinux
+
+[placement]
+os_region_name = RegionOne
+project_domain_name = default
+project_name = service
+auth_type = password
+user_domain_name = default
+auth_url = http://controller:35357/v3
+username = placement
+password = {{ openstack.admin_password }}
+
+[vnc]
+enabled = true
+vncserver_listen = $my_ip
+vncserver_proxyclient_address = $my_ip
+novncproxy_base_url = http://controller:6080/vnc_auto.html
+
+[wsgi]
+api_paste_config=/etc/nova/api-paste.ini
+

@@ -1,0 +1,32 @@
+---
+- name: Create Grafana storage
+  docker_volume:
+    name: grafana-storage
+
+- name: Grafana container
+  docker_container:
+    name: grafana
+    image: grafana/grafana
+    state: started
+    ports:
+    - "3000:3000"
+    volumes:
+    - grafana-storage:/var/lib/grafana
+    env:
+      GF_SERVER_ROOT_URL: 'http://grafana.server.name'
+      GF_SECURITY_ADMIN_PASSWORD: 'CumulusLinux!' 
+
+- name: Pause to let container start 
+  pause:
+    seconds: 60 
+
+- name: Create Grafana NetQ datasource
+  grafana_datasource:
+    name: NetQ
+    grafana_url: http://localhost:3000
+    grafana_password: 'CumulusLinux!'
+    ds_type: influxdb
+    url: http://192.168.200.250:8086
+    database: netq
+    state: present
+...

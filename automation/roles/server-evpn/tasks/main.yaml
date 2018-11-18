@@ -1,0 +1,41 @@
+---
+- name: Sysctl ipv4 forward
+  sysctl:
+    name: net.ipv4.ip_forward
+    value: 1
+    state: present
+    reload: yes
+
+- name: Sysctl ipv6 forward
+  sysctl:
+    name: net.ipv6.conf.all.forwarding
+    value: 1
+    state: present
+    reload: yes 
+
+- name: Copy interfaces configuration
+  template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    backup: yes
+  notify: reload networking 
+
+- name: Copy FRR daemons file
+  copy:
+    src: daemons
+    dest: /etc/frr/daemons
+    backup: yes
+  notify: restart frr
+
+- name: Copy FRR configuration
+  template:
+    src: frr.j2
+    dest: /etc/frr/frr.conf
+    backup: yes
+  notify: reload frr
+
+- name: Reboot system
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount
+...

@@ -1,0 +1,40 @@
+---
+- name: Copy interfaces configuration
+  template:
+    src: interfaces.j2
+    dest: /etc/network/interfaces
+    backup: yes
+  notify: reload networking
+
+- name: Ping to learn prefixes
+  command: screen -dm ip vrf exec "{{ item.app }}" ping 192.168."{{ item.prefix }}"."{{ item.destination }}" -c 120
+  loop:
+    - { app: 'app1', prefix: '11', destination: '11'} 
+    - { app: 'app1', prefix: '11', destination: '12'} 
+    - { app: 'app1', prefix: '11', destination: '13'} 
+    - { app: 'app1', prefix: '11', destination: '14'} 
+    - { app: 'app1', prefix: '11', destination: '15'} 
+    - { app: 'app1', prefix: '11', destination: '16'} 
+    - { app: 'app3', prefix: '13', destination: '11'} 
+    - { app: 'app3', prefix: '13', destination: '12'} 
+    - { app: 'app3', prefix: '13', destination: '13'} 
+    - { app: 'app3', prefix: '13', destination: '14'} 
+    - { app: 'app3', prefix: '13', destination: '15'} 
+    - { app: 'app3', prefix: '13', destination: '16'} 
+
+- name: Ping6 to learn prefixes
+  command: screen -dm ip vrf exec "{{ item.app }}" ping6 fc00:"{{ item.prefix }}"::"{{ item.destination }}" -c 120 
+  loop:
+    - { app: 'app1', prefix: '11', destination: '11'} 
+    - { app: 'app1', prefix: '11', destination: '12'} 
+    - { app: 'app1', prefix: '11', destination: '13'} 
+    - { app: 'app1', prefix: '11', destination: '14'} 
+    - { app: 'app1', prefix: '11', destination: '15'} 
+    - { app: 'app1', prefix: '11', destination: '16'} 
+    - { app: 'app3', prefix: '13', destination: '11'} 
+    - { app: 'app3', prefix: '13', destination: '12'} 
+    - { app: 'app3', prefix: '13', destination: '13'} 
+    - { app: 'app3', prefix: '13', destination: '14'} 
+    - { app: 'app3', prefix: '13', destination: '15'} 
+    - { app: 'app3', prefix: '13', destination: '16'} 
+...
