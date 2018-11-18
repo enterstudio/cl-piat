@@ -55,6 +55,9 @@
   - setup-server
   - app-netq
   - server-evpn
+
+- hosts: servers-rack2 
+  become: true 
   reboot:
     reboot_timeout: 1200
     test_command: mount

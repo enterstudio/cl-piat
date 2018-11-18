@@ -33,9 +33,4 @@
     dest: /etc/frr/frr.conf
     backup: yes
   notify: reload frr
-
-- name: Add dns server 
-  lineinfile:
-    path: /etc/resolv.conf 
-    line: 'nameserver 192.168.200.1 # vrf mgmt'
 ...
