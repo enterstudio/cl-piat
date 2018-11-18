@@ -36,9 +36,6 @@
   - setup-server
   - app-netq
   - server-evpn
-
-- hosts: servers-rack2 
-  become: true 
   tasks:
   - name: reboot
     reboot:
