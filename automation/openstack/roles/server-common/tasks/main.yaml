@@ -32,11 +32,10 @@
     name: ['python-openstackclient', 'neutron-linuxbridge-agent', 'neutron-l3-agent', 'nova-common']
 
 - name: high speed networking
-- copy:
+  copy:
     src: 99cumulus_defaults
     dest: /etc/sysctl.d/99cumulus_defaults.conf
     owner: root
     group: root
     mode: "u=rw,g=r,o=r"
 - command: 'sysctl --system'
-- shell: ifdown --force --all --allow=ansible && ifup --force --all --allow=ansible

@@ -1,5 +1,5 @@
 ---
-- hosts: servers
+- hosts: server01,server02,server03,server04
   roles:
   - server-common
   - openstack-compute
@@ -7,6 +7,7 @@
 
 - hosts: oob 
   roles:
+  - server-common
   - openstack-controller
   become: true
 ...

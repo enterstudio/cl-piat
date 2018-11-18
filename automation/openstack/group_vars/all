@@ -27,44 +27,17 @@ OUTSIDE_NET:    '10.0.2.0/24'
 # Inventory specific networking variables
 #
 
-switchvars:
-
-  spine01:
-    ASN: 65000
-    V4: 10.1.0.1
-    V6: fd00:1:0:0::1
-
-  spine02:
-    ASN: 65000
-    V4: 10.1.0.2
-    V6: fd00:1:0:0::2
-
-  leaf01:
-    ASN: 65101
-    V4: 10.1.1.1
-    V6: fd00:1:0:1::1
-
-  leaf02:
-    ASN: 65102
-    V4: 10.1.1.2
-    V6: fd00:1:0:1::2
-
-  leaf03:
-    ASN: 65103
-    V4: 10.1.2.1
-    V6: fd00:1:0:2::1
-
-  leaf04:
-    ASN: 65104
-    V4: 10.1.2.2
-    V6: fd00:1:0:2::2
-
 servervars:
 
   oob-mgmt-server:
     ASN: 65301
     V4: 10.1.3.11
     V6: fd00:1:0:3::11
+
+  localhost:
+    ASN: 65200
+    V4: 10.1.1.10
+    V6: fd00:1:0:1::10
 
   server01:
     ASN: 65201
