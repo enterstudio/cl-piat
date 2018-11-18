@@ -29,12 +29,7 @@ OUTSIDE_NET:    '10.0.2.0/24'
 
 servervars:
 
-  oob-mgmt-server:
-    ASN: 65301
-    V4: 10.1.3.11
-    V6: fd00:1:0:3::11
-
-  localhost:
+  openstack-controller:
     ASN: 65200
     V4: 10.1.1.10
     V6: fd00:1:0:1::10
@@ -65,6 +60,7 @@ servervars:
 openstack:
   provider_network:
     iface:
+      openstack-controller: "eth0"
       server01: "eth0"
       server02: "eth0"
       server03: "eth0"
