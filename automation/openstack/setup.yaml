@@ -1,5 +1,5 @@
 ---
-- hosts: server01,server02,server03,server04
+- hosts: server03,server04
   roles:
   - server-common
   - openstack-compute
