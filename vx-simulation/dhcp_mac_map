@@ -132,6 +132,7 @@ oob-mgmt-switch,swp33,44:38:39:00:00:d9
 oob-mgmt-switch,swp34,44:38:39:00:00:db
 oob-mgmt-switch,swp35,44:38:39:00:00:dd
 oob-mgmt-switch,swp36,44:38:39:00:00:df
+oob-mgmt-switch,swp37,44:38:39:00:00:e1
 oob-mgmt-switch,swp4,44:38:39:00:00:9f
 oob-mgmt-switch,swp5,44:38:39:00:00:a1
 oob-mgmt-switch,swp6,44:38:39:00:00:a3
@@ -222,3 +223,4 @@ super02,swp3,44:38:39:00:00:13
 super02,swp4,44:38:39:00:00:15
 super02,swp49,44:38:39:00:00:58
 super02,swp50,44:38:39:00:00:3a
+openstack-controller,eth0,44:38:39:00:00:e2

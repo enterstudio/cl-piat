@@ -738,6 +738,10 @@ udev_rule
 echo "  INFO: Adding UDEV Rule: 44:38:39:00:00:df --> swp36"
 echo 'ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="44:38:39:00:00:df", NAME="swp36", SUBSYSTEMS=="pci"' >> /etc/udev/rules.d/70-persistent-net.rules
 udev_rule
+     device.vm.provision :shell , :inline => <<-udev_rule
+echo "  INFO: Adding UDEV Rule: 44:38:39:00:00:e1 --> swp37"
+echo 'ACTION=="add", SUBSYSTEM=="net", ATTR{address}=="44:38:39:00:00:e1", NAME="swp37", SUBSYSTEMS=="pci"' >> /etc/udev/rules.d/70-persistent-net.rules
+udev_rule
      
       device.vm.provision :shell , :inline => <<-vagrant_interface_rule
 echo "  INFO: Adding UDEV Rule: Vagrant interface = vagrant"
@@ -5290,7 +5294,7 @@ end
     
     # Run the Config specified in the Node Attributes
     device.vm.provision :shell , privileged: false, :inline => 'echo "$(whoami)" > /tmp/normal_user'
-    #device.vm.provision :shell , path: "./helper_scripts/extra_server_config.sh"
+    device.vm.provision :shell , path: "./helper_scripts/extra_server_config.sh"
 
 
     # Install Rules for the interface re-map
