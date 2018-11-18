@@ -31,6 +31,12 @@
 - name: Remove netplan files
   shell: rm -vfr /usr/share/netplan /etc/netplan
 
+- name: Disable resolved
+  systemd:
+    name: resolved
+    state: stopped
+    enabled: no
+
 - name: Copy deb packages
   copy: src={{ item }} dest=/home/cumulus/ owner=cumulus
   with_fileglob:
