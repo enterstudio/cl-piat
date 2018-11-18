@@ -39,9 +39,9 @@
 
 - hosts: servers-rack2 
   become: true 
+  tasks:
   - name: reboot
-    tasks:
-      reboot:
-        reboot_timeout: 1200
-        test_command: mount
+    reboot:
+      reboot_timeout: 1200
+      test_command: mount
 ...
