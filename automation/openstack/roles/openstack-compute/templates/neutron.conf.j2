@@ -769,7 +769,7 @@ root_helper = sudo /usr/bin/neutron-rootwrap /etc/neutron/rootwrap.conf
 
 [keystone_authtoken]
 auth_uri = http://controller:5000
-auth_url = http://controller:35357
+auth_url = http://controller:5000
 memcached_servers = controller:11211
 auth_type = password
 project_domain_name = default
@@ -814,7 +814,7 @@ password = {{ openstack.admin_password }}
 
 
 [nova]
-auth_url = http://controller:35357
+auth_url = http://controller:5000
 auth_type = password
 project_domain_name = default
 user_domain_name = default

@@ -84,7 +84,7 @@
   with_items:
   - {a: "public", b: 5000}
   - {a: "internal", b: 5000}
-  - {a: "admin", b: 35357}
+  - {a: "admin", b: 5000}
   when: "'keystone' not in _services.stdout"
 
 
