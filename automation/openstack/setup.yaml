@@ -5,7 +5,7 @@
   - openstack-compute
   become: true
 
-- hosts: oob 
+- hosts: openstack-controller 
   roles:
   - server-common
   - openstack-controller
