@@ -2,22 +2,8 @@ ansible_ssh_pass: "CumulusLinux!"
 ansible_become_pass: "CumulusLinux!"
 
 #
-# Openstack external access configuration
-#
-
-HORIZON_HOST:  server01
-HORIZON_UI:    80
-FLOATING_IP:   192.168.0.102
-FLOATING_SSH:  2222
-
-#
 # Global connectivity options
 #
-
-ACCESS_IFS:     'swp1,swp2'
-UPLINK_IFS:     'swp51,swp52'
-AGG_IFS:        'swp1,swp2,swp3,swp4'
-LEAF_INET_IF:   'swp44'
 
 HOST_IF:        'eth1,eth2'
 JUMP_INET_IFS:  'eth2,eth3'
@@ -31,17 +17,17 @@ servervars:
 
   openstack-controller:
     ASN: 65200
-    V4: 10.1.1.10
+    V4: 192.168.200.37 
     V6: fd00:1:0:1::10
 
   server03:
     ASN: 65203
-    V4: 10.1.2.11
+    V4: 192.168.200.9
     V6: fd00:1:0:2::1
 
   server04:
     ASN: 65204
-    V4: 10.1.2.12
+    V4: 192.168.200.12
     V6: fd00:1:0:2::12
 
 #
