@@ -36,6 +36,9 @@
   - setup-server
   - app-netq
   - server-evpn
+
+- hosts: servers-rack2 
+  become: true 
   tasks:
     reboot:
       reboot_timeout: 1200
