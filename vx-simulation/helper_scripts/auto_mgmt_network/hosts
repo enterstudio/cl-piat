@@ -33,18 +33,18 @@
 192.168.200.32 exit01
 192.168.200.5 server09
 192.168.200.6 server08
-192.168.200.8 server01
-192.168.200.9 server03
-192.168.200.10 server02
+192.168.200.8 server01, compute01
+192.168.200.9 server03, compute03
+192.168.200.10 server02, compute02
 192.168.200.11 server05
-192.168.200.12 server04
+192.168.200.12 server04, compute04
 192.168.200.13 server07
 192.168.200.14 server06
 192.168.200.250 netq-ts
 192.168.200.34 server12
 192.168.200.35 server10
 192.168.200.36 server11
-
+192.168.200.37 openstack-controller, controller
 
 # The following lines are desirable for IPv6 capable hosts
 ::1     localhost ip6-localhost ip6-loopback

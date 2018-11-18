@@ -49,6 +49,9 @@ netq-ts ansible_host=192.168.200.250
 [oob]
 localhost ansible_connection=local
 
+[openstack]
+openstack-controller ansible_host=
+
 [rack1-pod1:children]
 leafs-rack1
 servers-rack1

@@ -84,5 +84,7 @@ host server12 {hardware ethernet 44:38:39:00:00:dc; fixed-address 192.168.200.34
 host server10 {hardware ethernet 44:38:39:00:00:de; fixed-address 192.168.200.35; option host-name "server10"; } 
 
 host server11 {hardware ethernet 44:38:39:00:00:e0; fixed-address 192.168.200.36; option host-name "server11"; } 
+
+host openstack-controller {hardware ethernet 44:38:39:00:00:e2; fixed-address 192.168.200.37; option host-name "openstack-controller"; } 
 }#End of static host group
 

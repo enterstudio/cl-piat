@@ -5,12 +5,6 @@
 - set_fact:
     myvars: "{{ servervars[inventory_hostname] }}"
 
-- name: distribute the cluster hosts file
-  blockinfile:
-    dest: /etc/hosts
-    marker: "# {mark} ANSIBLE MANAGED BLOCK cluster hosts"
-    block: "{{ lookup('file', '{{ inventory_dir }}/files/hosts') }}"
-
 - name: add repositories for NetQ/HostPack, Mesosphere, Docker and then update the apt cache
   apt_key:
     keyserver: keyserver.ubuntu.com
