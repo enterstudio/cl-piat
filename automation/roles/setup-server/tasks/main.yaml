@@ -28,6 +28,31 @@
     name: ['ifupdown','ifenslave','netplan.io']
     state: absent
 
+- name: Disable systemd-resolved
+  systemd:
+    name: systemd-resolved.service
+    state: stopped
+    enabled: no
+
+- name: Remove resolve.conf
+  file:
+   path: /etc/resolv.conf
+   state: absent
+
+- name: Create resolve.conf
+  copy:
+    content: ""
+    dest: /etc/resolv.conf
+    force: no
+    group: sys
+    owner: root
+    mode: 0644
+
+- name: Add dns server
+  lineinfile:
+    path: /etc/resolv.conf
+    line: 'nameserver 192.168.200.1 # vrf mgmt'
+
 - name: Remove netplan files
   shell: rm -vfr /usr/share/netplan /etc/netplan
 
