@@ -55,4 +55,7 @@
   - setup-server
   - app-netq
   - server-evpn
+  reboot:
+    reboot_timeout: 1200
+    test_command: mount
 ...
