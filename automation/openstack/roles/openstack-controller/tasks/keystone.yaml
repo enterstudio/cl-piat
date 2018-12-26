@@ -26,7 +26,7 @@
 
 - name: keystone dbsync
   ignore_errors: yes
-  shell: su -s /bin/sh -c "keystone-manage db_sync" keystone
+  shell: /bin/sh -c "keystone-manage db_sync" keystone
 
 - name: configure fernet
   command: keystone-manage {{ item }} --keystone-user keystone --keystone-group keystone
