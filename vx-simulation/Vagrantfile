@@ -2802,6 +2802,16 @@ end
             :libvirt__tunnel_port => '17563',
             :libvirt__iface_name => 'swp50',
             auto_config: false
+      # link for swp3 --> openstack-controller:eth2
+      device.vm.network "private_network",
+            :mac => "44:38:39:00:00:e5",
+            :libvirt__tunnel_type => 'udp',
+            :libvirt__tunnel_local_ip => '127.0.0.1',
+            :libvirt__tunnel_local_port => '17616',
+            :libvirt__tunnel_ip => '127.0.0.1',
+            :libvirt__tunnel_port => '18616',
+            :libvirt__iface_name => 'swp3',
+            auto_config: false
 
 
 
@@ -3105,6 +3115,16 @@ end
             :libvirt__tunnel_ip => '127.0.0.1',
             :libvirt__tunnel_port => '17554',
             :libvirt__iface_name => 'swp50',
+            auto_config: false
+      # link for swp3 --> openstack-controller:eth1
+      device.vm.network "private_network",
+            :mac => "44:38:39:00:00:e3",
+            :libvirt__tunnel_type => 'udp',
+            :libvirt__tunnel_local_ip => '127.0.0.1',
+            :libvirt__tunnel_local_port => '17615',
+            :libvirt__tunnel_ip => '127.0.0.1',
+            :libvirt__tunnel_port => '18615',
+            :libvirt__iface_name => 'swp3',
             auto_config: false
 
 
@@ -5286,6 +5306,26 @@ end
             :libvirt__tunnel_ip => '127.0.0.1',
             :libvirt__tunnel_port => '17614',
             :libvirt__iface_name => 'eth0',
+            auto_config: false
+      # link for eth1 --> leaf01:swp3
+      device.vm.network "private_network",
+            :mac => "44:38:39:00:00:e4",
+            :libvirt__tunnel_type => 'udp',
+            :libvirt__tunnel_local_ip => '127.0.0.1',
+            :libvirt__tunnel_local_port => '18615',
+            :libvirt__tunnel_ip => '127.0.0.1',
+            :libvirt__tunnel_port => '17615',
+            :libvirt__iface_name => 'eth1',
+            auto_config: false
+      # link for eth2 --> leaf02:swp3
+      device.vm.network "private_network",
+            :mac => "44:38:39:00:00:e6",
+            :libvirt__tunnel_type => 'udp',
+            :libvirt__tunnel_local_ip => '127.0.0.1',
+            :libvirt__tunnel_local_port => '18616',
+            :libvirt__tunnel_ip => '127.0.0.1',
+            :libvirt__tunnel_port => '17616',
+            :libvirt__iface_name => 'eth2',
             auto_config: false
 
     # Fixes "stdin: is not a tty" and "mesg: ttyname failed : Inappropriate ioctl for device"  messages --> https://github.com/mitchellh/vagrant/issues/1673
