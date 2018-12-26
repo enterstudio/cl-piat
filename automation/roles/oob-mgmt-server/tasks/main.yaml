@@ -19,7 +19,7 @@
   command: pip3 install PyYAML
 
 - name: Install Pynetbox
-  command: pip3 install pynetbox
+  command: pip3 install pynetbox==3.4.7 
 
 - name: Install NetQ
   apt:
