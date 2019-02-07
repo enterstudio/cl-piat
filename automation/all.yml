@@ -1,0 +1,584 @@
+node:
+  exit01:
+    mlag:
+      address: 169.254.1.1/30
+      backup-ip: 192.168.200.29
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.2
+      sysmac: 44:38:39:FF:01:56
+    overlay:
+      anycast-ip: 10.100.100.56/32
+      irb:
+        irb1000:
+          ipv4:
+            None: 192.168.10.6/24
+            VRRP: 192.168.10.1/24
+          ipv6:
+            None: fc00:10::6/64
+            VRRP: fc00:10::1/64
+            prefix: fc00:10::/64
+          l2vni: 1000
+          l3vni: 4001
+          vrf: tenant1
+        irb1001:
+          ipv4:
+            None: 192.168.11.6/24
+            VRRP: 192.168.11.1/24
+          ipv6:
+            None: fc00:11::6/64
+            VRRP: fc00:11::1/64
+            prefix: fc00:11::/64
+          l2vni: 1001
+          l3vni: 4001
+          vrf: tenant1
+        irb1002:
+          ipv4:
+            None: 192.168.12.6/24
+            VRRP: 192.168.12.1/24
+          ipv6:
+            None: fc00:12::6/64
+            VRRP: fc00:12::1/64
+            prefix: fc00:12::/64
+          l2vni: 1002
+          l3vni: 4002
+          vrf: tenant2
+        irb1003:
+          ipv4:
+            None: 192.168.13.6/24
+            VRRP: 192.168.13.1/24
+          ipv6:
+            None: fc00:13::6/64
+            VRRP: fc00:13::1/64
+            prefix: fc00:13::/64
+          l2vni: 1003
+          l3vni: 4002
+          vrf: tenant2
+        irb1004:
+          ipv4:
+            None: 192.168.14.6/24
+            VRRP: 192.168.14.1/24
+          ipv6:
+            None: fc00:14::6/64
+            VRRP: fc00:14::1/64
+            prefix: fc00:14::/64
+          l2vni: 1004
+          l3vni: 4003
+          vrf: tenant3
+        irb1005:
+          ipv4:
+            None: 192.168.15.6/24
+            VRRP: 192.168.15.1/24
+          ipv6:
+            None: fc00:15::6/64
+            VRRP: fc00:15::1/64
+            prefix: fc00:15::/64
+          l2vni: 1005
+          l3vni: 4003
+          vrf: tenant3
+    ports:
+      bond01:
+        members:
+        - swp1
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      bond02:
+        members:
+        - swp2
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      swp49: {}
+      swp50: {}
+      swp51: {}
+      swp52: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65131
+          peers:
+          - peerlink.4094
+          - swp49
+          - swp50
+          - swp51
+          - swp52
+      lo: 10.10.10.5/32
+  exit02:
+    mlag:
+      address: 169.254.1.2/30
+      backup-ip: 192.168.200.32
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.1
+      sysmac: 44:38:39:FF:01:56
+    overlay:
+      anycast-ip: 10.100.100.56/32
+      irb:
+        irb1000:
+          ipv4:
+            None: 192.168.10.7/24
+            VRRP: 192.168.10.1/24
+          ipv6:
+            None: fc00:10::7/64
+            VRRP: fc00:10::1/64
+            prefix: fc00:10::/64
+          l2vni: 1000
+          l3vni: 4001
+          vrf: tenant1
+        irb1001:
+          ipv4:
+            None: 192.168.11.7/24
+            VRRP: 192.168.11.1/24
+          ipv6:
+            None: fc00:11::7/64
+            VRRP: fc00:11::1/64
+            prefix: fc00:11::/64
+          l2vni: 1001
+          l3vni: 4001
+          vrf: tenant1
+        irb1002:
+          ipv4:
+            None: 192.168.12.7/24
+            VRRP: 192.168.12.1/24
+          ipv6:
+            None: fc00:12::7/64
+            VRRP: fc00:12::1/64
+            prefix: fc00:12::/64
+          l2vni: 1002
+          l3vni: 4002
+          vrf: tenant2
+        irb1003:
+          ipv4:
+            None: 192.168.13.7/24
+            VRRP: 192.168.13.1/24
+          ipv6:
+            None: fc00:13::7/64
+            VRRP: fc00:13::1/64
+            prefix: fc00:13::/64
+          l2vni: 1003
+          l3vni: 4002
+          vrf: tenant2
+        irb1004:
+          ipv4:
+            None: 192.168.14.7/24
+            VRRP: 192.168.14.1/24
+          ipv6:
+            None: fc00:14::7/64
+            VRRP: fc00:14::1/64
+            prefix: fc00:14::/64
+          l2vni: 1004
+          l3vni: 4003
+          vrf: tenant3
+        irb1005:
+          ipv4:
+            None: 192.168.15.7/24
+            VRRP: 192.168.15.1/24
+          ipv6:
+            None: fc00:15::7/64
+            VRRP: fc00:15::1/64
+            prefix: fc00:15::/64
+          l2vni: 1005
+          l3vni: 4003
+          vrf: tenant3
+    ports:
+      bond01:
+        members:
+        - swp1
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      bond02:
+        members:
+        - swp2
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      swp49: {}
+      swp50: {}
+      swp51: {}
+      swp52: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65132
+          peers:
+          - peerlink.4094
+          - swp49
+          - swp50
+          - swp51
+          - swp52
+      lo: 10.10.10.6/32
+  leaf01:
+    mlag:
+      address: 169.254.1.1/30
+      backup-ip: 192.168.200.19
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.2
+      sysmac: 44:38:39:FF:01:02
+    overlay:
+      anycast-ip: 10.100.100.12/32
+      irb:
+        irb1000:
+          ipv4:
+            None: 192.168.10.2/24
+            VRRP: 192.168.10.1/24
+          ipv6:
+            None: fc00:10::2/64
+            VRRP: fc00:10::1/64
+            prefix: fc00:10::/64
+          l2vni: 1000
+          l3vni: 4001
+          vrf: tenant1
+        irb1001:
+          ipv4:
+            None: 192.168.11.2/24
+            VRRP: 192.168.11.1/24
+          ipv6:
+            None: fc00:11::2/64
+            VRRP: fc00:11::1/64
+            prefix: fc00:11::/64
+          l2vni: 1001
+          l3vni: 4001
+          vrf: tenant1
+        irb1002:
+          ipv4:
+            None: 192.168.12.2/24
+            VRRP: 192.168.12.1/24
+          ipv6:
+            None: fc00:12::2/64
+            VRRP: fc00:12::1/64
+            prefix: fc00:12::/64
+          l2vni: 1002
+          l3vni: 4002
+          vrf: tenant2
+        irb1003:
+          ipv4:
+            None: 192.168.13.2/24
+            VRRP: 192.168.13.1/24
+          ipv6:
+            None: fc00:13::2/64
+            VRRP: fc00:13::1/64
+            prefix: fc00:13::/64
+          l2vni: 1003
+          l3vni: 4002
+          vrf: tenant2
+        irb1004:
+          ipv4:
+            None: 192.168.14.2/24
+            VRRP: 192.168.14.1/24
+          ipv6:
+            None: fc00:14::2/64
+            VRRP: fc00:14::1/64
+            prefix: fc00:14::/64
+          l2vni: 1004
+          l3vni: 4003
+          vrf: tenant3
+        irb1005:
+          ipv4:
+            None: 192.168.15.2/24
+            VRRP: 192.168.15.1/24
+          ipv6:
+            None: fc00:15::2/64
+            VRRP: fc00:15::1/64
+            prefix: fc00:15::/64
+          l2vni: 1005
+          l3vni: 4003
+          vrf: tenant3
+    ports:
+      bond01:
+        members:
+        - swp1
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      bond02:
+        members:
+        - swp2
+        mode: Tagged
+        pvid: 1000
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65111
+          peers:
+          - peerlink.4094
+          - swp49
+          - swp50
+      lo: 10.10.10.1/32
+  leaf02:
+    mlag:
+      address: 169.254.1.2/30
+      backup-ip: 192.168.200.21
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.1
+      sysmac: 44:38:39:FF:01:02
+    overlay:
+      anycast-ip: 10.100.100.12/32
+      irb:
+        irb1000:
+          ipv4:
+            None: 192.168.10.3/24
+            VRRP: 192.168.10.1/24
+          ipv6:
+            None: fc00:10::3/64
+            VRRP: fc00:10::1/64
+            prefix: fc00:10::/64
+          l2vni: 1000
+          l3vni: 4001
+          vrf: tenant1
+        irb1001:
+          ipv4:
+            None: 192.168.11.3/24
+            VRRP: 192.168.11.1/24
+          ipv6:
+            None: fc00:11::3/64
+            VRRP: fc00:11::1/64
+            prefix: fc00:11::/64
+          l2vni: 1001
+          l3vni: 4001
+          vrf: tenant1
+        irb1002:
+          ipv4:
+            None: 192.168.12.3/24
+            VRRP: 192.168.12.1/24
+          ipv6:
+            None: fc00:12::3/64
+            VRRP: fc00:12::1/64
+            prefix: fc00:12::/64
+          l2vni: 1002
+          l3vni: 4002
+          vrf: tenant2
+        irb1003:
+          ipv4:
+            None: 192.168.13.3/24
+            VRRP: 192.168.13.1/24
+          ipv6:
+            None: fc00:13::3/64
+            VRRP: fc00:13::1/64
+            prefix: fc00:13::/64
+          l2vni: 1003
+          l3vni: 4002
+          vrf: tenant2
+        irb1004:
+          ipv4:
+            None: 192.168.14.3/24
+            VRRP: 192.168.14.1/24
+          ipv6:
+            None: fc00:14::3/64
+            VRRP: fc00:14::1/64
+            prefix: fc00:14::/64
+          l2vni: 1004
+          l3vni: 4003
+          vrf: tenant3
+        irb1005:
+          ipv4:
+            None: 192.168.15.3/24
+            VRRP: 192.168.15.1/24
+          ipv6:
+            None: fc00:15::3/64
+            VRRP: fc00:15::1/64
+            prefix: fc00:15::/64
+          l2vni: 1005
+          l3vni: 4003
+          vrf: tenant3
+    ports:
+      bond01:
+        members:
+        - swp1
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      bond02:
+        members:
+        - swp2
+        mode: Tagged
+        vlans:
+        - 1000
+        - 1001
+        - 1002
+        - 1003
+        - 1004
+        - 1005
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65112
+          peers:
+          - peerlink.4094
+          - swp49
+          - swp50
+      lo: 10.10.10.2/32
+  leaf03:
+    mlag:
+      address: 169.254.1.1/30
+      backup-ip: 192.168.200.17
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.2
+      sysmac: 44:38:39:FF:01:34
+    overlay:
+      irb: {}
+    ports:
+      swp1: {}
+      swp2: {}
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65121
+          peers:
+          - peerlink.4094
+          - swp1
+          - swp2
+          - swp49
+          - swp50
+      lo: 10.10.10.3/32
+  leaf04:
+    mlag:
+      address: 169.254.1.2/30
+      backup-ip: 192.168.200.20
+      members:
+      - swp20
+      - swp21
+      peer-ip: 169.254.1.1
+      sysmac: 44:38:39:FF:01:34
+    overlay:
+      irb: {}
+    ports:
+      swp1: {}
+      swp2: {}
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65122
+          peers:
+          - peerlink.4094
+          - swp1
+          - swp2
+          - swp49
+          - swp50
+      lo: 10.10.10.4/32
+  spine01:
+    ports:
+      swp1: {}
+      swp2: {}
+      swp3: {}
+      swp4: {}
+      swp5: {}
+      swp6: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65101
+          peers:
+          - swp1
+          - swp2
+          - swp3
+          - swp4
+          - swp5
+          - swp6
+      lo: 10.10.20.1/32
+  spine02:
+    ports:
+      swp1: {}
+      swp2: {}
+      swp3: {}
+      swp4: {}
+      swp5: {}
+      swp6: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65102
+          peers:
+          - swp1
+          - swp2
+          - swp3
+          - swp4
+          - swp5
+          - swp6
+      lo: 10.10.20.2/32
+  super01:
+    ports:
+      swp1: {}
+      swp2: {}
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65901
+          peers:
+          - swp1
+          - swp2
+          - swp49
+          - swp50
+      lo: 10.10.30.1/32
+  super02:
+    ports:
+      swp1: {}
+      swp2: {}
+      swp49: {}
+      swp50: {}
+    routing:
+      bgp:
+        underlay:
+          asn: 65902
+          peers:
+          - swp1
+          - swp2
+          - swp49
+          - swp50
+      lo: 10.10.30.2/32
