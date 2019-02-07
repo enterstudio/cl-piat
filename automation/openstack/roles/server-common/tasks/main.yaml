@@ -13,8 +13,8 @@
     name: ubuntu-cloud-keyring
     state: present
 - apt_repository:
-    repo: 'deb http://ubuntu-cloud.archive.canonical.com/ubuntu xenial-updates/pike  main'
-    filename: pike
+    repo: 'deb http://ubuntu-cloud.archive.canonical.com/ubuntu bionic-updates/rocky  main'
+    filename: rocky
     state: present
 - apt:
     update_cache: yes
