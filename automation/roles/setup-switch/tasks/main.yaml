@@ -14,10 +14,31 @@
     - systemctl enable ntp@mgmt
     - systemctl start ntp@mgmt
 
+- name: Remove NetQ1.4 
+  apt:
+    name: ['cumulus-netq','netq-agent','netq-apps']
+    state: absent
+
+- name: Add Cumulus Apt Key
+  apt_key:
+    url: "https://apps3.cumulusnetworks.com/setup/cumulus-apps-deb.pubkey"
+    state: present
+
+- name: Add Cumulus Repo
+  apt_repository:
+    repo: deb https://apps3.cumulusnetworks.com/repos/deb CumulusLinux-3 netq-2.0 
+    state: present
+    update_cache: no
+
+- name: Install NetQ2.0
+  apt:
+    name: cumulus-netq
+    update_cache: yes
+
 - name: copy netq config file
   copy:
     src: netq.yml
-    dest: /etc/netq/netq.yml
+    dest: /etc/netq/config.d/netq-overwrite.yml 
 
 - name: Configure NetQ in management VRF
   command: "{{item}}"
