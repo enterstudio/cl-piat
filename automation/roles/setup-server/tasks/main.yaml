@@ -67,8 +67,7 @@
     state: present 
   with_items:
     - /home/cumulus/bridge-utils_1.5-9-cl3u2_amd64.deb
-    - /home/cumulus/ifupdown2_1.0~git20170314-1_all.deb
-    - /home/cumulus/ifupdown2_1.2.0-cl3u19_all.deb
+    - /home/cumulus/ifupdown2_1.2.5-1_all.deb
     - /home/cumulus/vrf_1.3_amd64.deb
     - /home/cumulus/mgmt-vrf_1.3_all.deb
     - /home/cumulus/linux-headers-4.19.0-041900_4.19.0-041900.201810221809_all.deb
