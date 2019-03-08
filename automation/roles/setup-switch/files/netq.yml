@@ -9,5 +9,5 @@ netq-cli:
   opid: 0
   password: admin  # >> optional
   port: 32708
-  server: netq2beta2-netq20attilla-hvnon5cj.srv.ravcloud.com
+  server: netq201-netq201attilla-jzaubopb.srv.ravcloud.com
   username: admin   # >> Optional
